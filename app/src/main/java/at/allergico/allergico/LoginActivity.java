@@ -5,7 +5,6 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.LoaderManager.LoaderCallbacks;
-import android.content.ContentResolver;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
@@ -30,8 +29,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import at.allergico.allergico.DAOs.UserDAO;
-import at.allergico.allergico.POJOs.UserPOJO;
+import at.allergico.allergico.database.DAO.UserDAO;
+import at.allergico.allergico.POJO.UserPOJO;
 
 
 /**
@@ -44,7 +43,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
      * Keep track of the login task to ensure we can cancel it if requested.
      */
     private UserLoginTask mAuthTask = null;
-    private UserDAO  userDAO = UserDAO.get_instance();
+    private UserDAO  userDAO = UserDAO.getInstance();
     private UserPOJO loggedInUser;
 
 
@@ -164,7 +163,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         List<UserPOJO> userList = userDAO.getAllUsersFromDB();
         boolean emailInDB = false;
         for(UserPOJO item : userList){
-            if(item.getMailaddress().equals(email)){
+            if(item.getEmail().equals(email)){
                 emailInDB = true;
                 break;
             }
@@ -176,7 +175,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         List<UserPOJO> userList = userDAO.getAllUsersFromDB();
         boolean passwordValid = false;
         for(UserPOJO item : userList){
-            if(item.getMailaddress().equals(email) && item.getPassword().equals(password)){
+            if(item.getEmail().equals(email) && item.getPassword().equals(password)){
                 passwordValid = true;
                 loggedInUser = item;
                 break;
