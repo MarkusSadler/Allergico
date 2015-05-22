@@ -3,35 +3,224 @@ package at.allergico.allergico;
 import android.app.DatePickerDialog;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+
+import at.allergico.allergico.database.POJO.UserPOJO;
 
 
 public class Registration extends ActionBarActivity {
-    private Button birthday;
-    private TextView dateDisplay;
+    //region daclarationsOfLayoutVariables
+    private EditText    firstname;
+    private EditText    lastname;
+    private EditText    eMail;
+    private TextView    dateDisplay;
+    private EditText    username;
+    private EditText    password;
+    private EditText    passwordRepeat;
+    private Button      dateOfBirth;
+    private Button      submit;
+    private Button      reset;
+    //endregion
+
+    boolean[] checkInput = new boolean[7];
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
-        birthday = (Button) findViewById(R.id.datePicker);
-        dateDisplay = (TextView) findViewById(R.id.datDisplay);
-        birthday.setOnClickListener(new View.OnClickListener() {
+
+        //region connectionToLayoutItems
+        firstname       = (EditText) findViewById(R.id.firstname);
+        lastname        = (EditText) findViewById(R.id.lastname);
+        eMail           = (EditText) findViewById(R.id.mailAdress);
+        dateDisplay     = (TextView) findViewById(R.id.datDisplay);
+        username        = (EditText) findViewById(R.id.username);
+        password        = (EditText) findViewById(R.id.password);
+        passwordRepeat  = (EditText) findViewById(R.id.passwordRepeat);
+        dateOfBirth     = (Button)   findViewById(R.id.datePicker);
+        submit          = (Button)   findViewById(R.id.submit);
+        reset           = (Button)   findViewById(R.id.reset);
+        //endregion
+
+        submit.setEnabled(false);
+
+        //region TextChangeListener for editable Textfields
+        firstname.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onClick(View view) {
+            public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {}
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {}
+            @Override
+            public void afterTextChanged(Editable editable)
+            {
+                if(editable.length() > 0) { checkInput[0] = true; }
+                else { checkInput[0] = false;}
+                checkAllInputs();
+            }
+        });
+
+        lastname.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {}
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {}
+            @Override
+            public void afterTextChanged(Editable editable)
+            {
+                if(editable.length() > 0) { checkInput[1] = true; }
+                else { checkInput[1] = false;}
+                checkAllInputs();
+            }
+        });
+
+        eMail.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {}
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {}
+            @Override
+            public void afterTextChanged(Editable editable)
+            {
+                String tmp = editable.toString();
+                if(editable.length() > 0 && tmp.contains("@")) { checkInput[2] = true; }
+                else { checkInput[2] = false;}
+                checkAllInputs();
+            }
+        });
+
+        username.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {}
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {}
+            @Override
+            public void afterTextChanged(Editable editable)
+            {
+                if(editable.length() > 0) { checkInput[3] = true; }
+                else { checkInput[3] = false;}
+                checkAllInputs();
+            }
+        });
+
+        password.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {}
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {}
+            @Override
+            public void afterTextChanged(Editable editable)
+            {
+                if(editable.length() > 6) { checkInput[4] = true; }
+                else { checkInput[4] = false;}
+                checkAllInputs();
+            }
+        });
+
+        passwordRepeat.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {}
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {}
+            @Override
+            public void afterTextChanged(Editable editable)
+            {
+                if(editable.length() > 6) { checkInput[5] = true; }
+                else { checkInput[5] = false;}
+                checkAllInputs();
+            }
+        });
+
+        dateDisplay.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {}
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {}
+            @Override
+            public void afterTextChanged(Editable editable)
+            {
+                String tmp = editable.toString();
+                if(tmp.equals("Bitte auswählen") == false) { checkInput[6] = true; }
+                else { checkInput[6] = false;}
+                checkAllInputs();
+            }
+        });
+        //endregion
+
+        //region Test
+        dateOfBirth.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
                 showDatePicker();
             }
         });
+
+        reset.setOnClickListener(new View.OnClickListener()
+        {
+             @Override
+             public void onClick(View view)
+             {
+                 firstname.setText("");         lastname.setText("");
+                 eMail.setText("");             username.setText("");
+                 password.setText("");          passwordRepeat.setText("");
+                 dateDisplay.setText("Bitte auswählen");
+             }
+         }
+        );
+
+        submit.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                if(password.getText().toString().equals(passwordRepeat.getText().toString()))
+                {
+                    SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd");
+                    String dateString = "";
+                    for(int i=0; i < dateDisplay.getText().toString().split("\\.").length; i++)
+                    {
+                        dateString += dateDisplay.getText().toString().split("\\.")[i];
+                    }
+                    Date date = GregorianCalendar.getInstance().getTime();
+                    try {
+                        date = ft.parse(dateString);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    UserPOJO insertUser = new UserPOJO( -1, username.getText().toString(),  password.getText().toString(),
+                                                            eMail.getText().toString(),     firstname.getText().toString(),
+                                                            lastname.getText().toString(),  date, true);
+                    DisplayToast(insertUser.getFirstname() + "," + insertUser.getLastname() + "," + insertUser.getUsername());
+                }
+                else {DisplayToast("Passwörter stimmen nicht überein"); }
+            }
+        });
+        //endregion
+    }
+
+    private void checkAllInputs()
+    {
+        if(checkInput[0] && checkInput[1] && checkInput[2] && checkInput[3] && checkInput[4] && checkInput[5] && checkInput[6])
+        {   submit.setEnabled(true);    }
+        else
+        {   submit.setEnabled(false);   }
     }
 
 
