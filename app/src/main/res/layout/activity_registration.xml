@@ -18,6 +18,8 @@
                 android:singleLine="true"
                 android:hint="Vorname"
                 android:layout_alignParentLeft="true"
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/header"
                 android:layout_toLeftOf="@+id/lastname"/>
 
         <EditText
@@ -26,6 +28,8 @@
                 android:layout_height="wrap_content"
                 android:singleLine="true"
                 android:hint="Nachanme"
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/header"
                 android:layout_alignParentRight="true" />
 
         <EditText
@@ -34,6 +38,7 @@
                 android:layout_width="fill_parent"
                 android:singleLine="true"
                 android:layout_below="@id/lastname"
+                android:layout_marginTop="10dp"
                 android:hint="E-Mail"/>
 
         <Button
@@ -42,7 +47,9 @@
                 android:layout_width="150dp"
                 android:layout_gravity="right"
                 android:text="Geburtstag"
-                android:layout_below="@id/mailAdress"/>
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/mailAdress"
+                android:background="#00BFFF"/>
 
         <TextView
                 android:id="@+id/datDisplay"
@@ -51,7 +58,7 @@
                 android:layout_width="175dp"
                 android:singleLine="true"
                 android:layout_below="@id/mailAdress"
-                android:layout_marginTop="13dp"
+                android:layout_marginTop="23dp"
                 android:layout_marginLeft="190dp"
                 android:textAlignment="center"
                 android:text="Bitte auswählen"
@@ -62,34 +69,49 @@
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
                 android:singleLine="true"
-                android:layout_below="@id/datDisplay"
+                android:layout_below="@id/datePicker"
                 android:layout_marginTop="10dp"
                 android:hint="Benutzername"/>
-    <!--<Password
-            android:id="@+id/passwordRepeat"
-            android:layout_height="wrap_content"
-            android:layout_width="fill_parent"
-            android:singleLine="true"
-            android:hint="Passwort wiederholen"/>
 
-<Password
-            android:id="@+id/password"
-            android:layout_height="wrap_content"
-            android:layout_width="fill_parent"
-            android:singleLine="true"
-            android:hint="Passwort"/>
+        <EditText
+                android:id="@+id/password"
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:singleLine="true"
+                android:hint="Passwort"
+                android:layout_below="@id/username"
+                android:layout_marginTop="10dp"
+                android:inputType="textPassword"/>
 
+        <EditText
+                android:id="@+id/passwordRepeat"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:hint="Passwort wiederholen"
+                android:layout_below="@id/password"
+                android:layout_marginTop="10dp"
+                android:inputType="textPassword"/>
 
+        <Button
+                android:id="@+id/submit"
+                android:layout_height="wrap_content"
+                android:layout_width="150dp"
+                android:layout_gravity="right"
+                android:text="Registrieren"
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/passwordRepeat"
+                android:background="#00FF80"/>
 
-<Button
-        android:id="@+id/submit"
-        android:layout_height="89dp"
-        android:layout_width="205dp"
-        android:layout_gravity="right"/>
-
-<Button
-        android:id="@+id/reset"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content" />-->
+        <Button
+                android:id="@+id/reset"
+                android:layout_height="wrap_content"
+                android:layout_width="150dp"
+                android:layout_gravity="right"
+                android:text="Zurücksetzen"
+                android:layout_marginLeft="190dp"
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/passwordRepeat"
+                android:background="#FAAC58"/>
 
 </RelativeLayout>
