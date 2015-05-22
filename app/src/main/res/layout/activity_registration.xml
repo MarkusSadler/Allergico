@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="20dp">
+
+        <TextView
+                android:id="@+id/header"
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"/>
+
+        <EditText
+                android:id="@+id/firstname"
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:singleLine="true"
+                android:hint="Vorname"
+                android:layout_alignParentLeft="true"
+                android:layout_toLeftOf="@+id/lastname"/>
+
+        <EditText
+                android:id="@+id/lastname"
+                android:layout_width="175dp"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:hint="Nachanme"
+                android:layout_alignParentRight="true" />
+
+        <EditText
+                android:id="@+id/mailAdress"
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:singleLine="true"
+                android:layout_below="@id/lastname"
+                android:hint="E-Mail"/>
+
+        <Button
+                android:id="@+id/datePicker"
+                android:layout_height="wrap_content"
+                android:layout_width="150dp"
+                android:layout_gravity="right"
+                android:text="Geburtstag"
+                android:layout_below="@id/mailAdress"/>
+
+        <TextView
+                android:id="@+id/datDisplay"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_height="wrap_content"
+                android:layout_width="175dp"
+                android:singleLine="true"
+                android:layout_below="@id/mailAdress"
+                android:layout_marginTop="13dp"
+                android:layout_marginLeft="190dp"
+                android:textAlignment="center"
+                android:text="Bitte auswählen"
+                android:textColor="@color/background_material_dark" />
+
+        <EditText
+                android:id="@+id/username"
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:singleLine="true"
+                android:layout_below="@id/datDisplay"
+                android:layout_marginTop="10dp"
+                android:hint="Benutzername"/>
+    <!--<Password
+            android:id="@+id/passwordRepeat"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:singleLine="true"
+            android:hint="Passwort wiederholen"/>
+
+<Password
+            android:id="@+id/password"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:singleLine="true"
+            android:hint="Passwort"/>
+
+
+
+<Button
+        android:id="@+id/submit"
+        android:layout_height="89dp"
+        android:layout_width="205dp"
+        android:layout_gravity="right"/>
+
+<Button
+        android:id="@+id/reset"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content" />-->
+
+</RelativeLayout>
