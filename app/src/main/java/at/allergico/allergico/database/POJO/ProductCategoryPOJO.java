@@ -1,4 +1,4 @@
-package at.allergico.allergico.POJO;
+package at.allergico.allergico.database.POJO;
 
 /**
  * Created by Michael on 22/05/2015.

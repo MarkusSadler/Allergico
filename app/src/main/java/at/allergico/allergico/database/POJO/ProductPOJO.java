@@ -1,4 +1,4 @@
-package at.allergico.allergico.POJO;
+package at.allergico.allergico.database.POJO;
 
 import android.media.Image;
 

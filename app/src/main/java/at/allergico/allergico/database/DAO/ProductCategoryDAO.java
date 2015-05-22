@@ -2,7 +2,7 @@ package at.allergico.allergico.database.DAO;
 
 import java.util.List;
 
-import at.allergico.allergico.POJO.ProductCategoryPOJO;
+import at.allergico.allergico.database.POJO.ProductCategoryPOJO;
 
 /**
  * Created by Michael on 23/05/2015.

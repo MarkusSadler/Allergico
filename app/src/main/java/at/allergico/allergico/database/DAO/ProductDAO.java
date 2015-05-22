@@ -4,7 +4,7 @@ import android.media.Image;
 
 import java.util.List;
 
-import at.allergico.allergico.POJO.ProductPOJO;
+import at.allergico.allergico.database.POJO.ProductPOJO;
 
 /**
  * Created by Michael on 23/05/2015.

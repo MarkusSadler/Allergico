@@ -3,7 +3,8 @@ package at.allergico.allergico.database.DAO;
 import java.util.Date;
 import java.util.List;
 
-import at.allergico.allergico.POJO.UserPOJO;
+import at.allergico.allergico.database.POJO.UserPOJO;
+
 
 /**
  * Created by Markus on 22.05.2015.

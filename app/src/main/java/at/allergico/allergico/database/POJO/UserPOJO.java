@@ -1,4 +1,4 @@
-package at.allergico.allergico.POJO;
+package at.allergico.allergico.database.POJO;
 
 import java.util.Date;
 import java.util.GregorianCalendar;
