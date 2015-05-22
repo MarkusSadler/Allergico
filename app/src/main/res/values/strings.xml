@@ -3,5 +3,9 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+<<<<<<< HEAD
     <string name="title_activity_registration">Registration</string>
+=======
+
+>>>>>>> origin/master
 </resources>
