@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import at.allergico.allergico.database.DAO.UserDAO;
+import at.allergico.allergico.database.POJO.UserPOJO;
 
 
 /**
