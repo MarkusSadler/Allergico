@@ -23,29 +23,33 @@ import java.util.GregorianCalendar;
 
 import at.allergico.allergico.database.POJO.UserPOJO;
 
+/**
+ * Created by Alexander on 22.05.2015.
+ * Adapted by Alexander on 23.05.2015.
+ */
 
-public class Registration extends ActionBarActivity {
-    //region daclarationsOfLayoutVariables
-    private EditText    firstname;
-    private EditText    lastname;
-    private EditText    eMail;
-    private TextView    dateDisplay;
-    private EditText    username;
-    private EditText    password;
-    private EditText    passwordRepeat;
-    private Button      dateOfBirth;
-    private Button      submit;
-    private Button      reset;
+public class Registration extends ActionBarActivity
+{
+    //region Variables
+    /** Variables to working with the layout elements. */
+    private EditText    firstname;          private EditText    lastname;
+    private EditText    eMail;              private TextView    dateDisplay;
+    private EditText    username;           private EditText    password;
+    private EditText    passwordRepeat;     private Button      dateOfBirth;
+    private Button      submit;             private Button      reset;
+
+    /** Help variable to check the inputs */
+    boolean[] checkInput = new boolean[7];
     //endregion
 
-    boolean[] checkInput = new boolean[7];
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
 
-        //region connectionToLayoutItems
+        //region Variablebindings
+        /** Bind the variables with the layout items on the view */
         firstname       = (EditText) findViewById(R.id.firstname);
         lastname        = (EditText) findViewById(R.id.lastname);
         eMail           = (EditText) findViewById(R.id.mailAdress);
@@ -60,7 +64,17 @@ public class Registration extends ActionBarActivity {
 
         submit.setEnabled(false);
 
-        //region TextChangeListener for editable Textfields
+        //region TextChangeListeners
+        /**
+         * The following TextChangeListener checks the inserted input. If everything is valid,
+         * the submit button changed to enabled, otherwise he is disabled and it is impossible to submit the input.
+         * The Listeners checks following conditions:
+         *  - all input fields must be filled out
+         *  - the email address contains an @ synbol
+         *  - the passwords must have more than 6 characters
+         * The results of this conditions will be written in to the checkInput array and when the complete array is true,
+         * the submit button goes to enabled.
+         */
         firstname.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {}
@@ -162,7 +176,17 @@ public class Registration extends ActionBarActivity {
         });
         //endregion
 
-        //region Test
+        //region ClickListener
+        /**
+         * The following ClickListener defnied the action after a button is cklicked. Following actions are defind:
+         * - BIRTHDAY BUTTON: The datePickerFragment will be opened and it is possible to select a date
+         *   The fragment function checks the selected date because it must be in the past. If the user select
+         *   a date in the future, a toast message with an error message will be displayed.
+         * - RESET BUTTON: All textfield will be cleared and the selected date will be deleted.
+         * - SUBMIT BUTTON: If all inputs are valid and the user enter the submit button, the clickListener compare
+         *   the inserted passwords. If the two passwords are equal, a new UserPOJO will be created and
+         *   will be inserted in the Database via the UserDAO. Otherwise a toast message with a password error will be displayed.
+         */
         dateOfBirth.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -192,6 +216,7 @@ public class Registration extends ActionBarActivity {
             {
                 if(password.getText().toString().equals(passwordRepeat.getText().toString()))
                 {
+                    /** Create a date object with the selected birthday **/
                     SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd");
                     String dateString = "";
                     for(int i=0; i < dateDisplay.getText().toString().split("\\.").length; i++)
@@ -204,9 +229,11 @@ public class Registration extends ActionBarActivity {
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
+                    /** Create a new UserPOJO for insert into the database */
                     UserPOJO insertUser = new UserPOJO( -1, username.getText().toString(),  password.getText().toString(),
                                                             eMail.getText().toString(),     firstname.getText().toString(),
                                                             lastname.getText().toString(),  date, true);
+                    //Testmessage
                     DisplayToast(insertUser.getFirstname() + "," + insertUser.getLastname() + "," + insertUser.getUsername());
                 }
                 else {DisplayToast("Passwörter stimmen nicht überein"); }
@@ -214,15 +241,6 @@ public class Registration extends ActionBarActivity {
         });
         //endregion
     }
-
-    private void checkAllInputs()
-    {
-        if(checkInput[0] && checkInput[1] && checkInput[2] && checkInput[3] && checkInput[4] && checkInput[5] && checkInput[6])
-        {   submit.setEnabled(true);    }
-        else
-        {   submit.setEnabled(false);   }
-    }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -246,6 +264,7 @@ public class Registration extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /** The DatePicker Fragment will be displayed */
     private void showDatePicker() {
         DatePickerFragment date = new DatePickerFragment();
         Calendar calender = Calendar.getInstance();
@@ -258,7 +277,9 @@ public class Registration extends ActionBarActivity {
         date.show(getSupportFragmentManager(), "Date Picker");
     }
 
-        DatePickerDialog.OnDateSetListener ondate = new DatePickerDialog.OnDateSetListener() {
+    /** The date variable will be set or an error toast message will be displayed */
+    DatePickerDialog.OnDateSetListener ondate = new DatePickerDialog.OnDateSetListener()
+    {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear,
                               int dayOfMonth) {
@@ -283,6 +304,7 @@ public class Registration extends ActionBarActivity {
         }
     };
 
+    /** Return a int array with the actual [0] - year, [1] - month, [2] - day */
     public int[] getCurrentDate()
     {
         DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd-HH:mm:ss");
@@ -296,8 +318,18 @@ public class Registration extends ActionBarActivity {
         return curDate;
     }
 
+    /** Display the entered Message in a toast */
     public void DisplayToast(String tmp)
     {
         Toast.makeText(Registration.this,tmp,Toast.LENGTH_LONG).show();
+    }
+
+    /** If each input is valid, the submit button will be enabled, otherwise disabled. */
+    private void checkAllInputs()
+    {
+        if(checkInput[0] && checkInput[1] && checkInput[2] && checkInput[3] && checkInput[4] && checkInput[5] && checkInput[6])
+        {   submit.setEnabled(true);    }
+        else
+        {   submit.setEnabled(false);   }
     }
 }
