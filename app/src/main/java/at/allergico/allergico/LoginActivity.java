@@ -25,6 +25,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -131,10 +132,12 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         // Check for a valid email address.
         if (TextUtils.isEmpty(email)) {
             mEmailView.setError(getString(R.string.error_field_required));
+            //DisplayToast(getString(R.string.error_field_required));
             focusView = mEmailView;
             cancel = true;
         } else if (!isEmailValid(email)) {
             mEmailView.setError(getString(R.string.error_invalid_email));
+         //   DisplayToast(getString(R.string.error_invalid_email));
             focusView = mEmailView;
             cancel = true;
         }
@@ -142,6 +145,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         // Check for a valid password, if the user entered one.
         if (!TextUtils.isEmpty(password) && !isPasswordValid(password, email)) {
             mPasswordView.setError(getString(R.string.error_incorrect_password));
+          //  DisplayToast(getString(R.string.error_incorrect_password));
             focusView = mPasswordView;
             cancel = true;
         }
@@ -160,28 +164,34 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
     }
 
     private boolean isEmailValid(String email) {
-        List<UserPOJO> userList = userDAO.getAllUsersFromDB();
-        boolean emailInDB = false;
-        for(UserPOJO item : userList){
-            if(item.getEmail().equals(email)){
-                emailInDB = true;
-                break;
-            }
-        }
-        return emailInDB;
+        return true;
+//        List<UserPOJO> userList = userDAO.getAllUsersFromDB();
+//        boolean emailInDB = false;
+//        for(UserPOJO item : userList){
+//            if(item.getEmail().equals(email)){
+//                emailInDB = true;
+//                break;
+//            }
+//        }
+//        return emailInDB;
     }
 
     private boolean isPasswordValid(String password, String email) {
-        List<UserPOJO> userList = userDAO.getAllUsersFromDB();
-        boolean passwordValid = false;
-        for(UserPOJO item : userList){
-            if(item.getEmail().equals(email) && item.getPassword().equals(password)){
-                passwordValid = true;
-                loggedInUser = item;
-                break;
-            }
-        }
-        return passwordValid;
+        return true;
+//        List<UserPOJO> userList = userDAO.getAllUsersFromDB();
+//        boolean passwordValid = false;
+//        for(UserPOJO item : userList){
+//            if(item.getEmail().equals(email) && item.getPassword().equals(password)){
+//                passwordValid = true;
+//                loggedInUser = item;
+//                break;
+//            }
+//        }
+//        return passwordValid;
+    }
+    public void DisplayToast(String tmp)
+    {
+        Toast.makeText(LoginActivity.this, tmp, Toast.LENGTH_LONG).show();
     }
 
     /**
@@ -312,6 +322,8 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             mAuthTask = null;
             showProgress(false);
         }
+
+
     }
 }
 
