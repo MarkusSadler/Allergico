@@ -25,6 +25,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activities.EANReaderActivity"
+            android:label="@string/title_activity_eanreader" >
+        </activity>
     </application>
 
 </manifest>
