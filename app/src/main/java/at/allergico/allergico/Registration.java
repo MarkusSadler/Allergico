@@ -21,6 +21,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import at.allergico.allergico.database.DAO.UserDAO;
 import at.allergico.allergico.database.POJO.UserPOJO;
 
 /**
@@ -42,6 +43,7 @@ public class Registration extends ActionBarActivity
     boolean[] checkInput = new boolean[7];
     //endregion
 
+    UserDAO userdao = UserDAO.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -217,11 +219,12 @@ public class Registration extends ActionBarActivity
                 if(password.getText().toString().equals(passwordRepeat.getText().toString()))
                 {
                     /** Create a date object with the selected birthday **/
-                    SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd");
+                    SimpleDateFormat ft = new SimpleDateFormat("dd/MM/yyyy");
                     String dateString = "";
                     for(int i=0; i < dateDisplay.getText().toString().split("\\.").length; i++)
                     {
                         dateString += dateDisplay.getText().toString().split("\\.")[i];
+                        if(i!=2)    {   dateString += "/";  }
                     }
                     Date date = GregorianCalendar.getInstance().getTime();
                     try {
@@ -233,8 +236,9 @@ public class Registration extends ActionBarActivity
                     UserPOJO insertUser = new UserPOJO( -1, username.getText().toString(),  password.getText().toString(),
                                                             eMail.getText().toString(),     firstname.getText().toString(),
                                                             lastname.getText().toString(),  date, true);
-                    //Testmessage
-                    DisplayToast(insertUser.getFirstname() + "," + insertUser.getLastname() + "," + insertUser.getUsername());
+                    boolean tmp = userdao.addUser(insertUser);
+                    if(tmp) { DisplayToast("Registrierung erfolgreich"); }
+                        else{ DisplayToast("Fehler beim Registrieren"); }
                 }
                 else {DisplayToast("Passwörter stimmen nicht überein"); }
             }
@@ -308,13 +312,13 @@ public class Registration extends ActionBarActivity
     public int[] getCurrentDate()
     {
         DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd-HH:mm:ss");
-        //get current date time with Date()
         Date date = new Date();
         String dateString = dateFormat.format(date).split("-")[0];
         int[] curDate = new int[3];
         curDate[0] = Integer.parseInt(dateString.split("\\.")[0]);
         curDate[1] = Integer.parseInt(dateString.split("\\.")[1]);
         curDate[2] = Integer.parseInt(dateString.split("\\.")[2]);
+        System.out.println(dateFormat.format(date));
         return curDate;
     }
 

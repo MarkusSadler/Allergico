@@ -1,8 +1,20 @@
 package at.allergico.allergico.database.DAO;
 
+import android.util.JsonWriter;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import at.allergico.allergico.database.Manager.DBManager;
 import at.allergico.allergico.database.POJO.UserPOJO;
 
 
@@ -12,6 +24,7 @@ import at.allergico.allergico.database.POJO.UserPOJO;
  */
 public class UserDAO {
     /******** SINGLETON START ********/
+    DBManager dbManager = DBManager.getInstance();
     private static UserDAO _instance;
 
     public static UserDAO getInstance() {
@@ -26,8 +39,7 @@ public class UserDAO {
 
     }
     /******** SINGLETON END *********/
-
-   public List<UserPOJO> getAllUsersFromDB(){
+    public List<UserPOJO> getAllUsersFromDB(){
        throw new UnsupportedOperationException();
    }
 
@@ -39,8 +51,29 @@ public class UserDAO {
         throw new UnsupportedOperationException();
     }
 
-    public boolean addUser(UserPOJO newUser) {
-        throw new UnsupportedOperationException();
+    public boolean addUser(UserPOJO newUser)
+    {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        String dateInString = formatter.format(newUser.getDob());
+        JSONObject addingUser = new JSONObject();
+        try
+        {
+            addingUser.put("UserID", null);
+            addingUser.put("Username", newUser.getUsername());
+            addingUser.put("Password", newUser.getPassword());
+            addingUser.put("Mailaddress" ,newUser.getEmail());
+            addingUser.put("Firstname", newUser.getFirstname());
+            addingUser.put("Lastname", newUser.getLastname());
+            addingUser.put("DoB", dateInString);
+            addingUser.put("Active", true);
+            System.out.println(addingUser.toString());
+            return dbManager.addUser(addingUser.toString());
+        }
+        catch (JSONException e)
+        {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     public boolean updateUser(UserPOJO updatedUser) {
