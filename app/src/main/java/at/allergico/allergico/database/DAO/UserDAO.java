@@ -1,5 +1,6 @@
 package at.allergico.allergico.database.DAO;
 
+import android.os.AsyncTask;
 import android.util.JsonWriter;
 
 import org.json.JSONArray;
@@ -52,6 +53,7 @@ public class UserDAO {
     public List<UserPOJO> getAllUsersFromDB(){
      this.getAllUsersList().clear();
       String jsonString = dbManager.getObject("User");
+        System.out.print(jsonString);
         try {
             JSONArray jsonArray = new JSONArray(jsonString);
             JSONObject[] jsonObjects = new JSONObject[jsonArray.length()];
@@ -66,15 +68,17 @@ public class UserDAO {
                         item.getString("Mailaddress"),
                         item.getString("Firstname"),
                         item.getString("Lastname"),
-                        (Date)item.get("DoB"),
-                        item.getBoolean("Active")
-                        );
-
+                        null,
+                        true
+                );
+                //if(item.getInt("Active") == 0){user.setActive(false);}
+                System.out.print(user.getEmail());
                 this.getAllUsersList().add(user);
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
         return this.getAllUsersList();
 
     }

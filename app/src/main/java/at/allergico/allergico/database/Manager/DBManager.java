@@ -1,7 +1,20 @@
 package at.allergico.allergico.database.Manager;
 
+import android.os.AsyncTask;
+import android.os.StrictMode;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpParams;
+
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
@@ -30,6 +43,9 @@ public class DBManager
     }
 
     private DBManager() {}
+
+
+
     /******** SINGLETON END *********/
 
     public boolean addUser(String jsonString)
@@ -61,28 +77,38 @@ public class DBManager
         }
     }
 
-    public String getObject(String getParameter){
-        String ret = "";
+    public String getObject(String getParameter) {
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
         try {
-            url = new URL("http://sadler.or.at/allergico/service.php?get=" + getParameter);
+            HttpParams httpParams = new BasicHttpParams();
+           // httpParams.setParameter("get",getParameter);
+            HttpClient httpclient = new DefaultHttpClient(); // Create HTTP Client
+            HttpGet httpget = new HttpGet("http://sadler.or.at/allergico/service.php?get="+getParameter); // Set the action you want to do
+            HttpResponse response = httpclient.execute(httpget); // Executeit
+            HttpEntity entity = response.getEntity();
+            InputStream is = entity.getContent(); // Create an InputStream with the response
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is, "iso-8859-1"), 8);
+            StringBuilder sb = new StringBuilder();
+            String line = null;
+            while ((line = reader.readLine()) != null) // Read line by line
+                sb.append(line + "\n");
 
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(url.openStream()));
+            String resString = sb.toString(); // Result is here
 
-            String inputLine;
-            while ((inputLine = in.readLine()) != null){
-                ret += inputLine;
-            }
-
-            in.close();
-            return ret;
-        } catch (MalformedURLException e) {
+            is.close(); // Close the stream
+            return resString;
+        }catch (UnsupportedEncodingException e) {
             e.printStackTrace();
+            return null;
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+            return null;
         } catch (IOException e) {
             e.printStackTrace();
-        }finally {
-            return ret;
+            return null;
         }
+
 
     }
 }
