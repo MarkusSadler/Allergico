@@ -1,11 +1,15 @@
 package at.allergico.allergico.activities;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+
+import com.google.zxing.client.android.CaptureActivity;
 
 import at.allergico.allergico.R;
 
@@ -40,6 +44,25 @@ public class EANReaderActivity extends ActionBarActivity {
     }
 
     public void testEANReader(View view) {
-        Toast.makeText(this.getApplicationContext(), "hello toast =)", Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(getApplicationContext(),CaptureActivity.class);
+        intent.setAction("com.google.zxing.client.android.SCAN");
+        // this stops saving ur barcode in barcode scanner app's history
+        intent.putExtra("SAVE_HISTORY", false);
+        startActivityForResult(intent, 0);
     }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        if (requestCode == 0) {
+            if (resultCode == RESULT_OK) {
+                String contents = intent.getStringExtra("SCAN_RESULT");
+                String format = intent.getStringExtra("SCAN_RESULT_FORMAT");
+                // Handle successful scan
+                Toast.makeText(this.getApplicationContext(), "Successfull scan", Toast.LENGTH_LONG).show();
+            } else if (resultCode == RESULT_CANCELED) {
+                // Handle cancel
+                Toast.makeText(this.getApplicationContext(), "Unsuccessfull scan", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
 }
