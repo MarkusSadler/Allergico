@@ -103,7 +103,7 @@ public class UserDAO {
 
     public boolean addUser(UserPOJO newUser)
     {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         String dateInString = formatter.format(newUser.getDob());
         JSONObject addingUser = new JSONObject();
         try
@@ -115,9 +115,9 @@ public class UserDAO {
             addingUser.put("Firstname", newUser.getFirstname());
             addingUser.put("Lastname", newUser.getLastname());
             addingUser.put("DoB", dateInString);
-            addingUser.put("Active", true);
-           // System.out.println(addingUser.toString());
-            boolean result =  dbManager.addUser(addingUser.toString());
+            addingUser.put("Active", "1");
+            System.out.println(addingUser.toString());
+            boolean result = dbManager.addUser(addingUser.toString());
             if(result){
                 this.getAllUsersList().add(newUser);
             }

@@ -19,6 +19,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
@@ -52,26 +54,16 @@ public class DBManager
     {
         try
         {
-            url = new URL("http://sadler.or.at/allergico/service.php");
-            URLConnection conn = url.openConnection();
-            String data  = URLEncoder.encode("InsertUser", "UTF-8")
-                    + "=" + URLEncoder.encode(jsonString, "UTF-8");
-            wr = new OutputStreamWriter(conn.getOutputStream());
-            wr.write(data);
+            String link = "http://sadler.or.at/allergico/service.php?InsertUser=" + URLEncoder.encode(jsonString);
+            System.out.println(link);
+            DefaultHttpClient client = new DefaultHttpClient();
+            HttpGet request = new HttpGet(link);
+            HttpResponse response = client.execute(request);
             return true;
-        }
-        catch (MalformedURLException e)
-        {
+        } catch (ClientProtocolException e) {
             e.printStackTrace();
             return false;
-        }
-        catch (UnsupportedEncodingException e)
-        {
-            e.printStackTrace();
-            return false;
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             e.printStackTrace();
             return false;
         }
@@ -82,7 +74,7 @@ public class DBManager
         StrictMode.setThreadPolicy(policy);
         try {
             HttpParams httpParams = new BasicHttpParams();
-           // httpParams.setParameter("get",getParameter);
+            // httpParams.setParameter("get",getParameter);
             HttpClient httpclient = new DefaultHttpClient(); // Create HTTP Client
             HttpGet httpget = new HttpGet("http://sadler.or.at/allergico/service.php?get="+getParameter); // Set the action you want to do
             HttpResponse response = httpclient.execute(httpget); // Executeit

@@ -40,7 +40,8 @@ public class Registration extends ActionBarActivity
     private Button      submit;             private Button      reset;
 
     /** Help variable to check the inputs */
-    boolean[] checkInput = new boolean[7];
+    private boolean[] checkInput = new boolean[7];
+    private GregorianCalendar userDate;
     //endregion
 
     UserDAO userdao = UserDAO.getInstance();
@@ -218,26 +219,12 @@ public class Registration extends ActionBarActivity
             {
                 if(password.getText().toString().equals(passwordRepeat.getText().toString()))
                 {
-                    /** Create a date object with the selected birthday **/
-                    SimpleDateFormat ft = new SimpleDateFormat("dd/MM/yyyy");
-                    String dateString = "";
-                    for(int i=0; i < dateDisplay.getText().toString().split("\\.").length; i++)
-                    {
-                        dateString += dateDisplay.getText().toString().split("\\.")[i];
-                        if(i!=2)    {   dateString += "/";  }
-                    }
-                    Date date = GregorianCalendar.getInstance().getTime();
-                    try {
-                        date = ft.parse(dateString);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
                     /** Create a new UserPOJO for insert into the database */
                     UserPOJO insertUser = new UserPOJO( -1, username.getText().toString(),  password.getText().toString(),
                                                             eMail.getText().toString(),     firstname.getText().toString(),
-                                                            lastname.getText().toString(),  date, true);
-                    boolean tmp = userdao.addUser(insertUser);
-                    if(tmp) { DisplayToast("Registrierung erfolgreich"); }
+                                                            lastname.getText().toString(),  userDate.getTime(), true);
+
+                    if(userdao.addUser(insertUser)) { DisplayToast("Registrierung erfolgreich"); }
                         else{ DisplayToast("Fehler beim Registrieren"); }
                 }
                 else {DisplayToast("Passwörter stimmen nicht überein"); }
@@ -285,25 +272,21 @@ public class Registration extends ActionBarActivity
     DatePickerDialog.OnDateSetListener ondate = new DatePickerDialog.OnDateSetListener()
     {
         @Override
-        public void onDateSet(DatePicker view, int year, int monthOfYear,
-                              int dayOfMonth) {
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth)
+        {
             monthOfYear++;
-            if(getCurrentDate()[0] < year)
+            GregorianCalendar tmp = new GregorianCalendar(year,monthOfYear,dayOfMonth);
+            GregorianCalendar currentDate = new GregorianCalendar();
+            if(currentDate.getTimeInMillis() > tmp.getTimeInMillis())
             {
-                DisplayToast("Fehler - Jahr liegt in der Zukunft");
-            }
-            else if(getCurrentDate()[0] >= year && getCurrentDate()[1] < monthOfYear)
-            {
-                DisplayToast("Fehler - Monat liegt in der Zukunft");
-            }
-            else if(getCurrentDate()[0] >= year && getCurrentDate()[1] >= monthOfYear && getCurrentDate()[2] < dayOfMonth)
-            {
-                DisplayToast("Fehler - Tag liegt in der Zukunft");
+                userDate = tmp;
+                dateDisplay.setText(String.valueOf(dayOfMonth) + "." + String.valueOf(monthOfYear)
+                        + "." + String.valueOf(year));
+
             }
             else
             {
-                dateDisplay.setText(String.valueOf(dayOfMonth) + "." + String.valueOf(monthOfYear)
-                        + "." + String.valueOf(year));
+                DisplayToast("Fehler - Datum liegt in der Zukunft");
             }
         }
     };
