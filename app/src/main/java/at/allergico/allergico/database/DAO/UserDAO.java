@@ -39,15 +39,16 @@ public class UserDAO {
 
         return _instance;
     }
-    private List<UserPOJO> AllUsersList = new ArrayList<>();
+    /******** SINGLETON END *********/
+    private List<UserPOJO> _allUsersList = new ArrayList<>();
     public List<UserPOJO> getAllUsersList() {
-        return AllUsersList;
+        return _allUsersList;
     }
 
     private UserDAO() {
         getAllUsersFromDB();
     }
-    /******** SINGLETON END *********/
+
     public List<UserPOJO> getAllUsersFromDB(){
      this.getAllUsersList().clear();
       String jsonString = dbManager.getObject("User");
