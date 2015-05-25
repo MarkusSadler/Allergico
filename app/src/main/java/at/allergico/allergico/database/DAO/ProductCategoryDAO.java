@@ -42,7 +42,7 @@ public class ProductCategoryDAO {
 
     public List<ProductCategoryPOJO> getAllProductCategories() {
         this.getProductCatList().clear();
-        String jsonString = dbManager.getObject("Product");
+        String jsonString = dbManager.getObject("ProductCategory");
         try {
             JSONArray jsonArray = new JSONArray(jsonString);
             JSONObject[] jsonObjects = new JSONObject[jsonArray.length()];
