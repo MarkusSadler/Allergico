@@ -5,11 +5,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import at.allergico.allergico.database.Manager.DBManager;
 import at.allergico.allergico.database.POJO.AllergenPOJO;
 import at.allergico.allergico.database.POJO.ProductCategoryPOJO;
+import at.allergico.allergico.database.POJO.UserHasAllergenPOJO;
 
 /**
  * Created by Michael on 23/05/2015.
@@ -32,7 +34,7 @@ public class AllergenDAO {
     }
     /******** SINGLETON END *********/
     private DBManager dbManager = DBManager.getInstance();
-
+    private UserHasAllergenDAO userHasAllergenDAO = UserHasAllergenDAO.getInstance();
     private List<AllergenPOJO> _allergeneList = new ArrayList<>();
     public List<AllergenPOJO> getAllergeneList() {
         return _allergeneList;
@@ -54,7 +56,7 @@ public class AllergenDAO {
                         (char)item.get("Abbreviation")
 
                 );
-
+                allergen.setUsers(userHasAllergenDAO.getUserOfAllergen(allergen.getAllergenID()));
                 this.getAllergeneList().add(allergen);
             }
         } catch (JSONException e) {
@@ -64,8 +66,15 @@ public class AllergenDAO {
 
     }
 
-    public AllergenDAO getAllergenByID(int allergenID) {
-        throw new UnsupportedOperationException();
+    public AllergenPOJO getAllergenByID(int allergenID) {
+        Iterator<AllergenPOJO> iter = this.getAllergeneList().listIterator();
+        while (iter.hasNext()){
+            AllergenPOJO item = iter.next();
+            if(item.getAllergenID() == allergenID){
+                return item;
+            }
+        }
+        return null;
     }
 
     public AllergenDAO getAllergenByAbbreviation(char abbreviation) {

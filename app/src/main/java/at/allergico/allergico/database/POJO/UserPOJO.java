@@ -1,7 +1,9 @@
 package at.allergico.allergico.database.POJO;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 /**
  * Created by Markus on 22.05.2015.
@@ -16,6 +18,7 @@ public class UserPOJO {
     private String lastname;
     private Date dob;
     private boolean active;
+    private List<AllergenPOJO> allergene;
 
     /**
      * Default constructor - sets all values of the object to default
@@ -29,6 +32,8 @@ public class UserPOJO {
         this.lastname = "???";
         this.dob = GregorianCalendar.getInstance().getTime();
         this.active = false;
+        this.allergene = new ArrayList<>();
+
     }
 
     /**
@@ -52,6 +57,7 @@ public class UserPOJO {
         this.lastname = lastname;
         this.dob = dob;
         this.active = active;
+        this.allergene = new ArrayList<>();
     }
 
     public int getUserID() {
@@ -116,5 +122,18 @@ public class UserPOJO {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    @Override
+    public String toString(){
+        return String.format("/s /s",this.getFirstname(),this.getLastname());
+    }
+
+    public List<AllergenPOJO> getAllergene() {
+        return allergene;
+    }
+
+    public void setAllergene(List<AllergenPOJO> allergene) {
+        this.allergene = allergene;
     }
 }

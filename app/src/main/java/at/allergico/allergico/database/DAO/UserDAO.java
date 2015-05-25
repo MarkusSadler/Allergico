@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 import at.allergico.allergico.database.Manager.DBManager;
+import at.allergico.allergico.database.POJO.UserHasAllergenPOJO;
 import at.allergico.allergico.database.POJO.UserPOJO;
 
 
@@ -41,6 +42,7 @@ public class UserDAO {
         return _instance;
     }
     /******** SINGLETON END *********/
+    private UserHasAllergenDAO userHasAllergenDAO = UserHasAllergenDAO.getInstance();
     private List<UserPOJO> _allUsersList = new ArrayList<>();
     public List<UserPOJO> getAllUsersList() {
         return _allUsersList;
@@ -71,8 +73,12 @@ public class UserDAO {
                         null,
                         true
                 );
-                //if(item.getInt("Active") == 0){user.setActive(false);}
-                System.out.print(user.getEmail());
+                //if(item.getString("Active").equals("0")){user.setActive(false);}
+                String[] dobStringArr = item.getString("DoB").split("-");
+                user.setDob(new Date(Integer.parseInt(dobStringArr[0]),Integer.parseInt(dobStringArr[1]),Integer.parseInt(dobStringArr[2])));
+
+                user.setAllergene(userHasAllergenDAO.getAllergeneOfUser(user.getUserID()));
+
                 this.getAllUsersList().add(user);
             }
         } catch (JSONException e) {
@@ -85,11 +91,11 @@ public class UserDAO {
 
 
 
-    public UserDAO getUserByID(int userID) {
+    public UserPOJO getUserByID(int userID) {
         throw new UnsupportedOperationException();
     }
 
-    public UserDAO getUserByUsername(String username) {
+    public UserPOJO getUserByUsername(String username) {
         throw new UnsupportedOperationException();
     }
 
@@ -108,7 +114,7 @@ public class UserDAO {
             addingUser.put("Lastname", newUser.getLastname());
             addingUser.put("DoB", dateInString);
             addingUser.put("Active", true);
-            System.out.println(addingUser.toString());
+           // System.out.println(addingUser.toString());
             boolean result =  dbManager.addUser(addingUser.toString());
             if(result){
                 this.getAllUsersList().add(newUser);

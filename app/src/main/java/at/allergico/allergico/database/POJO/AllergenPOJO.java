@@ -1,5 +1,8 @@
 package at.allergico.allergico.database.POJO;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Michael on 22/05/2015.
  */
@@ -7,6 +10,7 @@ public class AllergenPOJO {
     private int allergenID;
     private String description;
     private char abbreviation;
+    private List<UserPOJO> users = new ArrayList<>();
 
     /**
      * Default constructor - set all values to default
@@ -27,6 +31,7 @@ public class AllergenPOJO {
         this.allergenID = allergenID;
         this.description = description;
         this.abbreviation = abbreviation;
+        this.users = new ArrayList<>();
     }
 
     public int getAllergenID() {
@@ -51,5 +56,13 @@ public class AllergenPOJO {
 
     public void setAbbreviation(char abbreviation) {
         this.abbreviation = abbreviation;
+    }
+
+    public List<UserPOJO> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<UserPOJO> users) {
+        this.users = users;
     }
 }
