@@ -31,8 +31,7 @@ public class UserHasAllergenDAO {
         return _instance;
     }
     /******** SINGLETON END *********/
-    private AllergenDAO allergenDAO = AllergenDAO.getInstance();
-    private UserDAO userDAO = UserDAO.getInstance();
+
 
     private List<UserHasAllergenPOJO> UserHasAllergenList = new ArrayList<>();
 
@@ -72,7 +71,7 @@ public class UserHasAllergenDAO {
     }
 
     public List<AllergenPOJO> getAllergeneOfUser(int userID){
-
+        AllergenDAO allergenDAO = AllergenDAO.getInstance();
         Iterator<UserHasAllergenPOJO> iter = UserHasAllergenList.listIterator();
         List<AllergenPOJO> returnList = new ArrayList<>();
         while(iter.hasNext()){
@@ -85,6 +84,7 @@ public class UserHasAllergenDAO {
     }
 
     public List<UserPOJO> getUserOfAllergen(int allergenID){
+        UserDAO userDAO = UserDAO.getInstance();
         Iterator<UserHasAllergenPOJO> iter = UserHasAllergenList.listIterator();
         List<UserPOJO> returnList = new ArrayList<>();
         while (iter.hasNext()){

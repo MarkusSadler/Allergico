@@ -31,16 +31,19 @@ public class AllergenDAO {
 
     private AllergenDAO() {
         this.getAllAllergene();
+        System.out.print("AllergeneDAO Instance");
     }
     /******** SINGLETON END *********/
     private DBManager dbManager = DBManager.getInstance();
-    private UserHasAllergenDAO userHasAllergenDAO = UserHasAllergenDAO.getInstance();
+
+
     private List<AllergenPOJO> _allergeneList = new ArrayList<>();
     public List<AllergenPOJO> getAllergeneList() {
         return _allergeneList;
     }
 
     public List<AllergenPOJO> getAllAllergene() {
+       //msa UserHasAllergenDAO userHasAllergenDAO = UserHasAllergenDAO.getInstance();
         this.getAllergeneList().clear();
         String jsonString = dbManager.getObject("Allergen");
         try {
@@ -53,10 +56,11 @@ public class AllergenDAO {
                 AllergenPOJO allergen = new AllergenPOJO(
                         item.getInt("AllergenID"),
                         item.getString("Description"),
-                        (char)item.get("Abbreviation")
+                        item.getString("Abbreviation").charAt(0)
 
                 );
-                allergen.setUsers(userHasAllergenDAO.getUserOfAllergen(allergen.getAllergenID()));
+
+               // allergen.setUsers(userHasAllergenDAO.getUserOfAllergen(allergen.getAllergenID()));
                 this.getAllergeneList().add(allergen);
             }
         } catch (JSONException e) {

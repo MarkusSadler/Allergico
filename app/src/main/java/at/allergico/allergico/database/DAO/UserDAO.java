@@ -42,7 +42,7 @@ public class UserDAO {
         return _instance;
     }
     /******** SINGLETON END *********/
-    private UserHasAllergenDAO userHasAllergenDAO = UserHasAllergenDAO.getInstance();
+
     private List<UserPOJO> _allUsersList = new ArrayList<>();
     public List<UserPOJO> getAllUsersList() {
         return _allUsersList;
@@ -50,12 +50,14 @@ public class UserDAO {
 
     private UserDAO() {
         getAllUsersFromDB();
+        System.out.print("UserDAO Instance");
     }
 
     public List<UserPOJO> getAllUsersFromDB(){
+     UserHasAllergenDAO userHasAllergenDAO = UserHasAllergenDAO.getInstance();
      this.getAllUsersList().clear();
       String jsonString = dbManager.getObject("User");
-        System.out.print(jsonString);
+        //System.out.print(jsonString);
         try {
             JSONArray jsonArray = new JSONArray(jsonString);
             JSONObject[] jsonObjects = new JSONObject[jsonArray.length()];
@@ -73,7 +75,7 @@ public class UserDAO {
                         null,
                         true
                 );
-                //if(item.getString("Active").equals("0")){user.setActive(false);}
+                if(item.getString("[Active]").equals("0")){user.setActive(false);}
                 String[] dobStringArr = item.getString("DoB").split("-");
                 user.setDob(new Date(Integer.parseInt(dobStringArr[0]),Integer.parseInt(dobStringArr[1]),Integer.parseInt(dobStringArr[2])));
 
