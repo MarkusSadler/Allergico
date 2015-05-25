@@ -164,30 +164,13 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
     }
 
     private boolean isEmailValid(String email) {
-        return true;
-//        List<UserPOJO> userList = userDAO.getAllUsersFromDB();
-//        boolean emailInDB = false;
-//        for(UserPOJO item : userList){
-//            if(item.getEmail().equals(email)){
-//                emailInDB = true;
-//                break;
-//            }
-//        }
-//        return emailInDB;
+        return userDAO.userExists(email);
+
     }
 
     private boolean isPasswordValid(String password, String email) {
-        return true;
-//        List<UserPOJO> userList = userDAO.getAllUsersFromDB();
-//        boolean passwordValid = false;
-//        for(UserPOJO item : userList){
-//            if(item.getEmail().equals(email) && item.getPassword().equals(password)){
-//                passwordValid = true;
-//                loggedInUser = item;
-//                break;
-//            }
-//        }
-//        return passwordValid;
+        return userDAO.userExists(email,password);
+
     }
     public void DisplayToast(String tmp)
     {
@@ -300,7 +283,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
         @Override
         protected Boolean doInBackground(Void... params) {
-                       // TODO: attempt authentication against a network service.
+
         return true;
         }
 

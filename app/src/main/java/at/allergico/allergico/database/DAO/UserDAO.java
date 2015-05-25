@@ -2,6 +2,7 @@ package at.allergico.allergico.database.DAO;
 
 import android.util.JsonWriter;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -11,8 +12,12 @@ import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
 
 import at.allergico.allergico.database.Manager.DBManager;
 import at.allergico.allergico.database.POJO.UserPOJO;
@@ -34,14 +39,46 @@ public class UserDAO {
 
         return _instance;
     }
+    private List<UserPOJO> AllUsersList = new ArrayList<>();
+    public List<UserPOJO> getAllUsersList() {
+        return AllUsersList;
+    }
 
     private UserDAO() {
-
+        getAllUsersFromDB();
     }
     /******** SINGLETON END *********/
     public List<UserPOJO> getAllUsersFromDB(){
-       throw new UnsupportedOperationException();
-   }
+     this.getAllUsersList().clear();
+      String jsonString = dbManager.getObject("User");
+        try {
+            JSONArray jsonArray = new JSONArray(jsonString);
+            JSONObject[] jsonObjects = new JSONObject[jsonArray.length()];
+            for(int i = 0; i < jsonArray.length(); i++){
+                jsonObjects[i] = jsonArray.getJSONObject(i);
+            }
+            for(JSONObject item : jsonObjects){
+                UserPOJO user = new UserPOJO(
+                        item.getInt("UserID"),
+                        item.getString("Username"),
+                        item.getString("Password"),
+                        item.getString("Mailaddress"),
+                        item.getString("Firstname"),
+                        item.getString("Lastname"),
+                        (Date)item.get("DoB"),
+                        item.getBoolean("Active")
+                        );
+
+                this.getAllUsersList().add(user);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return this.getAllUsersList();
+
+    }
+
+
 
     public UserDAO getUserByID(int userID) {
         throw new UnsupportedOperationException();
@@ -67,7 +104,11 @@ public class UserDAO {
             addingUser.put("DoB", dateInString);
             addingUser.put("Active", true);
             System.out.println(addingUser.toString());
-            return dbManager.addUser(addingUser.toString());
+            boolean result =  dbManager.addUser(addingUser.toString());
+            if(result){
+                this.getAllUsersList().add(newUser);
+            }
+            return result;
         }
         catch (JSONException e)
         {
@@ -106,12 +147,38 @@ public class UserDAO {
 
     public boolean userExists(UserPOJO user) {
 
-        throw new UnsupportedOperationException();
+        return this.getAllUsersList().contains(user);
     }
 
     public boolean userExists(int userID) {
-
         throw new UnsupportedOperationException();
+    }
+    public boolean userExists(String mailaddress) {
+        ListIterator<UserPOJO> iter = this.getAllUsersList().listIterator();
+        Boolean ret = false;
+        UserPOJO user;
+        while (iter.hasNext()){
+            user = iter.next();
+            if(user.getEmail().equals(mailaddress)){
+                ret = true;
+                break;
+            }
+        }
+        return ret;
+    }
+    public boolean userExists(String mailaddress,String password) {
+        if(!userExists(mailaddress)){return false;}
+        ListIterator<UserPOJO> iter = this.getAllUsersList().listIterator();
+        Boolean ret = false;
+        UserPOJO user;
+        while (iter.hasNext()){
+            user = iter.next();
+            if(user.getEmail().equals(mailaddress) && user.getPassword().equals(password)){
+                ret = true;
+                break;
+            }
+        }
+        return ret;
     }
 
     public UserPOJO deleteUser(int userID) {
@@ -132,4 +199,8 @@ public class UserDAO {
 
         throw new UnsupportedOperationException();
     }
+
+
+
+
 }

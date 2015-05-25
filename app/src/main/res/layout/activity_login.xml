@@ -46,7 +46,7 @@
             <Button android:id="@+id/registration_button" style="?android:textAppearanceSmall"
                 android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:layout_marginTop="16dp" android:text="@string/action_registration"
-
+                android:background="#00FF80"
                 android:textStyle="bold" />
 
         </LinearLayout>

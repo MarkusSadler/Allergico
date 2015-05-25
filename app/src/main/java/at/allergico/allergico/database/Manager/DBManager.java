@@ -1,6 +1,8 @@
 package at.allergico.allergico.database.Manager;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
@@ -15,6 +17,7 @@ public class DBManager
 {
     private URL url;
     private OutputStreamWriter wr;
+
 
     /******** SINGLETON START ********/
     private static DBManager _instance;
@@ -56,5 +59,30 @@ public class DBManager
             e.printStackTrace();
             return false;
         }
+    }
+
+    public String getObject(String getParameter){
+        String ret = "";
+        try {
+            url = new URL("http://sadler.or.at/allergico/service.php?get=" + getParameter);
+
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(url.openStream()));
+
+            String inputLine;
+            while ((inputLine = in.readLine()) != null){
+                ret += inputLine;
+            }
+
+            in.close();
+            return ret;
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            return ret;
+        }
+
     }
 }
