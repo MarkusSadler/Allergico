@@ -125,6 +125,7 @@ public class AdministrateProductActivity extends ListActivity {
             }
         });
 
+
         password.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {}
