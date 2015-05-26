@@ -23,26 +23,47 @@
             android:name=".LoginActivity"
             android:label="@string/title_activity_login"
             android:windowSoftInputMode="adjustResize|stateVisible" >
-
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".activities.EANReaderActivity"
             android:label="@string/title_activity_eanreader" >
-            <!--<intent-filter>
+
+            <!--
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
+            -->
         </activity>
         <activity
             android:name=".activities.MainActivity"
             android:label="@string/title_activity_main" >
+        </activity>
+        <activity
+            android:name=".activities.ProductOverviewActivity"
+            android:label="@string/title_activity_product_overview" >
+        </activity>
+        <activity
+            android:name=".activities.ShowAllergenActivity"
+            android:label="@string/title_activity_show_allergen" >
+        </activity>
+        <activity
+            android:name=".activities.ShowProductActivity"
+            android:label="@string/title_activity_show_product" >
+        </activity>
+        <activity
+            android:name=".activities.AdministrateProductActivity"
+            android:label="@string/title_activity_administrate_product" >
+        </activity>
+        <activity
+            android:name=".activities.AddProductActivity"
+            android:label="@string/title_activity_add_product" >
         </activity>
     </application>
 

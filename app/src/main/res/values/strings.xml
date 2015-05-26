@@ -5,4 +5,9 @@
     <string name="title_activity_registration">Registration</string>
     <string name="title_activity_eanreader">EANReaderActivity</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_product_overview">ProductOverviewActivity</string>
+    <string name="title_activity_show_allergen">ShowAllergenActivity</string>
+    <string name="title_activity_show_product">ShowProductActivity</string>
+    <string name="title_activity_administrate_product">AdministrateProductActivity</string>
+    <string name="title_activity_add_product">AddProductActivity</string>
 </resources>
