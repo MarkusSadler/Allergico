@@ -33,6 +33,7 @@ import java.util.List;
 import at.allergico.allergico.activities.MainActivity;
 import at.allergico.allergico.database.DAO.UserDAO;
 import at.allergico.allergico.database.POJO.UserPOJO;
+import at.allergico.allergico.helper.CurrentUser;
 
 
 /**
@@ -46,7 +47,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
      */
     private UserLoginTask mAuthTask = null;
     private UserDAO  userDAO = UserDAO.getInstance();
-    private UserPOJO loggedInUser;
+    private CurrentUser currentUser = CurrentUser.getInstance();
 
 
     // UI references.
@@ -158,6 +159,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
+            currentUser.setLogedInUser(userDAO.getUserByEmail(email));
             showProgress(true);
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
