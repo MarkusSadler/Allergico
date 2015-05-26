@@ -20,7 +20,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_marginTop="10dp"
                 android:layout_below="@id/header"
-                android:layout_toLeftOf="@+id/lastname"/>
+                android:layout_toLeftOf="@+id/lastname" />
 
         <EditText
                 android:id="@+id/lastname"
@@ -113,5 +113,4 @@
                 android:layout_marginTop="10dp"
                 android:layout_below="@id/passwordRepeat"
                 android:background="#FAAC58"/>
-
 </RelativeLayout>
