@@ -1,12 +1,154 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="at.allergico.allergico.activities.AdministrateProductActivity">
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <TextView android:text="@string/hello_world" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="20dp">
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/header"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"/>
+
+        <EditText
+            android:id="@+id/firstname"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:singleLine="true"
+            android:hint="Vorname"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/header"
+            android:layout_toLeftOf="@+id/lastname" />
+
+        <EditText
+            android:id="@+id/lastname"
+            android:layout_width="175dp"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:hint="Nachanme"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/header"
+            android:layout_alignParentRight="true" />
+
+        <EditText
+            android:id="@+id/mailAdress"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:singleLine="true"
+            android:layout_below="@id/lastname"
+            android:layout_marginTop="10dp"
+            android:hint="E-Mail"
+            android:editable="false" />
+
+        <!--<Button
+            android:id="@+id/datePicker"
+            android:layout_height="wrap_content"
+            android:layout_width="150dp"
+            android:layout_gravity="right"
+            android:text="Geburtstag"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/mailAdress"
+            android:background="#00BFFF"/>-->
+
+        <TextView
+            android:id="@+id/datDisplay"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_height="wrap_content"
+            android:layout_width="175dp"
+            android:layout_gravity="right"
+            android:singleLine="true"
+            android:layout_below="@id/mailAdress"
+            android:layout_marginTop="23dp"
+            android:layout_marginLeft="3dp"
+            android:textAlignment="center"
+            android:text="Bitte auswählen"
+            android:textColor="@color/background_material_dark" />
+
+        <EditText
+            android:id="@+id/username"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:singleLine="true"
+            android:layout_below="@id/datDisplay"
+            android:layout_marginTop="10dp"
+            android:hint="Benutzername"
+            android:editable="false" />
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:singleLine="true"
+            android:hint="Passwort"
+            android:layout_below="@id/username"
+            android:layout_marginTop="10dp"
+            android:inputType="textPassword"/>
+
+        <EditText
+            android:id="@+id/passwordRepeat"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:hint="Passwort wiederholen"
+            android:layout_below="@id/password"
+            android:layout_marginTop="10dp"
+            android:inputType="textPassword"/>
+
+        <Spinner
+            android:layout_width="225dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/allergenSpinner"
+            android:layout_below="@+id/passwordRepeat"
+            android:layout_alignLeft="@+id/datDisplay"
+            android:layout_alignStart="@+id/datDisplay"
+            android:layout_marginTop="10dp" />
+
+        <Button
+            android:id="@+id/addAllergen"
+            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_gravity="left"
+            android:text="+"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="280dp"
+            android:layout_below="@id/passwordRepeat"
+            android:background="#00FF80"/>
+
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/allergenListView"
+            android:layout_below="@+id/allergenSpinner"
+            android:layout_alignRight="@+id/reset"
+            android:layout_alignEnd="@+id/reset" />
+
+        <Button
+            android:id="@+id/submit"
+            android:layout_height="wrap_content"
+            android:layout_width="150dp"
+            android:layout_gravity="right"
+            android:text="Speichern"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/allergenListView"
+            android:background="#00FF80"/>
+
+        <Button
+            android:id="@+id/reset"
+            android:layout_height="wrap_content"
+            android:layout_width="150dp"
+            android:layout_gravity="right"
+            android:text="Abbrechen"
+            android:layout_marginLeft="190dp"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/allergenListView"
+            android:background="#FAAC58"/>
+    </RelativeLayout>
+</ScrollView>
