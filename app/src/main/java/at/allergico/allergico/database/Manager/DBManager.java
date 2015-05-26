@@ -74,7 +74,7 @@ public class DBManager
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
             try {
-                HttpParams httpParams = new BasicHttpParams();
+//                HttpParams httpParams = new BasicHttpParams();
                 // httpParams.setParameter("get",getParameter);
                 HttpClient httpclient = new DefaultHttpClient(); // Create HTTP Client
                 HttpGet httpget = new HttpGet("http://sadler.or.at/allergico/service.php?get="+params[0]); // Set the action you want to do

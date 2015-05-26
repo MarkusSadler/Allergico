@@ -53,7 +53,7 @@ public class UserDAO {
         System.out.print("UserDAO Instance");
     }
 
-    public List<UserPOJO> getAllUsersFromDB(){
+    private List<UserPOJO> getAllUsersFromDB(){
      UserHasAllergenDAO userHasAllergenDAO = UserHasAllergenDAO.getInstance();
      this.getAllUsersList().clear();
       String jsonString = dbManager.getObject("User");
@@ -98,9 +98,31 @@ public class UserDAO {
     }
 
     public UserPOJO getUserByUsername(String username) {
-        throw new UnsupportedOperationException();
-    }
+        if(!userExists(username)){return null;}
+        ListIterator<UserPOJO> iter = this.getAllUsersList().listIterator();
 
+        UserPOJO user = null;
+        while (iter.hasNext()){
+            user = iter.next();
+            if(user.getUsername().equals(username)){
+                break;
+            }
+        }
+        return user;
+    }
+    public UserPOJO getUserByEmail(String mailaddress){
+        if(!userExists(mailaddress)){return null;}
+        ListIterator<UserPOJO> iter = this.getAllUsersList().listIterator();
+
+        UserPOJO user = null;
+        while (iter.hasNext()){
+            user = iter.next();
+            if(user.getEmail().equals(mailaddress)){
+                break;
+            }
+        }
+        return user;
+    }
     public boolean addUser(UserPOJO newUser)
     {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
