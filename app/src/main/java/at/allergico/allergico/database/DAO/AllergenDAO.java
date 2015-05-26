@@ -88,6 +88,4 @@ public class AllergenDAO {
     public List<AllergenDAO> getAllergenByDescription(String description) {
         throw new UnsupportedOperationException();
     }
-
-
 }

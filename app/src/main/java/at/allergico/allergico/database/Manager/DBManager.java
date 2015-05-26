@@ -63,8 +63,6 @@ public class DBManager
         String[] params = new String[1];
         params[0] = getParameter;
        return getObjektTask.doInBackground(params);
-
-
     }
 
     public class GetObjektTask extends AsyncTask<String, Void, String> {

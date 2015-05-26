@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 import at.allergico.allergico.database.Manager.DBManager;
+import at.allergico.allergico.database.POJO.AllergenPOJO;
 import at.allergico.allergico.database.POJO.ProductPOJO;
 import at.allergico.allergico.database.POJO.UserPOJO;
 
@@ -68,7 +69,12 @@ public class ProductDAO {
     }
 
     public ProductPOJO getProductByID(int productID) {
-        throw new UnsupportedOperationException();
+        for(ProductPOJO p : this._productList) {
+            if(p.getProductID() == productID) {
+                return p;
+            }
+        }
+        return null;
     }
 
     public List<ProductPOJO> getProductByName(int productName) {
@@ -100,4 +106,26 @@ public class ProductDAO {
     }
 
 
+    public List<AllergenPOJO> getProductsAllergenes(int productID) {
+        List<AllergenPOJO> productsAllergenes = new ArrayList<AllergenPOJO>();
+        String jsonString = this.dbManager.getObject("ProductHasAllergen");
+
+        try {
+            JSONArray jsonArray = new JSONArray(jsonString);
+            JSONObject[] jsonObjects = new JSONObject[jsonArray.length()];
+            for(int i = 0; i < jsonArray.length(); i++){
+                jsonObjects[i] = jsonArray.getJSONObject(i);
+            }
+            for(JSONObject item : jsonObjects){
+                AllergenPOJO ap = new AllergenPOJO(item.getInt("AllergenID"), item.getString("Description"), item.getString("Abbreviation").charAt(0));
+
+
+                productsAllergenes.add(ap);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return productsAllergenes;
+    }
 }

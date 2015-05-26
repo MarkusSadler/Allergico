@@ -4,15 +4,56 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.GridLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.List;
 
 import at.allergico.allergico.R;
+import at.allergico.allergico.database.DAO.AllergenDAO;
+import at.allergico.allergico.database.DAO.ProductDAO;
+import at.allergico.allergico.database.POJO.AllergenPOJO;
+import at.allergico.allergico.database.POJO.ProductPOJO;
 
 public class ShowProductActivity extends ActionBarActivity {
+
+    private TextView _productName;
+    private TextView _productDescription;
+    private TextView _allergenesOfProduct;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_product);
+
+        this._productName = (TextView) this.findViewById(R.id.productName);
+        this._productDescription = (TextView) this.findViewById(R.id.productDescription);
+        this._allergenesOfProduct = (TextView) this.findViewById(R.id.AllergenText);
+        int productID = 3;
+
+        ProductDAO pDAO = ProductDAO.getInstance();
+        ProductPOJO desiredProduct = pDAO.getProductByID(productID);
+
+        if(desiredProduct != null) {
+            this._productName.setText(desiredProduct.getProductName());
+            this._productDescription.setText(desiredProduct.getDescription());
+
+            List<AllergenPOJO> productsAllergenes = pDAO.getProductsAllergenes(desiredProduct.getProductID());
+            if(productsAllergenes.size() == 0) {
+                this._allergenesOfProduct.setText("Allergenes: None");
+            } else {
+                this._allergenesOfProduct.setText("Allergenes:");
+                for(AllergenPOJO all : productsAllergenes) {
+                    this._allergenesOfProduct.setText(this._allergenesOfProduct.getText() + " " + all.getAbbreviation());
+                }
+            }
+
+        } else {
+            this._productName.setText("Product Load Failed");
+            this._productDescription.setText("Product Load Failed");
+            //Toast.makeText(this.getApplicationContext(), "No product fetched", Toast.LENGTH_SHORT).show();
+        }
     }
 
 
