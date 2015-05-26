@@ -1,5 +1,6 @@
 package at.allergico.allergico.database.POJO;
 
+import android.graphics.Bitmap;
 import android.media.Image;
 
 /**
@@ -9,7 +10,7 @@ public class ProductPOJO {
     private int productID;
     private String productName;
     private String description;
-    private Image image;
+    private Bitmap image;
     private String eanCode;
 
     /**
@@ -31,7 +32,7 @@ public class ProductPOJO {
      * @param image
      * @param eanCode
      */
-    public ProductPOJO(int productID, String productName, String description, Image image, String eanCode) {
+    public ProductPOJO(int productID, String productName, String description, Bitmap image, String eanCode) {
         this.productID = productID;
         this.productName = productName;
         this.description = description;
@@ -63,11 +64,11 @@ public class ProductPOJO {
         this.description = description;
     }
 
-    public Image getImage() {
+    public Bitmap getImage() {
         return image;
     }
 
-    public void setImage(Image image) {
+    public void setImage(Bitmap image) {
         this.image = image;
     }
 

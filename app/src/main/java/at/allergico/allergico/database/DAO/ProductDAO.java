@@ -1,5 +1,6 @@
 package at.allergico.allergico.database.DAO;
 
+import android.graphics.BitmapFactory;
 import android.media.Image;
 
 import org.json.JSONArray;
@@ -42,7 +43,7 @@ public class ProductDAO {
     }
 
 
-    public List<ProductPOJO> getAllProducts() {
+    private List<ProductPOJO> getAllProducts() {
         this.getProductList().clear();
         String jsonString = dbManager.getObject("Product");
         try {
@@ -56,9 +57,11 @@ public class ProductDAO {
                         item.getInt("ProductID"),
                         item.getString("Productname"),
                         item.getString("Description"),
-                        (Image)item.get("Image"),
+                        null,
                         item.getString("EANCode")
                 );
+//                byte[] imagebyteArray =  item.getString("Image").getBytes();
+//                product.setImage(BitmapFactory.decodeByteArray(imagebyteArray, 0, imagebyteArray.length));
 
                 this.getProductList().add(product);
             }
