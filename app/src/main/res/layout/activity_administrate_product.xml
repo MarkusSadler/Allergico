@@ -45,18 +45,7 @@
             android:singleLine="true"
             android:layout_below="@id/lastname"
             android:layout_marginTop="10dp"
-            android:hint="E-Mail"
             android:editable="false" />
-
-        <!--<Button
-            android:id="@+id/datePicker"
-            android:layout_height="wrap_content"
-            android:layout_width="150dp"
-            android:layout_gravity="right"
-            android:text="Geburtstag"
-            android:layout_marginTop="10dp"
-            android:layout_below="@id/mailAdress"
-            android:background="#00BFFF"/>-->
 
         <TextView
             android:id="@+id/datDisplay"
@@ -69,7 +58,6 @@
             android:layout_marginTop="23dp"
             android:layout_marginLeft="3dp"
             android:textAlignment="center"
-            android:text="Bitte auswählen"
             android:textColor="@color/background_material_dark" />
 
         <EditText
@@ -79,7 +67,6 @@
             android:singleLine="true"
             android:layout_below="@id/datDisplay"
             android:layout_marginTop="10dp"
-            android:hint="Benutzername"
             android:editable="false" />
 
         <EditText
@@ -125,10 +112,11 @@
         <ListView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/allergenListView"
-            android:layout_below="@+id/allergenSpinner"
+            android:id="@id/android:list"
+            android:layout_below="@+id/addAllergen"
             android:layout_alignRight="@+id/reset"
-            android:layout_alignEnd="@+id/reset" />
+            android:layout_alignEnd="@+id/reset"
+            android:layout_marginBottom="10dp"/>
 
         <Button
             android:id="@+id/submit"
@@ -137,18 +125,18 @@
             android:layout_gravity="right"
             android:text="Speichern"
             android:layout_marginTop="10dp"
-            android:layout_below="@id/allergenListView"
+            android:layout_below="@id/android:list"
             android:background="#00FF80"/>
 
         <Button
-            android:id="@+id/reset"
+            android:id="@+id/cancel"
             android:layout_height="wrap_content"
             android:layout_width="150dp"
             android:layout_gravity="right"
             android:text="Abbrechen"
             android:layout_marginLeft="190dp"
             android:layout_marginTop="10dp"
-            android:layout_below="@id/allergenListView"
+            android:layout_below="@id/android:list"
             android:background="#FAAC58"/>
     </RelativeLayout>
 </ScrollView>

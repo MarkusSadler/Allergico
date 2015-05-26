@@ -12,12 +12,15 @@ import at.allergico.allergico.R;
 
 public class MainActivity extends ActionBarActivity implements View.OnClickListener{
     private Button eanReader;
+    private Button administrate;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         eanReader = (Button) findViewById(R.id.EANButton);
+        administrate = (Button) findViewById(R.id.AdministrateUser);
         eanReader.setOnClickListener(this);
+        administrate.setOnClickListener(this);
     }
 
 
@@ -45,6 +48,10 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        startActivity(new Intent(this, EANReaderActivity.class));
+        if(view.getId() == administrate.getId()){
+            MainActivity.this.startActivity(new Intent(MainActivity.this, AdministrateProductActivity.class));
+        }else if(view.getId() == eanReader.getId()){
+            MainActivity.this.startActivity(new Intent(MainActivity.this, EANReaderActivity.class));
+        }
     }
 }
