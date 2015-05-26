@@ -30,6 +30,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import at.allergico.allergico.activities.MainActivity;
 import at.allergico.allergico.database.DAO.UserDAO;
 import at.allergico.allergico.database.POJO.UserPOJO;
 
@@ -293,7 +294,8 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             showProgress(false);
 
             if (success) {
-                finish();
+                //finish();
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();

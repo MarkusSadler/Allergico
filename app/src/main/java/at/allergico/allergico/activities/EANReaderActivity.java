@@ -1,5 +1,6 @@
 package at.allergico.allergico.activities;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -40,6 +41,22 @@ public class EANReaderActivity extends ActionBarActivity {
     }
 
     public void testEANReader(View view) {
-        Toast.makeText(this.getApplicationContext(), "hello toast =)", Toast.LENGTH_LONG).show();
+        //Toast.makeText(this.getApplicationContext(), "hello toast =)", Toast.LENGTH_LONG).show();
+        Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+        intent.putExtra("SCAN_MODE", "PRODUCT_MODE");
+        startActivityForResult(intent, 0);
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        if (requestCode == 0) {
+            if (resultCode == RESULT_OK) {
+                String contents = intent.getStringExtra("SCAN_RESULT");
+                String format = intent.getStringExtra("SCAN_RESULT_FORMAT");
+                // Handle successful scan
+                Toast.makeText(this.getApplicationContext(), contents, Toast.LENGTH_LONG).show();
+            } else if (resultCode == RESULT_CANCELED) {
+                // Handle cancel
+            }
+        }
     }
 }
