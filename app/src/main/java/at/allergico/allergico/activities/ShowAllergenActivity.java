@@ -4,15 +4,44 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import at.allergico.allergico.R;
+import at.allergico.allergico.database.DAO.AllergenDAO;
+import at.allergico.allergico.database.POJO.AllergenPOJO;
 
 public class ShowAllergenActivity extends ActionBarActivity {
-
+    private ListView allergenListView;
+    private AllergenDAO allergenDAO;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_allergen);
+        allergenListView = (ListView)findViewById(R.id.allergeneListview);
+        allergenDAO = AllergenDAO.getInstance();
+
+        CreatAllergenListView();
+
+    }
+
+    private void CreatAllergenListView() {
+       List<AllergenPOJO> allergenList = allergenDAO.getAllergeneList();
+       List<String> allergenStringList = new ArrayList<>();
+        for(AllergenPOJO item : allergenList){
+            allergenStringList.add(item.getAbbreviation() + " - " + item.getDescription());
+        }
+
+        allergenListView.setAdapter(new ArrayAdapter<>(this,R.layout.allergene_list_item,allergenStringList));
     }
 
 
@@ -38,3 +67,8 @@ public class ShowAllergenActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 }
+
+
+
+
+

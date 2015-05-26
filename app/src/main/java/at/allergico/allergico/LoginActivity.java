@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import at.allergico.allergico.activities.MainActivity;
+import at.allergico.allergico.activities.ShowAllergenActivity;
 import at.allergico.allergico.database.DAO.UserDAO;
 import at.allergico.allergico.database.POJO.UserPOJO;
 import at.allergico.allergico.helper.CurrentUser;

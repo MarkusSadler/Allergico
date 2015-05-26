@@ -42,7 +42,7 @@ public class AllergenDAO {
         return _allergeneList;
     }
 
-    public List<AllergenPOJO> getAllAllergene() {
+    private List<AllergenPOJO> getAllAllergene() {
        //msa UserHasAllergenDAO userHasAllergenDAO = UserHasAllergenDAO.getInstance();
         this.getAllergeneList().clear();
         String jsonString = dbManager.getObject("Allergen");

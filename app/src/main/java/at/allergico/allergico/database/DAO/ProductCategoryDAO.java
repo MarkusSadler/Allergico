@@ -40,7 +40,7 @@ public class ProductCategoryDAO {
         return _productCatList;
     }
 
-    public List<ProductCategoryPOJO> getAllProductCategories() {
+    private List<ProductCategoryPOJO> getAllProductCategories() {
         this.getProductCatList().clear();
         String jsonString = dbManager.getObject("ProductCategory");
         try {

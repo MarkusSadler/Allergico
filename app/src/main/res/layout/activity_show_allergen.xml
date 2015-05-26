@@ -6,7 +6,11 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="at.allergico.allergico.activities.ShowAllergenActivity">
 
-    <TextView android:text="@string/hello_world" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <ListView
+        android:id="@+id/allergeneListview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="fill_vertical"
+        android:scrollbars="vertical"></ListView>
 
 </RelativeLayout>
