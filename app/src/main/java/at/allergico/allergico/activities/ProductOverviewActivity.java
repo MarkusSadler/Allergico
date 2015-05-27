@@ -1,18 +1,46 @@
 package at.allergico.allergico.activities;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import at.allergico.allergico.R;
+import at.allergico.allergico.database.DAO.ProductDAO;
+import at.allergico.allergico.database.POJO.AllergenPOJO;
+import at.allergico.allergico.database.POJO.ProductPOJO;
 
-public class ProductOverviewActivity extends ActionBarActivity {
+public class ProductOverviewActivity extends ActionBarActivity implements AdapterView.OnItemClickListener{
+    private ListView productListView;
+    private ProductDAO productDAO =  ProductDAO.getInstance();
+    private  List<String> productStringList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_overview);
+        productListView = (ListView) findViewById(R.id.ProductListView);
+        productListView.setOnItemClickListener(this);
+        CreateProductListView();
+    }
+
+    private void CreateProductListView() {
+        List<ProductPOJO> productList = productDAO.getProductList();
+
+        for(ProductPOJO item : productList) {
+            productStringList.add(item.getProductName());
+        }
+        
+
+        productListView.setAdapter(new ArrayAdapter<>(this,R.layout.product_list_item,productStringList));
     }
 
 
@@ -36,5 +64,13 @@ public class ProductOverviewActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            Intent i = new Intent(getApplicationContext(),ShowProductActivity.class);
+            System.out.print("clicked: " + productStringList.get(position));
+            i.putExtra("productID",productStringList.get(position));
+            startActivity(i);
     }
 }
