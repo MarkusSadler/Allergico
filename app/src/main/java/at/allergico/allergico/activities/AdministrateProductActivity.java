@@ -28,6 +28,7 @@ import at.allergico.allergico.R;
 import at.allergico.allergico.database.DAO.AllergenDAO;
 import at.allergico.allergico.database.POJO.AllergenPOJO;
 import at.allergico.allergico.database.POJO.UserPOJO;
+import at.allergico.allergico.helper.CurrentUser;
 
 public class AdministrateProductActivity extends ListActivity {
     //region Variables
@@ -48,7 +49,8 @@ public class AdministrateProductActivity extends ListActivity {
     private ArrayAdapter<String> listViewAdapter;
     private List<String> listViewArray;
     /** For developing instead of helper.CurrentUser */
-    private UserPOJO currentUser = new UserPOJO(10, "MikeTike", "michael", "wi13b020@technikum-wien.at", "Michael", "Mosgoeller", new Date(), true);
+    private CurrentUser cU = CurrentUser.getInstance();
+    private UserPOJO currentUser;
     //endregion
 
     @Override
@@ -70,7 +72,7 @@ public class AdministrateProductActivity extends ListActivity {
         addAllergen     = (Button)   findViewById(R.id.addAllergen);
 
         //endregion
-
+        currentUser = cU.getLogedInUser();
         firstname.setText(currentUser.getFirstname());
         lastname.setText(currentUser.getLastname());
         eMail.setText(currentUser.getEmail());
@@ -134,7 +136,7 @@ public class AdministrateProductActivity extends ListActivity {
             @Override
             public void afterTextChanged(Editable editable)
             {
-                if(editable.length() == 0 || editable.length() > 6) { checkInput[2] = true; }
+                if(editable.length() < 1 || editable.length() > 6) { checkInput[2] = true; }
                 else { checkInput[2] = false;}
                 checkAllInputs();
             }
@@ -148,7 +150,7 @@ public class AdministrateProductActivity extends ListActivity {
             @Override
             public void afterTextChanged(Editable editable)
             {
-                if(editable.length() == 0 || editable.length() > 6) { checkInput[3] = true; }
+                if(editable.length() < 1 || editable.length() > 6) { checkInput[3] = true; }
                 else { checkInput[3] = false;}
                 checkAllInputs();
             }
@@ -158,9 +160,17 @@ public class AdministrateProductActivity extends ListActivity {
             @Override
             public void onClick(View view) {
                 selected = sItems.getSelectedItem().toString();
-                int index = spinnerArray.indexOf(selected);
-                listViewArray.add(selected);
-                listViewAdapter.notifyDataSetChanged();
+                //int index = spinnerArray.indexOf(selected);
+                if(listViewArray.contains(selected) == false)
+                {
+                    listViewArray.add(selected);
+                    listViewAdapter.notifyDataSetChanged();
+                }
+                else
+                {
+                    Toast.makeText(AdministrateProductActivity.this,"Bereits gewählt",Toast.LENGTH_LONG).show();
+                }
+
             }
         });
 

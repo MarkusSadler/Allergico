@@ -24,7 +24,7 @@ public class CurrentUser {
         return _logedInUser;
     }
 
-    public static void setLogedInUser(UserPOJO _logedInUser) {
-        _logedInUser = _logedInUser;
+    public static void setLogedInUser(UserPOJO _logUser) {
+        _logedInUser = _logUser;
     }
 }
