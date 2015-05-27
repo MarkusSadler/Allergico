@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import at.allergico.allergico.R;
@@ -38,7 +39,7 @@ public class ProductOverviewActivity extends ActionBarActivity implements Adapte
         for(ProductPOJO item : productList) {
             productStringList.add(item.getProductName());
         }
-        
+        Collections.sort(productStringList);
 
         productListView.setAdapter(new ArrayAdapter<>(this,R.layout.product_list_item,productStringList));
     }
