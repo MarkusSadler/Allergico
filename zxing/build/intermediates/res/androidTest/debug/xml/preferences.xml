@@ -133,4 +133,4 @@
         android:title="@string/preferences_disable_barcode_scene_mode_title"/>
   </PreferenceCategory>
 </PreferenceScreen>
-<!-- From: file:/C:/Users/AGebhard/Documents/FH%20Technikum%20Wien/LVs/04Sem/MOCG%20-%20Mobile%20Computing%20Grundlagen/Allergico/zxing/src/main/res/xml/preferences.xml --><!-- From: file:/C:/Users/AGebhard/Documents/FH%20Technikum%20Wien/LVs/04Sem/MOCG%20-%20Mobile%20Computing%20Grundlagen/Allergico/zxing/build/intermediates/bundles/debug/res/xml/preferences.xml -->
+<!-- From: file:/D:/_Projects/MobileProjects/_Project/Allergico/zxing/src/main/res/xml/preferences.xml --><!-- From: file:/D:/_Projects/MobileProjects/_Project/Allergico/zxing/build/intermediates/bundles/debug/res/xml/preferences.xml -->
