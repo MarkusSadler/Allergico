@@ -22,13 +22,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Back"
-        android:id="@+id/backToMainMenuButton"
+        android:id="@+id/backToProductOverviewButton"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:background="#00FF80" />
+        android:background="#00FF80"
+        android:onClick="onClickBackToProductOverviewButton"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -36,7 +37,7 @@
         android:layout_below="@+id/productName"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_above="@+id/backToMainMenuButton">
+        android:layout_above="@+id/backToProductOverviewButton">
 
         <TextView
             android:layout_width="wrap_content"

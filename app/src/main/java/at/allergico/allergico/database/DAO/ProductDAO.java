@@ -131,4 +131,8 @@ public class ProductDAO {
 
         return productsAllergenes;
     }
+
+    public ProductPOJO getProductByEANCode(String eanCode) {
+        return null;
+    }
 }

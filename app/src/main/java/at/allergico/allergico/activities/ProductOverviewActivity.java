@@ -71,7 +71,7 @@ public class ProductOverviewActivity extends ActionBarActivity implements Adapte
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             Intent i = new Intent(getApplicationContext(),ShowProductActivity.class);
             System.out.print("clicked: " + productStringList.get(position));
-            i.putExtra("productID",productStringList.get(position));
+            i.putExtra("productID", "3"); //productStringList.get(position));
             startActivity(i);
     }
 }

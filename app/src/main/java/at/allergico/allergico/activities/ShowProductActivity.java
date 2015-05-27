@@ -1,9 +1,11 @@
 package at.allergico.allergico.activities;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.GridLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,10 +32,31 @@ public class ShowProductActivity extends ActionBarActivity {
         this._productName = (TextView) this.findViewById(R.id.productName);
         this._productDescription = (TextView) this.findViewById(R.id.productDescription);
         this._allergenesOfProduct = (TextView) this.findViewById(R.id.AllergenText);
-        int productID = 3;
-
         ProductDAO pDAO = ProductDAO.getInstance();
-        ProductPOJO desiredProduct = pDAO.getProductByID(productID);
+        ProductPOJO desiredProduct = null;
+
+        if(savedInstanceState == null) {
+            Bundle extras = this.getIntent().getExtras();
+            if(extras != null) {
+                if(extras.getString("productID") != null) {
+                    desiredProduct = pDAO.getProductByID(Integer.parseInt(extras.getString("productID")));
+                } else if(extras.getString("eanCode") != null) {
+                    desiredProduct = pDAO.getProductByEANCode(extras.getString("eanCode"));
+                } else {
+                    setDefaultViewValues();
+                }
+            } else {
+                setDefaultViewValues();
+            }
+        } else {
+            if(savedInstanceState.getSerializable("productID") != null) {
+                desiredProduct = pDAO.getProductByID(new Integer((int) savedInstanceState.getSerializable("productID")));
+            } else if(savedInstanceState.getSerializable("eanCode") != null) {
+                desiredProduct = pDAO.getProductByEANCode((String) savedInstanceState.getSerializable("eanCode"));
+            } else {
+                setDefaultViewValues();
+            }
+        }
 
         if(desiredProduct != null) {
             this._productName.setText(desiredProduct.getProductName());
@@ -48,12 +71,16 @@ public class ShowProductActivity extends ActionBarActivity {
                     this._allergenesOfProduct.setText(this._allergenesOfProduct.getText() + " " + all.getAbbreviation());
                 }
             }
-
         } else {
-            this._productName.setText("Product Load Failed");
-            this._productDescription.setText("Product Load Failed");
-            //Toast.makeText(this.getApplicationContext(), "No product fetched", Toast.LENGTH_SHORT).show();
+            setDefaultViewValues();
         }
+    }
+
+    private void setDefaultViewValues() {
+        String errorMessage = "Product load failed";
+        this._productName.setText(errorMessage);
+        this._productDescription.setText(errorMessage);
+        this._allergenesOfProduct.setText(errorMessage);
     }
 
 
@@ -77,5 +104,10 @@ public class ShowProductActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onClickBackToProductOverviewButton(View view) {
+        Intent i = new Intent(this, ProductOverviewActivity.class);
+        startActivity(i);
     }
 }
