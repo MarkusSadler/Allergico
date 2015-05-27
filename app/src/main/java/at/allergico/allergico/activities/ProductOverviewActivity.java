@@ -21,6 +21,7 @@ import at.allergico.allergico.database.POJO.ProductPOJO;
 public class ProductOverviewActivity extends ActionBarActivity implements AdapterView.OnItemClickListener{
     private ListView productListView;
     private ProductDAO productDAO =  ProductDAO.getInstance();
+    private  List<String> productStringList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,10 +34,11 @@ public class ProductOverviewActivity extends ActionBarActivity implements Adapte
 
     private void CreateProductListView() {
         List<ProductPOJO> productList = productDAO.getProductList();
-        List<String> productStringList = new ArrayList<>();
-        for(ProductPOJO item : productList){
+
+        for(ProductPOJO item : productList) {
             productStringList.add(item.getProductName());
         }
+        
 
         productListView.setAdapter(new ArrayAdapter<>(this,R.layout.product_list_item,productStringList));
     }
@@ -67,7 +69,8 @@ public class ProductOverviewActivity extends ActionBarActivity implements Adapte
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             Intent i = new Intent(getApplicationContext(),ShowProductActivity.class);
-            ProductPOJO clickedProduct = (ProductPOJO) parent.getSelectedItem();
-            //i.putExtra(clickedProduct.getProductID());
+            System.out.print("clicked: " + productStringList.get(position));
+            i.putExtra("productID",productStringList.get(position));
+            startActivity(i);
     }
 }
