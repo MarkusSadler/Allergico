@@ -3,6 +3,7 @@ package at.allergico.allergico.activities;
 import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -30,24 +31,17 @@ import at.allergico.allergico.database.POJO.AllergenPOJO;
 import at.allergico.allergico.database.POJO.UserPOJO;
 import at.allergico.allergico.helper.CurrentUser;
 
-public class AdministrateProductActivity extends ListActivity {
+public class AdministrateProductActivity extends Activity {
     //region Variables
     /** Variables to working with the layout elements. */
     private EditText    firstname;          private EditText    lastname;
     private EditText    eMail;              private TextView    dateDisplay;
     private EditText    username;           private EditText    password;
     private EditText    passwordRepeat;     private Button      addAllergen;
-    private Spinner     sItems;             private ListView    allergenListView;
     private Button      submit;             private Button      cancel;
 
     /** Help variable for input */
-    private AllergenDAO allergenDAO = AllergenDAO.getInstance();
-    private List<String> spinnerArray;
-    private ArrayAdapter<String> spinnerAdapter;
-    private String selected;
     private boolean[] checkInput = new boolean[4];
-    private ArrayAdapter<String> listViewAdapter;
-    private List<String> listViewArray;
     /** For developing instead of helper.CurrentUser */
     private CurrentUser cU = CurrentUser.getInstance();
     private UserPOJO currentUser;
@@ -68,7 +62,6 @@ public class AdministrateProductActivity extends ListActivity {
         passwordRepeat  = (EditText) findViewById(R.id.passwordRepeat);
         submit          = (Button)   findViewById(R.id.submit);
         cancel          = (Button)   findViewById(R.id.cancel);
-        sItems          = (Spinner)  findViewById(R.id.allergenSpinner);
         addAllergen     = (Button)   findViewById(R.id.addAllergen);
 
         //endregion
@@ -78,11 +71,9 @@ public class AdministrateProductActivity extends ListActivity {
         eMail.setText(currentUser.getEmail());
         dateDisplay.setText(currentUser.getDob().toString());
         username.setText(currentUser.getUsername());
-        listViewArray = new ArrayList<String>();
-        spinnerArray =  new ArrayList<String>();
 
         /** Put all allergen from the database in the spinnerArray and with the adapter into the drop down menu*/
-        for(AllergenPOJO ag : allergenDAO.getAllergeneList())
+        /*for(AllergenPOJO ag : allergenDAO.getAllergeneList())
         {
             spinnerArray.add(String.valueOf(ag.getAbbreviation()) + " - " + ag.getDescription());
         }
@@ -96,7 +87,7 @@ public class AdministrateProductActivity extends ListActivity {
         allergenListView= (ListView)findViewById(android.R.id.list);
         // Assign adapter to ListView
         allergenListView.setAdapter(listViewAdapter);
-
+        */
         submit.setEnabled(false);
 
         firstname.addTextChangedListener(new TextWatcher() {
@@ -156,24 +147,14 @@ public class AdministrateProductActivity extends ListActivity {
             }
         });
 
-        addAllergen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selected = sItems.getSelectedItem().toString();
-                //int index = spinnerArray.indexOf(selected);
-                if(listViewArray.contains(selected) == false)
-                {
-                    listViewArray.add(selected);
-                    listViewAdapter.notifyDataSetChanged();
+        addAllergen.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View view) {
+                    startActivity(new Intent(getApplicationContext(), AllergenListActivity.class));
                 }
-                else
-                {
-                    Toast.makeText(AdministrateProductActivity.this,"Bereits gewählt",Toast.LENGTH_LONG).show();
-                }
-
             }
-        });
-
+        );
     }
 
 

@@ -72,6 +72,10 @@
             android:name=".activities.AddProductActivity"
             android:label="@string/title_activity_add_product" >
         </activity>
+        <activity
+            android:name=".activities.AllergenListActivity"
+            android:label="@string/title_activity_allergen_list" >
+        </activity>
     </application>
 
 </manifest>
