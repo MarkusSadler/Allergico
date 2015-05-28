@@ -103,7 +103,6 @@ public class AddProductActivity extends ActionBarActivity {
                         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
                             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
                         }
-                        System.out.println("NOW FOR REAL :D");
                         this.checkAllInputs();
                         break;
             }
@@ -124,9 +123,7 @@ public class AddProductActivity extends ActionBarActivity {
 
         private void checkAllInputs() {
             if(AddProductActivity.this._productName.length() > 0 && AddProductActivity.this._productDescription.length() > 0) {
-                System.out.println("Texts ok" +AddProductActivity.this._photoTakenRadioButton.isChecked() + " " + AddProductActivity.this._madePhoto.getDrawable() + " " + AddProductActivity.this._noPhotoCRadioButton.isChecked());
                 if(AddProductActivity.this._photoTakenRadioButton.isChecked() && AddProductActivity.this._madePhoto.getDrawable() != null || AddProductActivity.this._noPhotoCRadioButton.isChecked()) {
-                    System.out.println("image ok");
                     AddProductActivity.this._nextActivityButton.setEnabled(true);
                 } else {
                     AddProductActivity.this._nextActivityButton.setEnabled(false);
