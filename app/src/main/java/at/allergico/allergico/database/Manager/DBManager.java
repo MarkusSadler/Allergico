@@ -79,7 +79,7 @@ public class DBManager
                 HttpResponse response = httpclient.execute(httpget); // Executeit
                 HttpEntity entity = response.getEntity();
                 InputStream is = entity.getContent(); // Create an InputStream with the response
-                BufferedReader reader = new BufferedReader(new InputStreamReader(is, "iso-8859-1"), 8);
+                BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"), 8);
                 StringBuilder sb = new StringBuilder();
                 String line = null;
                 while ((line = reader.readLine()) != null) // Read line by line
