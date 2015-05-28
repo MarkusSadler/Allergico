@@ -3,12 +3,17 @@ package at.allergico.allergico.activities;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
+
+import com.google.android.gms.drive.internal.CreateContentsRequest;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,6 +27,7 @@ import at.allergico.allergico.database.POJO.ProductPOJO;
 
 public class ProductOverviewActivity extends ActionBarActivity implements AdapterView.OnItemClickListener{
     private ListView productListView;
+    private EditText searchEditText;
     private ProductDAO productDAO =  ProductDAO.getInstance();
     private  List<String> productStringList = new ArrayList<>();
     List<ProductPOJO> productList = new ArrayList<>();
@@ -31,13 +37,48 @@ public class ProductOverviewActivity extends ActionBarActivity implements Adapte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_overview);
         productListView = (ListView) findViewById(R.id.ProductListView);
+        searchEditText = (EditText) findViewById(R.id.productSearchEditText);
         productListView.setOnItemClickListener(this);
+        searchEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                FilterList();
+            }
+        });
         CreateProductListView();
+    }
+
+    private void FilterList() {
+        if(searchEditText.getText().toString() != null && !searchEditText.getText().toString().matches("")){
+            List<String> toRemove = new ArrayList<>();
+            for(String item : productStringList){
+                if(!item.startsWith(searchEditText.getText().toString())){
+                    toRemove.add(item);
+                }
+            }
+            for(String item : toRemove){
+                productStringList.remove(item);
+            }
+            productListView.setAdapter(new ArrayAdapter<>(this,R.layout.product_list_item,productStringList));
+        }else{
+            CreateProductListView();
+        }
+
     }
 
     private void CreateProductListView() {
         productList = productDAO.getProductList();
-
+        productStringList.clear();
         for(ProductPOJO item : productList) {
             productStringList.add(item.getProductName());
         }
