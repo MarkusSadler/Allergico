@@ -1,24 +1,17 @@
 <resources>
     <string name="app_name">Allergico</string>
     <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Einstellungen</string>
     <string name="title_activity_registration">Registration</string>
     <string name="title_activity_eanreader">EANReaderActivity</string>
     <string name="title_activity_main">MainActivity</string>
-    <string name="title_activity_product_overview">ProductOverviewActivity</string>
-    <string name="title_activity_show_allergen">ShowAllergenActivity</string>
+    <string name="title_activity_product_overview">Produktübersicht</string>
+    <string name="title_activity_show_allergen">Allergenübersicht</string>
     <string name="title_activity_show_product">ShowProductActivity</string>
     <string name="title_activity_administrate_product">AdministrateProductActivity</string>
     <string name="title_activity_add_product">AddProductActivity</string>
 
-    <!--Main Colors Start DO NOT USE-->
-        <!--<string name="ColorLightGreen">#A8D08D</string>-->
-        <!--<string name="ColorGreen">#25BE36</string>-->
-        <!--<string name="ColorDarkGreen">#0B7116</string>-->
-        <!--<string name="ColorLightBrown">#D0BC8E</string>-->
-        <!--<string name="ColorBrown">#8B5D2F</string>-->
-        <!--<string name="ColorDarkBrown">#714A22</string>-->
-    <!--Main Colors End-->
+
     <!-- Product Text Views Default Values Start -->
         <string name="DefaultProductName">Product Name</string>
         <string name="DefaultProductDescription">Product Description</string>
@@ -36,6 +29,9 @@
     <!-- Text Views Start -->
         <string name="TextViewMultipleLineNumberStandard">10</string>
     <!-- Text Views End -->
+    <!--EditText Tooltipps Start-->
+    <string name="ProductSearchEditText">Produktsuche</string>
+    <!--EditText Tooltipps End-->
 
     <!-- Add Product Activity Start -->
         <string name="PhotoCheckboxText">Photo set</string>
