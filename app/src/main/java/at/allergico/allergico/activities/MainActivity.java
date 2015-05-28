@@ -15,6 +15,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     private Button administrate;
     private Button _productOverview;
     private Button _addProductButton;
+    private Button _showAllergenButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +29,9 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         administrate.setOnClickListener(this);
         this._productOverview.setOnClickListener(this);
         this._addProductButton.setOnClickListener(this);
+
+        _showAllergenButton = (Button) findViewById(R.id.showAllergenebutton);
+        this._showAllergenButton.setOnClickListener(this);
     }
 
 
@@ -64,6 +68,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             i = new Intent(this, ProductOverviewActivity.class);
         } else if(view.getId() == R.id.addProductButton) {
             i = new Intent(this, AddProductActivity.class);
+        }else if(view.getId() == R.id.showAllergenebutton){
+            i = new Intent(this,ShowAllergenActivity.class);
         }
 
         if(i != null) {

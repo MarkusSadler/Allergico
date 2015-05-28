@@ -43,4 +43,14 @@
         android:layout_centerVertical="true"
         android:layout_alignLeft="@+id/productOverview"
         android:layout_alignStart="@+id/productOverview" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show Allergene"
+        android:id="@+id/showAllergenebutton"
+        android:layout_below="@+id/addProductButton"
+        android:layout_alignRight="@+id/EANButton"
+        android:layout_alignEnd="@+id/EANButton"
+        android:layout_marginTop="45dp" />
 </RelativeLayout>
