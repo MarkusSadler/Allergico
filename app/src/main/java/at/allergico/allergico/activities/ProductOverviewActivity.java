@@ -12,6 +12,7 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import at.allergico.allergico.R;
@@ -23,6 +24,7 @@ public class ProductOverviewActivity extends ActionBarActivity implements Adapte
     private ListView productListView;
     private ProductDAO productDAO =  ProductDAO.getInstance();
     private  List<String> productStringList = new ArrayList<>();
+    List<ProductPOJO> productList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +36,7 @@ public class ProductOverviewActivity extends ActionBarActivity implements Adapte
     }
 
     private void CreateProductListView() {
-        List<ProductPOJO> productList = productDAO.getProductList();
+        productList = productDAO.getProductList();
 
         for(ProductPOJO item : productList) {
             productStringList.add(item.getProductName());
@@ -71,7 +73,8 @@ public class ProductOverviewActivity extends ActionBarActivity implements Adapte
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             Intent i = new Intent(getApplicationContext(),ShowProductActivity.class);
             System.out.print("clicked: " + productStringList.get(position));
-            i.putExtra("productID", "3"); //productStringList.get(position));
+
+            i.putExtra("productID", productDAO.getProductByName( productStringList.get(position)).get(0).getProductID()); //productStringList.get(position));
             startActivity(i);
     }
 }

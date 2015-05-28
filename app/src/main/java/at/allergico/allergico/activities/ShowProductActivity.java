@@ -38,8 +38,8 @@ public class ShowProductActivity extends ActionBarActivity {
         if(savedInstanceState == null) {
             Bundle extras = this.getIntent().getExtras();
             if(extras != null) {
-                if(extras.getString("productID") != null) {
-                    desiredProduct = pDAO.getProductByID(Integer.parseInt(extras.getString("productID")));
+                if(extras.getInt("productID") > 0) {
+                    desiredProduct = pDAO.getProductByID(extras.getInt("productID"));
                 } else if(extras.getString("eanCode") != null) {
                     desiredProduct = pDAO.getProductByEANCode(extras.getString("eanCode"));
                 } else {

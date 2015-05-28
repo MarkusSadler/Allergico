@@ -80,8 +80,14 @@ public class ProductDAO {
         return null;
     }
 
-    public List<ProductPOJO> getProductByName(int productName) {
-        throw new UnsupportedOperationException();
+    public List<ProductPOJO> getProductByName(String productName) {
+        List<ProductPOJO> ret = new ArrayList<>();
+        for(ProductPOJO p : this._productList) {
+            if(p.getProductName() == productName) {
+                ret.add(p);
+            }
+        }
+        return ret;
     }
 
     public boolean addProduct(ProductPOJO newProduct) {
