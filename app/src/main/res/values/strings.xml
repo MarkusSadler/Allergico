@@ -25,12 +25,7 @@
     <!-- Product Text Views Default Values End -->
 
     <!-- Buttons Start -->
-
-
-        <!-- Texts Start -->
-            <string name="NextButtonText">Next</string>
-            <string name="TakePhotoButtonText">Take Photo</string>
-        <!-- Texts End -->
+        <string name="NextButtonText">Next</string>
     <!-- Buttons End -->
 
     <!-- Text Views Start -->
@@ -39,6 +34,7 @@
 
     <!-- Add Product Activity Start -->
         <string name="PhotoCheckboxText">Photo set</string>
+    <string name="TakePhotoButtonText">Take Photo</string>
     <!-- Add Product Activity End -->
 
 

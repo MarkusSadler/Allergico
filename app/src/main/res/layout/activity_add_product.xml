@@ -6,74 +6,80 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="at.allergico.allergico.activities.AddProductActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/DefaultProductName"
-        android:id="@+id/productName"
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="31dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:stretchColumns="*">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/DefaultProductDescription"
-        android:lines="@string/TextViewMultipleLineNumberStandard"
-        android:id="@+id/productDescription"
-        android:layout_below="@+id/productName"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="77dp"
-        android:layout_alignRight="@+id/productName"
-        android:layout_alignEnd="@+id/productName" />
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/productDescription"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/productName"
+                android:layout_column="0"
+                android:hint="@string/DefaultProductName"
+                android:layout_span="4"/>
+        </TableRow>
 
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/PhotoCheckboxText"
-            android:id="@+id/photoCheckbox"
-            android:layout_centerVertical="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
-        <!--TODO:change color-->
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/TakePhotoButtonText"
-            android:id="@+id/takePhotoButton"
-            android:background="@color/Brown"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/photoCheckbox"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="New Button"
-            android:id="@+id/rfghsdfgedfgdfgdfghdfgh"
-            android:layout_below="@+id/takePhotoButton"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true" />
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/productDescription"
+                android:layout_column="0"
+                android:hint="@string/DefaultProductDescription"
+                android:lines="@string/TextViewMultipleLineNumberStandard"
+                android:gravity="top"
+                android:layout_span="4"/>
+        </TableRow>
 
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    </RelativeLayout>
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/PhotoCheckboxText"
+                android:id="@+id/photoTakenCheckox"
+                android:layout_column="0"
+                android:clickable="false"
+                android:layout_span="1"/>
 
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/TakePhotoButtonText"
+                android:id="@+id/takePhotoButton"
+                android:layout_column="1"
+                android:layout_span="3"
+                android:background="@color/PaleGreen"/>
+        </TableRow>
 
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/NextButtonText"
+                android:id="@+id/nextButton"
+                android:layout_column="0"
+                android:layout_span="4"
+                android:background="@color/LightGreen"
+                android:layout_marginTop="20dp"
+                />
+        </TableRow>
+    </TableLayout>
 </RelativeLayout>

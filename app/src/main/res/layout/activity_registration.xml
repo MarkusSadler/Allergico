@@ -49,7 +49,7 @@
                 android:text="Geburtstag"
                 android:layout_marginTop="10dp"
                 android:layout_below="@id/mailAdress"
-                android:background="#00BFFF"/>
+                android:background="@color/PaleGreen"/>
 
         <TextView
                 android:id="@+id/datDisplay"
@@ -101,7 +101,7 @@
                 android:text="Registrieren"
                 android:layout_marginTop="10dp"
                 android:layout_below="@id/passwordRepeat"
-                android:background="#00FF80"/>
+                android:background="@color/LightGreen"/>
 
         <Button
                 android:id="@+id/reset"
@@ -112,5 +112,5 @@
                 android:layout_marginLeft="190dp"
                 android:layout_marginTop="10dp"
                 android:layout_below="@id/passwordRepeat"
-                android:background="#FAAC58"/>
+                android:background="@color/LightCoral"/>
 </RelativeLayout>
