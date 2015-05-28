@@ -48,16 +48,29 @@
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
-
+        <!--TODO:change color-->
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/TakePhotoButtonText"
             android:id="@+id/takePhotoButton"
+            android:background="@color/Brown"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/photoCheckbox"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="New Button"
+            android:id="@+id/rfghsdfgedfgdfgdfghdfgh"
+            android:layout_below="@+id/takePhotoButton"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true" />
 
 
     </RelativeLayout>

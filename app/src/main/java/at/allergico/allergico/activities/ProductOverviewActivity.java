@@ -62,7 +62,7 @@ public class ProductOverviewActivity extends ActionBarActivity implements Adapte
         if(searchEditText.getText().toString() != null && !searchEditText.getText().toString().matches("")){
             List<String> toRemove = new ArrayList<>();
             for(String item : productStringList){
-                if(!item.startsWith(searchEditText.getText().toString())){
+                if(!item.toLowerCase().startsWith(searchEditText.getText().toString().toLowerCase())){
                     toRemove.add(item);
                 }
             }
