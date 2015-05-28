@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="textAreaNumRowsSmall">5</integer>
+    <integer name="textAreaNumRowsDefault">7</integer>
+    <integer name="textAreaNumRowsLarge">10</integer>
+</resources>

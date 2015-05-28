@@ -8,79 +8,81 @@
     tools:context="at.allergico.allergico.activities.AddProductActivity">
 
 
-    <TableLayout
+    <GridLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:stretchColumns="*">
+        android:layout_alignParentStart="true">
 
-        <TableRow
+        <EditText
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:id="@+id/addProductName"
+            android:hint="@string/DefaultProductName"
+            android:layout_row="0"
+            android:layout_column="0" />
 
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/productName"
-                android:layout_column="0"
-                android:hint="@string/DefaultProductName"
-                android:layout_span="4"/>
-        </TableRow>
-
-        <TableRow
+        <EditText
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:id="@+id/addProductDescription"
+            android:hint="@string/DefaultProductDescription"
+            android:lines="@integer/textAreaNumRowsDefault"
+            android:gravity="bottom"
+            android:layout_row="1"
+            android:layout_column="0" />
 
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/productDescription"
-                android:layout_column="0"
-                android:hint="@string/DefaultProductDescription"
-                android:lines="@string/TextViewMultipleLineNumberStandard"
-                android:gravity="top"
-                android:layout_span="4"/>
-        </TableRow>
-
-        <TableRow
+        <RadioGroup
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_row="2"
+            android:layout_column="0"
+            android:layout_marginTop="10dp">
 
-            <CheckBox
-                android:layout_width="wrap_content"
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/PhotoRadioText"
+                    android:id="@+id/takePhotoRadio"
+                    android:layout_weight=".5"
+                    />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/NoPhotoRadioText"
+                    android:id="@+id/noTakePhotoRadio"
+                    android:layout_marginLeft="25dp"
+                    android:layout_weight=".5" />
+            </LinearLayout>
+        </RadioGroup>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="208dp"
+            android:layout_row="3"
+            android:layout_column="0" >
+
+            <ImageView
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/PhotoCheckboxText"
-                android:id="@+id/photoTakenCheckox"
-                android:layout_column="0"
-                android:clickable="false"
-                android:layout_span="1"/>
+                android:id="@+id/addProductImage"/>
 
             <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/TakePhotoButtonText"
-                android:id="@+id/takePhotoButton"
-                android:layout_column="1"
-                android:layout_span="3"
-                android:background="@color/PaleGreen"/>
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <Button
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/NextButtonText"
                 android:id="@+id/nextButton"
+                android:layout_row="4"
                 android:layout_column="0"
-                android:layout_span="4"
-                android:background="@color/LightGreen"
-                android:layout_marginTop="20dp"
-                />
-        </TableRow>
-    </TableLayout>
+                android:layout_alignParentBottom="true" />
+        </RelativeLayout>
+
+    </GridLayout>
 </RelativeLayout>

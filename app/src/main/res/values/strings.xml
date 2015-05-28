@@ -29,8 +29,9 @@
     <!--EditText Tooltipps End-->
 
     <!-- Add Product Activity Start -->
-        <string name="PhotoCheckboxText">Photo set</string>
-    <string name="TakePhotoButtonText">Take Photo</string>
+        <string name="PhotoRadioText">Set photo</string>
+        <string name="NoPhotoRadioText">No photo</string>
+        <string name="TakePhotoButtonText">Take Photo</string>
     <!-- Add Product Activity End -->
 
 
