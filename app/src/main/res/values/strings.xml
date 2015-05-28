@@ -11,16 +11,19 @@
     <string name="title_activity_administrate_product">AdministrateProductActivity</string>
     <string name="title_activity_add_product">AddProductActivity</string>
 
+    <!--Main Colors Start-->
+        <string name="ColorGreen">#25BE36</string>
+        <string name="ColorDarkGreen">#0B7116</string>
+        <string name="ColorBrown">#8B5D2F</string>
+        <string name="ColorDarkBrown">#714A22</string>
+    <!--Main Colors End-->
     <!-- Product Text Views Default Values Start -->
         <string name="DefaultProductName">Product Name</string>
         <string name="DefaultProductDescription">Product Description</string>
     <!-- Product Text Views Default Values End -->
 
     <!-- Buttons Start -->
-        <!-- Colors Start -->
-            <string name="ButtonColorGreen">#00FF80</string>
-            <string name="ButtonColorRed">#FAAC58</string>
-        <!-- Colors End -->
+
 
         <!-- Texts Start -->
             <string name="NextButtonText">Next</string>
@@ -35,4 +38,6 @@
     <!-- Add Product Activity Start -->
         <string name="PhotoCheckboxText">Photo set</string>
     <!-- Add Product Activity End -->
+
+
 </resources>
