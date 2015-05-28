@@ -12,8 +12,10 @@
     <string name="title_activity_add_product">AddProductActivity</string>
 
     <!--Main Colors Start-->
+        <string name="ColorLightGreen">#A8D08D</string>
         <string name="ColorGreen">#25BE36</string>
         <string name="ColorDarkGreen">#0B7116</string>
+        <string name="ColorLightBrown">#D0BC8E</string>
         <string name="ColorBrown">#8B5D2F</string>
         <string name="ColorDarkBrown">#714A22</string>
     <!--Main Colors End-->
