@@ -44,6 +44,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Product Description"
+            android:lines="@string/TextViewMultipleLineNumberStandard"
             android:id="@+id/productDescription"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"

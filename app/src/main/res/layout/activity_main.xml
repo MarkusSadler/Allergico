@@ -33,4 +33,13 @@
         android:layout_alignRight="@+id/AdministrateUser"
         android:layout_alignEnd="@+id/AdministrateUser"
         android:layout_marginTop="26dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Product"
+        android:id="@+id/addProductButton"
+        android:layout_centerVertical="true"
+        android:layout_alignLeft="@+id/productOverview"
+        android:layout_alignStart="@+id/productOverview" />
 </RelativeLayout>

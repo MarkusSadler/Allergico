@@ -14,6 +14,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     private Button eanReader;
     private Button administrate;
     private Button _productOverview;
+    private Button _addProductButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,10 +22,12 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         eanReader = (Button) findViewById(R.id.EANButton);
         administrate = (Button) findViewById(R.id.AdministrateUser);
         this._productOverview = (Button) findViewById(R.id.productOverview);
+        this._addProductButton = (Button) findViewById(R.id.addProductButton);
 
         eanReader.setOnClickListener(this);
         administrate.setOnClickListener(this);
         this._productOverview.setOnClickListener(this);
+        this._addProductButton.setOnClickListener(this);
     }
 
 
@@ -53,12 +56,14 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         Intent i = null;
-        if(view.getId() == administrate.getId()){
-            i = new Intent(MainActivity.this, AdministrateProductActivity.class);
-        }else if(view.getId() == eanReader.getId()){
-           i = new Intent(MainActivity.this, EANReaderActivity.class);
-        } else if(view.getId() == this._productOverview.getId()) {
-            i = new Intent(MainActivity.this, ProductOverviewActivity.class);
+        if(view.getId() == R.id.AdministrateUser){
+            i = new Intent(this, AdministrateProductActivity.class);
+        }else if(view.getId() == R.id.eanButton){
+           i = new Intent(this, EANReaderActivity.class);
+        } else if(view.getId() == R.id.productOverview) {
+            i = new Intent(this, ProductOverviewActivity.class);
+        } else if(view.getId() == R.id.addProductButton) {
+            i = new Intent(this, AddProductActivity.class);
         }
 
         if(i != null) {
