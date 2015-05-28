@@ -139,6 +139,11 @@ public class ProductDAO {
     }
 
     public ProductPOJO getProductByEANCode(String eanCode) {
+        for(ProductPOJO p : this._productList) {
+            if(p.getEanCode().compareTo(eanCode) == 0) {
+                return p;
+            }
+        }
         return null;
     }
 }

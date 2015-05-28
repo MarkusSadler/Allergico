@@ -35,12 +35,17 @@ public class ShowProductActivity extends ActionBarActivity {
         ProductDAO pDAO = ProductDAO.getInstance();
         ProductPOJO desiredProduct = null;
 
+        System.out.println("on create activity");
+
         if(savedInstanceState == null) {
             Bundle extras = this.getIntent().getExtras();
+            System.out.println("got bundle");
             if(extras != null) {
+                System.out.println("got extras");
                 if(extras.getInt("productID") > 0) {
                     desiredProduct = pDAO.getProductByID(extras.getInt("productID"));
                 } else if(extras.getString("eanCode") != null) {
+                    System.out.println("ean code :)");
                     desiredProduct = pDAO.getProductByEANCode(extras.getString("eanCode"));
                 } else {
                     setDefaultViewValues();
@@ -107,7 +112,7 @@ public class ShowProductActivity extends ActionBarActivity {
     }
 
     public void onClickBackToProductOverviewButton(View view) {
-        Intent i = new Intent(this, ProductOverviewActivity.class);
-        startActivity(i);
+        Intent i = new Intent(getApplicationContext(), MainActivity.class);
+        this.startActivity(i);
     }
 }

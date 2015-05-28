@@ -54,6 +54,14 @@ public class EANReaderActivity extends ActionBarActivity {
                 String format = intent.getStringExtra("SCAN_RESULT_FORMAT");
                 // Handle successful scan
                 Toast.makeText(this.getApplicationContext(), contents, Toast.LENGTH_LONG).show();
+                Intent i = new Intent(getApplicationContext(), ShowProductActivity.class);
+                i.putExtra("eanCode", contents);
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                startActivity(i);
             } else if (resultCode == RESULT_CANCELED) {
                 // Handle cancel
             }

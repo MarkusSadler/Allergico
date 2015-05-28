@@ -23,4 +23,14 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Product Overview"
+        android:id="@+id/productOverview"
+        android:layout_below="@+id/AdministrateUser"
+        android:layout_alignRight="@+id/AdministrateUser"
+        android:layout_alignEnd="@+id/AdministrateUser"
+        android:layout_marginTop="26dp" />
 </RelativeLayout>
