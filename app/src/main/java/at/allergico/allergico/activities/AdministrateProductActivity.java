@@ -72,22 +72,7 @@ public class AdministrateProductActivity extends Activity {
         dateDisplay.setText(currentUser.getDob().toString());
         username.setText(currentUser.getUsername());
 
-        /** Put all allergen from the database in the spinnerArray and with the adapter into the drop down menu*/
-        /*for(AllergenPOJO ag : allergenDAO.getAllergeneList())
-        {
-            spinnerArray.add(String.valueOf(ag.getAbbreviation()) + " - " + ag.getDescription());
-        }
-        spinnerAdapter = new ArrayAdapter<String>(AdministrateProductActivity.this, android.R.layout.simple_spinner_item, spinnerArray);
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        sItems.setAdapter(spinnerAdapter);
 
-
-        //create an ArrayAdaptar from the String Array
-        listViewAdapter = new ArrayAdapter<String>(this, R.layout.allergen_list, listViewArray);
-        allergenListView= (ListView)findViewById(android.R.id.list);
-        // Assign adapter to ListView
-        allergenListView.setAdapter(listViewAdapter);
-        */
         submit.setEnabled(false);
 
         firstname.addTextChangedListener(new TextWatcher() {
