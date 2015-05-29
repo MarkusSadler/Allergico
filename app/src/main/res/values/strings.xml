@@ -33,6 +33,7 @@
         <string name="PhotoRadioText">Set photo</string>
         <string name="NoPhotoRadioText">No photo</string>
         <string name="TakePhotoButtonText">Take Photo</string>
+    <string name="title_activity_show_allergen_detail">ShowAllergenDetail</string>
     <!-- Add Product Activity End -->
 
 

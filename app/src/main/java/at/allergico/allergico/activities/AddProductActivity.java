@@ -97,7 +97,6 @@ public class AddProductActivity extends ActionBarActivity {
                 String contents = intent.getStringExtra("SCAN_RESULT");
                 String format = intent.getStringExtra("SCAN_RESULT_FORMAT");
                 // Handle successful scan
-                Toast.makeText(this.getApplicationContext(), contents, Toast.LENGTH_LONG).show();
                 Intent i = new Intent(getApplicationContext(), AllergenListActivity.class);
                 i.putExtra("addProduct", contents);
                 try {
