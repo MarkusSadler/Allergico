@@ -15,6 +15,8 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import at.allergico.allergico.R;
 
@@ -25,6 +27,7 @@ public class AddProductActivity extends ActionBarActivity {
 
     private Button _nextActivityButton;
 
+    private RadioGroup _buttonGroup;
     private RadioButton _photoTakenRadioButton;
     private RadioButton _noPhotoCRadioButton;
 
@@ -49,6 +52,8 @@ public class AddProductActivity extends ActionBarActivity {
         this._productDescription = (EditText) this.findViewById(R.id.addProductDescription);
         this._productDescription.addTextChangedListener(this._listener);
 
+        this._buttonGroup = (RadioGroup) this.findViewById(R.id.addProductButtonGroup);
+
         this._photoTakenRadioButton = (RadioButton) this.findViewById(R.id.takePhotoRadio);
         this._photoTakenRadioButton.setOnClickListener(this._listener);
 
@@ -59,7 +64,6 @@ public class AddProductActivity extends ActionBarActivity {
         this._nextActivityButton.setOnClickListener(this._listener);
         this._nextActivityButton.setEnabled(false);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -83,11 +87,28 @@ public class AddProductActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
+            Bundle extras = intent.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             AddProductActivity.this._madePhoto.setImageBitmap(imageBitmap);
+        } else if (requestCode == 0) {
+            if (resultCode == RESULT_OK) {
+                String contents = intent.getStringExtra("SCAN_RESULT");
+                String format = intent.getStringExtra("SCAN_RESULT_FORMAT");
+                // Handle successful scan
+                Toast.makeText(this.getApplicationContext(), contents, Toast.LENGTH_LONG).show();
+                Intent i = new Intent(getApplicationContext(), AllergenListActivity.class);
+                i.putExtra("addProduct", contents);
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                startActivity(i);
+            } else if (resultCode == RESULT_CANCELED) {
+                // Handle cancel
+            }
         }
     }
 
@@ -97,6 +118,9 @@ public class AddProductActivity extends ActionBarActivity {
         public void onClick(View v) {
             switch(v.getId()) {
                 case R.id.nextButton:
+                    Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+                    intent.putExtra("SCAN_MODE", "PRODUCT_MODE");
+                    startActivityForResult(intent, 0);
                     break;
                 case R.id.takePhotoRadio:
                         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -132,7 +156,5 @@ public class AddProductActivity extends ActionBarActivity {
                 AddProductActivity.this._nextActivityButton.setEnabled(false);
             }
         }
-
-
     }
 }
