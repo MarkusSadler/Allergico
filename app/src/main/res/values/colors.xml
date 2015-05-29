@@ -5,6 +5,7 @@
         <color name="NaviButtonBack">#EEE8AA</color>
         <color name="ActionButtonReset">#F08080</color>
         <color name="ActionButtonDo">#B0C4DE</color>
+        <color name="SelectedListItemBackground">#90EE90</color>
     <!-- Main Button Colours End -->
     <!--Misc Begin-->
     <color name="Transparent">#00000000 </color>
