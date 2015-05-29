@@ -20,6 +20,7 @@
 
     <!-- Buttons Start -->
         <string name="NextButtonText">Next</string>
+        <string name="BackButtonText">Back</string>
     <!-- Buttons End -->
 
     <!-- Text Views Start -->
