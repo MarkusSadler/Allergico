@@ -3,6 +3,7 @@ package at.allergico.allergico.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -12,15 +13,20 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import at.allergico.allergico.R;
 import at.allergico.allergico.database.DAO.AllergenDAO;
 import at.allergico.allergico.database.DAO.UserHasAllergenDAO;
 import at.allergico.allergico.database.POJO.AllergenPOJO;
+import at.allergico.allergico.helper.ColourHelper;
 import at.allergico.allergico.helper.CurrentUser;
 
 /**
@@ -31,7 +37,7 @@ public class AllergenListActivity extends Activity {
     private List<String> listArray;
     private AllergenDAO allergenDAO = AllergenDAO.getInstance();
     private UserHasAllergenDAO uhaDAO = UserHasAllergenDAO.getInstance();
-    private List<Integer> userAllergen;
+    private Set<Integer> userAllergen;
     private CurrentUser cu = CurrentUser.getInstance();
     private ArrayAdapter<String> listAdapter;
     @Override
@@ -50,25 +56,29 @@ public class AllergenListActivity extends Activity {
         aList.setAdapter(listAdapter);
         aList.setClickable(true);
 
-        userAllergen = new ArrayList<>();
+        userAllergen = new LinkedHashSet<Integer>();
         for(AllergenPOJO i : uhaDAO.getAllergeneOfUser(cu.getLogedInUser().getUserID()))
         {
             userAllergen.add(i.getAllergenID());
+            aList.setSelection(i.getAllergenID());
         }
 
         aList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                int id = i+1;
-                if(userAllergen.contains(id) == false)
+
+                Toast.makeText(AllergenListActivity.this, Integer.toString(R.color.SelectedListItemBackground),Toast.LENGTH_LONG).show();
+
+
+                if(userAllergen.contains(i) == false)
                 {
-                    adapterView.getChildAt(i).setBackgroundColor(Color.BLUE);
-                    userAllergen.add(id);
+                    adapterView.getChildAt(i).setBackgroundColor(Color.parseColor("#90EE90"));
+                    userAllergen.add(i);
                 }
                 else
                 {
-                    adapterView.getChildAt(i).setBackgroundColor(Color.WHITE);
-                    userAllergen.remove(id);
+                    adapterView.getChildAt(i).setBackgroundColor(Color.TRANSPARENT);
+                    userAllergen.remove(i);
                 }
 
 
