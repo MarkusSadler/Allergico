@@ -1,5 +1,6 @@
 package at.allergico.allergico.activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.provider.MediaStore;
@@ -20,7 +21,7 @@ import android.widget.Toast;
 
 import at.allergico.allergico.R;
 
-public class AddProductActivity extends ActionBarActivity {
+public class AddProductActivity extends Activity {
 
     private EditText _productName;
     private EditText _productDescription;

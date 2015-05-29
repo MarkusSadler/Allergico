@@ -1,5 +1,6 @@
 package at.allergico.allergico.activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -10,7 +11,7 @@ import android.widget.Toast;
 
 import at.allergico.allergico.R;
 
-public class EANReaderActivity extends ActionBarActivity {
+public class EANReaderActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

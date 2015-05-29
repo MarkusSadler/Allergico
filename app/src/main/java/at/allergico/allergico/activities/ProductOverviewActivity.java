@@ -1,5 +1,6 @@
 package at.allergico.allergico.activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -25,7 +26,7 @@ import at.allergico.allergico.database.DAO.ProductDAO;
 import at.allergico.allergico.database.POJO.AllergenPOJO;
 import at.allergico.allergico.database.POJO.ProductPOJO;
 
-public class ProductOverviewActivity extends ActionBarActivity implements AdapterView.OnItemClickListener{
+public class ProductOverviewActivity extends Activity implements AdapterView.OnItemClickListener{
     private ListView productListView;
     private EditText searchEditText;
     private ProductDAO productDAO =  ProductDAO.getInstance();
