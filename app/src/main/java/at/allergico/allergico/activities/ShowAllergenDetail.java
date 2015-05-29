@@ -4,15 +4,30 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import at.allergico.allergico.R;
 
 public class ShowAllergenDetail extends ActionBarActivity {
 
+    private TextView _allergenName;
+    private TextView _allergenDescription;
+    private Button _backButton;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_allergen_detail);
+
+        this._backButton = (Button) this.findViewById(R.id.backButton);
+
+        this._allergenName = (TextView) this.findViewById(R.id.allergenDescription);
+        this._allergenDescription = (TextView) this.findViewById(R.id.allergenDescription);
+
     }
 
     @Override
@@ -35,5 +50,15 @@ public class ShowAllergenDetail extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private class ShowAllergenDetailListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            if(v.getId() == R.id.backButton) {
+                Toast.makeText(getApplicationContext(), "Back button pressed", Toast.LENGTH_LONG).show();
+            }
+        }
     }
 }
