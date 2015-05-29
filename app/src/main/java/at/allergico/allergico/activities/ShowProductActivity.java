@@ -1,5 +1,6 @@
 package at.allergico.allergico.activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -18,7 +19,7 @@ import at.allergico.allergico.database.DAO.ProductDAO;
 import at.allergico.allergico.database.POJO.AllergenPOJO;
 import at.allergico.allergico.database.POJO.ProductPOJO;
 
-public class ShowProductActivity extends ActionBarActivity {
+public class ShowProductActivity extends Activity {
 
     private TextView _productName;
     private TextView _productDescription;

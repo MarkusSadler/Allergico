@@ -1,5 +1,6 @@
 package at.allergico.allergico.activities;
 
+import android.app.Activity;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -11,7 +12,7 @@ import android.widget.Toast;
 
 import at.allergico.allergico.R;
 
-public class ShowAllergenDetail extends ActionBarActivity {
+public class ShowAllergenDetail extends Activity {
 
     private TextView _allergenName;
     private TextView _allergenDescription;

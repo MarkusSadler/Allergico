@@ -10,6 +10,7 @@
     <string name="title_activity_show_product">ShowProductActivity</string>
     <string name="title_activity_administrate_product">AdministrateProductActivity</string>
     <string name="title_activity_add_product">AddProductActivity</string>
+    <string name="title_activity_loading_screen">Allergico</string>
     <string name="title_activity_allergen_list">AllergenListActivity</string>
 
 
