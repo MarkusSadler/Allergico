@@ -98,8 +98,25 @@ public class UserHasAllergenDAO {
 
     public boolean addUserHasAllergen(UserHasAllergenPOJO pojo){
         this.getUserHasAllergenList().add(pojo);
-        //TODO:add JSON String conversion and DBManager
-        return true;
+        JSONObject addingUserHasAllergen = new JSONObject();
+        try
+        {
+            addingUserHasAllergen.put("UserID", pojo.getUserID());
+            addingUserHasAllergen.put("AllergenID", pojo.getAllergenID());
+
+            boolean result = dbManager.addUser(addingUserHasAllergen.toString());
+            if(result){
+                this.getUserHasAllergenList().add(pojo);
+            }
+            return result;
+        }
+        catch (JSONException e)
+        {
+            e.printStackTrace();
+            return false;
+        }
+
+
     }
 
     public boolean removeUserHasAllergen(UserHasAllergenPOJO pojo){

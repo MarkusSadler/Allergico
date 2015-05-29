@@ -92,8 +92,26 @@ public class ProductDAO {
 
     public boolean addProduct(ProductPOJO newProduct) {
         this.getProductList().add(newProduct);
-        //TODO:Add json String conversion and DBManager
-        return true;
+        JSONObject addingProduct = new JSONObject();
+        try
+        {
+            addingProduct.put("ProductID", null);
+            addingProduct.put("Productname", newProduct.getProductName());
+            addingProduct.put("Description", newProduct.getDescription());
+            addingProduct.put("Image" ,null);
+            addingProduct.put("EANCode", newProduct.getEanCode());
+            boolean result = dbManager.addUser(addingProduct.toString());
+            if(result){
+                this.getProductList().add(newProduct);
+            }
+            return result;
+        }
+        catch (JSONException e)
+        {
+            e.printStackTrace();
+            return false;
+        }
+
     }
 
     public boolean updateProduct(ProductPOJO newProduct) {
