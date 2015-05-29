@@ -6,7 +6,9 @@
         <color name="ActionButtonReset">#F08080</color>
         <color name="ActionButtonDo">#B0C4DE</color>
     <!-- Main Button Colours End -->
-
+    <!--Misc Begin-->
+    <color name="Transparent">#00000000 </color>
+    <!--Misc End-->
     <!--w3c colors Begin-->
         <color name="white">#FFFFFF</color>
         <color name="yellow">#FFFF00</color>

@@ -91,7 +91,9 @@ public class ProductDAO {
     }
 
     public boolean addProduct(ProductPOJO newProduct) {
-        throw new UnsupportedOperationException();
+        this.getProductList().add(newProduct);
+        //TODO:Add json String conversion and DBManager
+        return true;
     }
 
     public boolean updateProduct(ProductPOJO newProduct) {

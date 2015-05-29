@@ -95,4 +95,16 @@ public class UserHasAllergenDAO {
         }
         return returnList;
     }
+
+    public boolean addUserHasAllergen(UserHasAllergenPOJO pojo){
+        this.getUserHasAllergenList().add(pojo);
+        //TODO:add JSON String conversion and DBManager
+        return true;
+    }
+
+    public boolean removeUserHasAllergen(UserHasAllergenPOJO pojo){
+        this.getUserHasAllergenList().remove(pojo);
+        dbManager.removeUserHasAllergen(pojo.getUserID(),pojo.getAllergenID());
+        return true;
+    }
 }
