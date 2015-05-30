@@ -140,6 +140,51 @@ public class ProductDAO {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * Method to check if an Product with an EANCode allready exists in the Database
+     * @param eanCode
+     * @return Returns true if and Product with the given eanCode allready exists in the ProductList
+     */
+    public boolean productExists(String eanCode){
+        for(ProductPOJO item : this.getProductList()){
+            if(item.getEanCode().equals(eanCode)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Checks if the given eanCode is a valid EANCode according to the GS1 Standard
+     * Reference: https://de.wikipedia.org/wiki/European_Article_Number
+     * @param eanCode
+     * @return true when the EANCode is valid and false if not
+     */
+    public boolean validateEANCode(String eanCode){
+        int[] numbers = new int[eanCode.length()];
+        int i = 0;
+        for(byte b : eanCode.getBytes()){
+            numbers[i] = (int) b;
+        }
+
+        int checksum = 0;
+        for(int j = 0; j < numbers.length; j++){
+            if(j%2 == 0){
+                checksum += numbers[j]*3;
+            }else{
+                checksum += numbers[j];
+            }
+        }
+
+        if(checksum%10 == 0){
+            return true;
+        }else{
+            return false;
+        }
+
+    }
+
+
 
     public List<AllergenPOJO> getProductsAllergenes(int productID) {
         List<AllergenPOJO> productsAllergenes = new ArrayList<AllergenPOJO>();
