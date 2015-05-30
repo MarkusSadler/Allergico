@@ -61,7 +61,8 @@ public class LoadingScreenActivity extends Activity implements OnLoadingDAOsComp
 
     @Override
     public void onLoadingDAOsTaskCompleted() {
-        startActivity(new Intent(this,LoginActivity.class));
+
+        startActivity(new Intent(this, LoginActivity.class));
     }
 }
 
@@ -74,7 +75,6 @@ class DAOLoader  extends AsyncTask<OnLoadingDAOsCompleted, Integer, Boolean>{
 
     private OnLoadingDAOsCompleted listener;
 
-    private ProgressBar progressBar;
 
     @Override
     protected Boolean doInBackground(OnLoadingDAOsCompleted... params) {
@@ -84,6 +84,7 @@ class DAOLoader  extends AsyncTask<OnLoadingDAOsCompleted, Integer, Boolean>{
         productDAO = ProductDAO.getInstance();
         userHasAllergenDAO = UserHasAllergenDAO.getInstance();
         userDAO = UserDAO.getInstance();
+        listener.onLoadingDAOsTaskCompleted();
         return true;
     }
 
@@ -94,7 +95,7 @@ class DAOLoader  extends AsyncTask<OnLoadingDAOsCompleted, Integer, Boolean>{
 
     @Override
     protected void onPostExecute(Boolean b){
-        listener.onLoadingDAOsTaskCompleted();
+
     }
 }
 

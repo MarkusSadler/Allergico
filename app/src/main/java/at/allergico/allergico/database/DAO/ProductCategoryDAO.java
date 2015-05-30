@@ -40,7 +40,7 @@ public class ProductCategoryDAO {
         return _productCatList;
     }
 
-    private List<ProductCategoryPOJO> getAllProductCategories() {
+    private Boolean getAllProductCategories() {
         this.getProductCatList().clear();
         String jsonString = dbManager.getObject("ProductCategory");
         try {
@@ -60,8 +60,13 @@ public class ProductCategoryDAO {
             }
         } catch (JSONException e) {
             e.printStackTrace();
+            return false;
         }
-        return this.getProductCatList();
+        return true;
+    }
+
+    public boolean reloadDataFromDB(){
+        return getAllProductCategories();
     }
 
     public List<ProductCategoryPOJO> getProductCategoryByName(String categoryName) {

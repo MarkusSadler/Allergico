@@ -53,7 +53,7 @@ public class UserDAO {
         System.out.print("UserDAO Instance");
     }
 
-    private List<UserPOJO> getAllUsersFromDB(){
+    private Boolean getAllUsersFromDB(){
      UserHasAllergenDAO userHasAllergenDAO = UserHasAllergenDAO.getInstance();
      this.getAllUsersList().clear();
       String jsonString = dbManager.getObject("User");
@@ -85,10 +85,15 @@ public class UserDAO {
             }
         } catch (JSONException e) {
             e.printStackTrace();
+            return false;
         }
 
-        return this.getAllUsersList();
+        return true;
 
+    }
+
+    public boolean reloadDataFromDB(){
+        return getAllUsersFromDB();
     }
 
 

@@ -43,7 +43,7 @@ public class ProductDAO {
     }
 
 
-    private List<ProductPOJO> getAllProducts() {
+    private Boolean getAllProducts() {
         this.getProductList().clear();
         String jsonString = dbManager.getObject("Product");
         try {
@@ -67,8 +67,13 @@ public class ProductDAO {
             }
         } catch (JSONException e) {
             e.printStackTrace();
+            return false;
         }
-        return this.getProductList();
+        return true;
+    }
+
+    public boolean reloadDataFromDB(){
+        return getAllProducts();
     }
 
     public ProductPOJO getProductByID(int productID) {

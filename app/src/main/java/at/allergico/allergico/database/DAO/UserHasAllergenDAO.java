@@ -43,7 +43,7 @@ public class UserHasAllergenDAO {
         fillList();
     }
 
-    private void fillList(){
+    private boolean fillList(){
         this.getUserHasAllergenList().clear();
         String jsonString = dbManager.getObject("UserHasAllergen");
         System.out.print(jsonString);
@@ -65,9 +65,14 @@ public class UserHasAllergenDAO {
             }
         } catch (JSONException e) {
             e.printStackTrace();
+            return false;
         }
 
+        return true;
+    }
 
+    public boolean reloadDataFromDB(){
+        return fillList();
     }
 
     public List<AllergenPOJO> getAllergeneOfUser(int userID){
