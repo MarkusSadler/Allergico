@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.google.zxing.client.android.Intents;
 
@@ -25,12 +26,14 @@ import at.allergico.allergico.helper.EncryptionHelper;
 
 public class LoadingScreenActivity extends Activity implements OnLoadingDAOsCompleted{
     private ProgressBar progressBar;
+    private AllergenDAO allergenDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading_screen);
         progressBar = (ProgressBar) findViewById(R.id.LoadingScreenProgressBar);
+        progressBar.setMax(100);
         DAOLoader daoLoader = new DAOLoader();
         daoLoader.doInBackground(this);
 
@@ -62,9 +65,23 @@ public class LoadingScreenActivity extends Activity implements OnLoadingDAOsComp
 
     @Override
     public void onLoadingDAOsTaskCompleted() {
+        allergenDAO = AllergenDAO.getInstance();
 
-        startActivity(new Intent(this, LoginActivity.class));
+        if(allergenDAO.getAllergeneList().size() == 0){
+            progressBar.setProgress(100);
+            DisplayToast("No Internetconnection!");
+
+        }else {
+            startActivity(new Intent(this, LoginActivity.class));
+        }
     }
+
+    /** Display the entered Message in a toast */
+    public void DisplayToast(String tmp)
+    {
+        Toast.makeText(LoadingScreenActivity.this, tmp, Toast.LENGTH_LONG).show();
+    }
+
 }
 
 class DAOLoader  extends AsyncTask<OnLoadingDAOsCompleted, Integer, Boolean>{

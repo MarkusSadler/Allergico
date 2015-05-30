@@ -46,6 +46,7 @@ public class ProductDAO {
     private Boolean getAllProducts() {
         this.getProductList().clear();
         String jsonString = dbManager.getObject("Product");
+        if(jsonString == null){return false;}
         try {
             JSONArray jsonArray = new JSONArray(jsonString);
             JSONObject[] jsonObjects = new JSONObject[jsonArray.length()];

@@ -46,6 +46,7 @@ public class UserHasAllergenDAO {
     private boolean fillList(){
         this.getUserHasAllergenList().clear();
         String jsonString = dbManager.getObject("UserHasAllergen");
+        if(jsonString == null){return false;}
         System.out.print(jsonString);
         try {
             JSONArray jsonArray = new JSONArray(jsonString);

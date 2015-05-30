@@ -46,6 +46,8 @@ public class AllergenDAO {
        //msa UserHasAllergenDAO userHasAllergenDAO = UserHasAllergenDAO.getInstance();
         this.getAllergeneList().clear();
         String jsonString = dbManager.getObject("Allergen");
+        if(jsonString == null){return false;}
+
         try {
             JSONArray jsonArray = new JSONArray(jsonString);
             JSONObject[] jsonObjects = new JSONObject[jsonArray.length()];

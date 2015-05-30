@@ -43,6 +43,7 @@ public class ProductCategoryDAO {
     private Boolean getAllProductCategories() {
         this.getProductCatList().clear();
         String jsonString = dbManager.getObject("ProductCategory");
+        if(jsonString == null){return false;}
         try {
             JSONArray jsonArray = new JSONArray(jsonString);
             JSONObject[] jsonObjects = new JSONObject[jsonArray.length()];

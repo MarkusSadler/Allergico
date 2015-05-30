@@ -17,6 +17,8 @@ import javax.crypto.spec.DESKeySpec;
 
 /**
  * Created by Markus on 30.05.2015.
+ * @author Markus Sadler
+ * Reference used: https://stackoverflow.com/questions/5220761/fast-and-simple-string-encrypt-decrypt-in-java
  */
 public class EncryptionHelper {
     /******** SINGLETON START ********/

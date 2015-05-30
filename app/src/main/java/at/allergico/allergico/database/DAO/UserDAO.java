@@ -59,6 +59,7 @@ public class UserDAO {
      UserHasAllergenDAO userHasAllergenDAO = UserHasAllergenDAO.getInstance();
      this.getAllUsersList().clear();
       String jsonString = dbManager.getObject("User");
+        if(jsonString == null){return false;}
         //System.out.print(jsonString);
         try {
             JSONArray jsonArray = new JSONArray(jsonString);
