@@ -130,6 +130,7 @@ public class UserDAO {
         }
         return user;
     }
+
     public boolean addUser(UserPOJO newUser)
     {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -159,8 +160,51 @@ public class UserDAO {
         }
     }
 
+    /**
+     * Updates the User where the UserID equals the  UserID in the given POJO with all the Userdata in the given POJO.
+     * The Update happens in the DB and in the AllUsersList
+     * @param updatedUser
+     * @return true if the Update was successfull or false if not
+     */
     public boolean updateUser(UserPOJO updatedUser) {
-        throw new UnsupportedOperationException();
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String dateInString = formatter.format(updatedUser.getDob());
+        JSONObject addingUser = new JSONObject();
+        try
+        {
+            addingUser.put("UserID", updatedUser.getUserID());
+            addingUser.put("Username", updatedUser.getUsername());
+            addingUser.put("Password", encryptionHelper.encryptStringWithDES(updatedUser.getPassword()));
+            addingUser.put("Mailaddress" ,updatedUser.getEmail());
+            addingUser.put("Firstname", updatedUser.getFirstname());
+            addingUser.put("Lastname", updatedUser.getLastname());
+            addingUser.put("DoB", dateInString);
+            addingUser.put("Active", "1");
+
+            boolean result = dbManager.addUser(addingUser.toString());
+            if(result){
+                removeUserFromList(updatedUser.getUserID());
+                this.getAllUsersList().add(updatedUser);
+            }
+            return result;
+        }
+        catch (JSONException e)
+        {
+            e.printStackTrace();
+            return false;
+        }
+
+    }
+
+    private void removeUserFromList(int userID) {
+        int i = 0;
+        for(; i < this.getAllUsersList().size(); i++){
+            if(this.getAllUsersList().get(i).getUserID() == userID){
+                break;
+            }
+        }
+        this.getAllUsersList().remove(i);
     }
 
     public boolean updateUserUsername(int userID, String newUsername) {

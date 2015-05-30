@@ -21,6 +21,7 @@ import at.allergico.allergico.database.DAO.ProductDAO;
 import at.allergico.allergico.database.DAO.UserDAO;
 import at.allergico.allergico.database.DAO.UserHasAllergenDAO;
 import at.allergico.allergico.database.POJO.ProductPOJO;
+import at.allergico.allergico.helper.EncryptionHelper;
 
 public class LoadingScreenActivity extends Activity implements OnLoadingDAOsCompleted{
     private ProgressBar progressBar;
@@ -72,6 +73,7 @@ class DAOLoader  extends AsyncTask<OnLoadingDAOsCompleted, Integer, Boolean>{
     private ProductCategoryDAO productCategoryDAO;
     private UserDAO userDAO;
     private UserHasAllergenDAO userHasAllergenDAO;
+    private EncryptionHelper encryptionHelper;
 
     private OnLoadingDAOsCompleted listener;
 
@@ -79,6 +81,7 @@ class DAOLoader  extends AsyncTask<OnLoadingDAOsCompleted, Integer, Boolean>{
     @Override
     protected Boolean doInBackground(OnLoadingDAOsCompleted... params) {
         this.listener = params[0];
+        encryptionHelper = EncryptionHelper.get_instance();
         allergenDAO = AllergenDAO.getInstance();
         productCategoryDAO = ProductCategoryDAO.getInstance();
         productDAO = ProductDAO.getInstance();

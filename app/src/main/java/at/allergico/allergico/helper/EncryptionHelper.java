@@ -28,8 +28,18 @@ public class EncryptionHelper {
     }
     /******** SINGLETON END *********/
 
+    /***
+     * Key for the DES Algorithm
+     * Generated with Keepass 2 on 30.05.2015 Settings: 128 length, Upper and Lower Case, Numbers
+     */
     private static final String KEY = "Ntuad6g3ngx7JclA2RrJ3hAiWsF5JoIaE0E8vmFQ2afRZtOSMYDGTcbzm1r1IhlwfDFeWF2NTSrjDG1qnBhPbwyQeMJAXwfnXdN4erX3luQlHsVTRIMJ3uJXb7nNqmrQ";
 
+    /***
+     * Encrypts the given String with the DES Algorithm and returns the Encrypted hash as a String
+     * The given String needs to be in UTF-8.
+     * @param clearText
+     * @return encryptedString
+     */
     public String encryptStringWithDES(String clearText){
         try {
             DESKeySpec keySpec = new DESKeySpec(KEY.getBytes("UTF8"));
