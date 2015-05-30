@@ -23,6 +23,7 @@ import java.util.ListIterator;
 import at.allergico.allergico.database.Manager.DBManager;
 import at.allergico.allergico.database.POJO.UserHasAllergenPOJO;
 import at.allergico.allergico.database.POJO.UserPOJO;
+import at.allergico.allergico.helper.EncryptionHelper;
 
 
 /**
@@ -42,6 +43,7 @@ public class UserDAO {
         return _instance;
     }
     /******** SINGLETON END *********/
+    private EncryptionHelper encryptionHelper = EncryptionHelper.get_instance();
 
     private List<UserPOJO> _allUsersList = new ArrayList<>();
     public List<UserPOJO> getAllUsersList() {
@@ -137,7 +139,7 @@ public class UserDAO {
         {
             addingUser.put("UserID", null);
             addingUser.put("Username", newUser.getUsername());
-            addingUser.put("Password", newUser.getPassword());
+            addingUser.put("Password", encryptionHelper.encryptStringWithDES(newUser.getPassword()));
             addingUser.put("Mailaddress" ,newUser.getEmail());
             addingUser.put("Firstname", newUser.getFirstname());
             addingUser.put("Lastname", newUser.getLastname());
@@ -208,12 +210,13 @@ public class UserDAO {
     }
     public boolean userExists(String mailaddress,String password) {
         if(!userExists(mailaddress)){return false;}
+        String encryptedPW = encryptionHelper.encryptStringWithDES(password);
         ListIterator<UserPOJO> iter = this.getAllUsersList().listIterator();
         Boolean ret = false;
         UserPOJO user;
         while (iter.hasNext()){
             user = iter.next();
-            if(user.getEmail().equals(mailaddress) && user.getPassword().equals(password)){
+            if(user.getEmail().equals(mailaddress) && user.getPassword().equals(encryptedPW)){
                 ret = true;
                 break;
             }
