@@ -84,10 +84,10 @@
         <activity
             android:name=".activities.LoadingScreenActivity"
             android:label="@string/title_activity_loading_screen" >
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
+             <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".activities.AllergenListActivity"
@@ -100,7 +100,7 @@
         <activity
             android:name=".activities.AdministrateAllergenActivity"
             android:label="@string/title_activity_administrate_allergen" >
-            <intent-filter>
+            <!-- <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter> -->

@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import at.allergico.allergico.R;
 import at.allergico.allergico.adapters.AdministrateAllergenListViewAdapter;
@@ -36,6 +37,9 @@ public class AdministrateAllergenActivity extends Activity {
         this._lv.setOnItemClickListener(this._listener);
         this._lv.setOnItemLongClickListener(this._listener);
         this._lv.setAdapter(this._listAdapter);
+
+
+        Toast.makeText(getApplicationContext(),this.getIntent().getExtras().getString("sourceActivity"), Toast.LENGTH_LONG).show();
 
         if(savedInstanceState == null) {
             Bundle extras = this.getIntent().getExtras();
