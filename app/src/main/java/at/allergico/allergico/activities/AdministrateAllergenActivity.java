@@ -34,6 +34,26 @@ public class AdministrateAllergenActivity extends Activity {
         this._lv = (ListView) this.findViewById(R.id.allergeneListview);
         this._lv.setOnItemClickListener(this._listener);
         this._lv.setOnItemLongClickListener(this._listener);
+        this._lv.setAdapter(this._listAdapter);
+
+        if(savedInstanceState == null) {
+            Bundle extras = this.getIntent().getExtras();
+            if(extras != null) {
+                if(extras.getString("sourceActivity") != null) {
+                    this._naviIntent = extras.getString("sourceActivity");
+                }
+            }
+        } else {
+            if(savedInstanceState.getSerializable("sourceActivity") != null) {
+                this._naviIntent = (String) savedInstanceState.getSerializable("sourceActivity");
+            }
+        }
+
+        switch(this._naviIntent) {
+            case "administrateActivity":
+                this._naviButton.setText("Back to profile");
+                break;
+        }
 
 
         this._naviButton = (Button) this.findViewById(R.id.navigationButton);
@@ -66,7 +86,13 @@ public class AdministrateAllergenActivity extends Activity {
 
         @Override
         public void onClick(View v) {
-
+            if(v.getId() == R.id.navigationButton) {
+                switch (AdministrateAllergenActivity.this._naviIntent) {
+                    case "administrateActivity":
+                        AdministrateAllergenActivity.this._naviButton.setText("Back to profile");
+                        break;
+                }
+            }
         }
 
         @Override

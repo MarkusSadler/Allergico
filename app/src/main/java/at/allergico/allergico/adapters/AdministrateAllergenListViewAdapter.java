@@ -22,13 +22,17 @@ import at.allergico.allergico.database.POJO.AllergenPOJO;
  */
 public class AdministrateAllergenListViewAdapter extends ArrayAdapter<AllergenPOJO> {
     private final Context _context;
-    private final AllergenPOJO[] _data;
+    private final ArrayList<AllergenPOJO> _data;
 
 
     public AdministrateAllergenListViewAdapter(Context context, List<AllergenPOJO> values) {
         super(context, R.layout.activity_administrate_allergen_listrow, values);
         this._context = context;
-        this._data = (AllergenPOJO[]) values.toArray();
+
+        this._data = new ArrayList<AllergenPOJO>();
+        for(int i = 0; i < values.size(); i++) {
+            this._data.add(values.get(i));
+        }
     }
 
     @Override
@@ -41,12 +45,12 @@ public class AdministrateAllergenListViewAdapter extends ArrayAdapter<AllergenPO
         TextView allergenDescription = (TextView) convertView.findViewById(R.id.allergenDescription);
         ImageView allergenImage = (ImageView) convertView.findViewById(R.id.allergenImage);
 
-        char allergenAbbreviation = this._data[position].getAbbreviation();
+        char allergenAbbreviation = this._data.get(position).getAbbreviation();
         int iconID = -1;
-        allergenName.setText(this._data[position].getAbbreviation());
-        allergenDescription.setText(this._data[position].getDescription());
+        allergenName.setText(this._data.get(position).getAbbreviation());
+        allergenDescription.setText(this._data.get(position).getDescription());
 
-        /*switch (allergenAbbreviation) {
+        switch (allergenAbbreviation) {
             case 'A':
                 break;
             case 'B':
@@ -79,7 +83,7 @@ public class AdministrateAllergenListViewAdapter extends ArrayAdapter<AllergenPO
                 break;
         }
         allergenImage.setImageResource(iconID);
-*/
+
         return rowView;
     }
 }

@@ -36,8 +36,6 @@ public class ShowProductActivity extends Activity {
         ProductDAO pDAO = ProductDAO.getInstance();
         ProductPOJO desiredProduct = null;
 
-        System.out.println("on create activity");
-
         if(savedInstanceState == null) {
             Bundle extras = this.getIntent().getExtras();
             System.out.println("got bundle");
