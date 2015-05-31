@@ -105,14 +105,14 @@ public class UserDAO {
         throw new UnsupportedOperationException();
     }
 
-    public UserPOJO getUserByUsername(String username) {
-        if(!userExists(username)){return null;}
+    public UserPOJO getUserByUsernameOrEmail(String usernameOrEmail) {
+        if(!userExists(usernameOrEmail)){return null;}
         ListIterator<UserPOJO> iter = this.getAllUsersList().listIterator();
 
         UserPOJO user = null;
         while (iter.hasNext()){
             user = iter.next();
-            if(user.getUsername().equals(username)){
+            if(user.getUsername().equals(usernameOrEmail) || user.getEmail().equals(usernameOrEmail)){
                 break;
             }
         }
@@ -173,11 +173,13 @@ public class UserDAO {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         String dateInString = formatter.format(updatedUser.getDob());
         JSONObject addingUser = new JSONObject();
+        String encryptedPassword = encryptionHelper.encryptStringWithDES(updatedUser.getPassword());
+        updatedUser.setPassword(encryptedPassword);
         try
         {
             addingUser.put("UserID", updatedUser.getUserID());
             addingUser.put("Username", updatedUser.getUsername());
-            addingUser.put("Password", encryptionHelper.encryptStringWithDES(updatedUser.getPassword()));
+            addingUser.put("Password", encryptedPassword);
             addingUser.put("Mailaddress" ,updatedUser.getEmail());
             addingUser.put("Firstname", updatedUser.getFirstname());
             addingUser.put("Lastname", updatedUser.getLastname());
@@ -186,8 +188,9 @@ public class UserDAO {
 
             boolean result = dbManager.addUser(addingUser.toString());
             if(result){
-                removeUserFromList(updatedUser.getUserID());
-                this.getAllUsersList().add(updatedUser);
+//                removeUserFromList(updatedUser.getUserID());
+//                this.getAllUsersList().add(updatedUser);
+                reloadDataFromDB();
             }
             return result;
         }
