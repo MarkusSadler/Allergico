@@ -1,6 +1,7 @@
 package at.allergico.allergico.activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -31,7 +32,7 @@ public class AdministrateAllergenActivity extends Activity {
         this._listener = new AdministrateAllergenActivityListener();
         this._listAdapter = new AdministrateAllergenListViewAdapter(getApplicationContext(), AllergenDAO.getInstance().getAllergeneList());
 
-        this._lv = (ListView) this.findViewById(R.id.allergeneListview);
+        this._lv = (ListView) this.findViewById(R.id.allergenListView);
         this._lv.setOnItemClickListener(this._listener);
         this._lv.setOnItemLongClickListener(this._listener);
         this._lv.setAdapter(this._listAdapter);
@@ -86,12 +87,17 @@ public class AdministrateAllergenActivity extends Activity {
 
         @Override
         public void onClick(View v) {
+
             if(v.getId() == R.id.navigationButton) {
+                //Intent i = new Intent(AdministrateAllergenActivity.this.getApplicationContext(),)
+
                 switch (AdministrateAllergenActivity.this._naviIntent) {
                     case "administrateActivity":
-                        AdministrateAllergenActivity.this._naviButton.setText("Back to profile");
+                        //AdministrateAllergenActivity.this._naviButton.setText("Back to profile");
                         break;
                 }
+
+                //AdministrateAllergenActivity.this.startActivity(i);
             }
         }
 

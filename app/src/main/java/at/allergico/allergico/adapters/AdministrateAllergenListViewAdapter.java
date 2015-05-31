@@ -30,6 +30,7 @@ public class AdministrateAllergenListViewAdapter extends ArrayAdapter<AllergenPO
         this._context = context;
 
         this._data = new ArrayList<AllergenPOJO>();
+
         for(int i = 0; i < values.size(); i++) {
             this._data.add(values.get(i));
         }
