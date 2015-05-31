@@ -172,21 +172,21 @@ public class UserDAO {
 
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         String dateInString = formatter.format(updatedUser.getDob());
-        JSONObject addingUser = new JSONObject();
+        JSONObject updatedJsonUser = new JSONObject();
         String encryptedPassword = encryptionHelper.encryptStringWithDES(updatedUser.getPassword());
         updatedUser.setPassword(encryptedPassword);
         try
         {
-            addingUser.put("UserID", updatedUser.getUserID());
-            addingUser.put("Username", updatedUser.getUsername());
-            addingUser.put("Password", encryptedPassword);
-            addingUser.put("Mailaddress" ,updatedUser.getEmail());
-            addingUser.put("Firstname", updatedUser.getFirstname());
-            addingUser.put("Lastname", updatedUser.getLastname());
-            addingUser.put("DoB", dateInString);
-            addingUser.put("Active", "1");
+            updatedJsonUser.put("UserID", updatedUser.getUserID());
+            updatedJsonUser.put("Username", updatedUser.getUsername());
+            updatedJsonUser.put("Password", encryptedPassword);
+            updatedJsonUser.put("Mailaddress", updatedUser.getEmail());
+            updatedJsonUser.put("Firstname", updatedUser.getFirstname());
+            updatedJsonUser.put("Lastname", updatedUser.getLastname());
+            updatedJsonUser.put("DoB", dateInString);
+            updatedJsonUser.put("Active", "1");
 
-            boolean result = dbManager.addUser(addingUser.toString());
+            boolean result = dbManager.updateUser(updatedJsonUser.toString());
             if(result){
 //                removeUserFromList(updatedUser.getUserID());
 //                this.getAllUsersList().add(updatedUser);
