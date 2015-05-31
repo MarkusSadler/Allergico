@@ -75,6 +75,24 @@ public class DBManager {
         }
     }
 
+    public boolean updateUser(String jsonString){
+        try {
+            //String jsonString = params[0];
+            String link = "http://sadler.or.at/allergico/service.php?UpdateUser=" + URLEncoder.encode(jsonString);
+            System.out.println(link);
+            DefaultHttpClient client = new DefaultHttpClient();
+            HttpGet request = new HttpGet(link);
+            HttpResponse response = client.execute(request);
+            return true;
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+            return false;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public boolean addProduct(String jsonString){
         try {
             //String jsonString = params[0];
