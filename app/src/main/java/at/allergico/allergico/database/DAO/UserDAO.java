@@ -273,12 +273,10 @@ public class UserDAO {
 
         throw new UnsupportedOperationException();
     }
-
     public UserPOJO deleteUser(String username) {
 
         throw new UnsupportedOperationException();
     }
-
     public UserPOJO deleteUser(UserPOJO deleteUser) {
         throw new UnsupportedOperationException();
     }
@@ -287,8 +285,4 @@ public class UserDAO {
 
         throw new UnsupportedOperationException();
     }
-
-
-
-
 }

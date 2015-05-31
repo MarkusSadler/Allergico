@@ -8,30 +8,30 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import at.allergico.allergico.R;
 
 public class MainActivity extends Activity implements View.OnClickListener{
-    private Button eanReader;
-    private Button administrate;
-    private Button _productOverview;
-    private Button _addProductButton;
-    private Button _showAllergenButton;
+    private ImageButton _eanReader;
+    private ImageButton _administrate;
+    private ImageButton _productOverview;
+    private ImageButton _addProductButton;
+    private ImageButton _showAllergenButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        eanReader = (Button) findViewById(R.id.EANButton);
-        administrate = (Button) findViewById(R.id.AdministrateUser);
-        this._productOverview = (Button) findViewById(R.id.productOverview);
-        this._addProductButton = (Button) findViewById(R.id.addProductButton);
+        this._eanReader = (ImageButton) findViewById(R.id.EANButton);
+        this._administrate = (ImageButton) findViewById(R.id.AdministrateUserButton);
+        this._productOverview = (ImageButton) findViewById(R.id.ProductOverviewButton);
+        this._addProductButton = (ImageButton) findViewById(R.id.AddProductButton);
+        this._showAllergenButton = (ImageButton) findViewById(R.id.ShowAllergeneButton);
 
-        eanReader.setOnClickListener(this);
-        administrate.setOnClickListener(this);
+        this._eanReader.setOnClickListener(this);
+        this._administrate.setOnClickListener(this);
         this._productOverview.setOnClickListener(this);
         this._addProductButton.setOnClickListener(this);
-
-        _showAllergenButton = (Button) findViewById(R.id.showAllergenebutton);
         this._showAllergenButton.setOnClickListener(this);
     }
 
@@ -61,16 +61,16 @@ public class MainActivity extends Activity implements View.OnClickListener{
     @Override
     public void onClick(View view) {
         Intent i = null;
-        if(view.getId() == R.id.AdministrateUser){
+        if(view.getId() == R.id.AdministrateUserButton){
             i = new Intent(this, AdministrateProductActivity.class);
-        }else if(view.getId() == R.id.eanButton){
+        }else if(view.getId() == R.id.EANButton){
            i = new Intent(this, EANReaderActivity.class);
-        } else if(view.getId() == R.id.productOverview) {
+        } else if(view.getId() == R.id.ProductOverviewButton) {
             i = new Intent(this, ProductOverviewActivity.class);
-        } else if(view.getId() == R.id.addProductButton) {
+        } else if(view.getId() == R.id.AddProductButton) {
             i = new Intent(this, AddProductActivity.class);
-        }else if(view.getId() == R.id.showAllergenebutton){
-            i = new Intent(this,ShowAllergenActivity.class);
+        }else if(view.getId() == R.id.ShowAllergeneButton){
+            i = new Intent(this, ShowAllergenActivity.class);
         }
 
         if(i != null) {
