@@ -2,7 +2,7 @@
     <string name="title_activity_login">Allergico</string>
 
     <!-- Strings related to login -->
-    <string name="prompt_email">Email</string>
+    <string name="prompt_email">Email oder Benutzername</string>
     <string name="prompt_password">Passwort</string>
     <string name="action_sign_in">Log In</string>
     <string name="action_sign_in_short">Log In</string>

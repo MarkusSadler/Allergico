@@ -123,7 +123,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
+        String emailOrUsername = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
 
         boolean cancel = false;
@@ -132,13 +132,13 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
 
 
-        // Check for a valid email address.
-        if (TextUtils.isEmpty(email)) {
+        // Check for a valid emailOrUsername address.
+        if (TextUtils.isEmpty(emailOrUsername)) {
             mEmailView.setError(getString(R.string.error_field_required));
             //DisplayToast(getString(R.string.error_field_required));
             focusView = mEmailView;
             cancel = true;
-        } else if (!isEmailValid(email)) {
+        } else if (!isEmailValid(emailOrUsername)) {
             mEmailView.setError(getString(R.string.error_invalid_email));
          //   DisplayToast(getString(R.string.error_invalid_email));
             focusView = mEmailView;
@@ -146,7 +146,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         }
 
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password, email)) {
+        if (!TextUtils.isEmpty(password) && !isPasswordValid(password, emailOrUsername)) {
             mPasswordView.setError(getString(R.string.error_incorrect_password));
           //  DisplayToast(getString(R.string.error_incorrect_password));
             focusView = mPasswordView;
@@ -160,9 +160,11 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-            currentUser.setLogedInUser(userDAO.getUserByEmail(email));
+            currentUser.setLogedInUser(userDAO.getUserByUsernameOrEmail(emailOrUsername));
+
+
             showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
+            mAuthTask = new UserLoginTask(emailOrUsername, password);
             mAuthTask.execute((Void) null);
         }
     }

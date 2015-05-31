@@ -105,14 +105,14 @@ public class UserDAO {
         throw new UnsupportedOperationException();
     }
 
-    public UserPOJO getUserByUsername(String username) {
-        if(!userExists(username)){return null;}
+    public UserPOJO getUserByUsernameOrEmail(String usernameOrEmail) {
+        if(!userExists(usernameOrEmail)){return null;}
         ListIterator<UserPOJO> iter = this.getAllUsersList().listIterator();
 
         UserPOJO user = null;
         while (iter.hasNext()){
             user = iter.next();
-            if(user.getUsername().equals(username)){
+            if(user.getUsername().equals(usernameOrEmail) || user.getEmail().equals(usernameOrEmail)){
                 break;
             }
         }
@@ -150,7 +150,8 @@ public class UserDAO {
             System.out.println(addingUser.toString());
             boolean result = dbManager.addUser(addingUser.toString());
             if(result){
-                this.getAllUsersList().add(newUser);
+                reloadDataFromDB();
+
             }
             return result;
         }
@@ -172,11 +173,13 @@ public class UserDAO {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         String dateInString = formatter.format(updatedUser.getDob());
         JSONObject addingUser = new JSONObject();
+        String encryptedPassword = encryptionHelper.encryptStringWithDES(updatedUser.getPassword());
+        updatedUser.setPassword(encryptedPassword);
         try
         {
             addingUser.put("UserID", updatedUser.getUserID());
             addingUser.put("Username", updatedUser.getUsername());
-            addingUser.put("Password", encryptionHelper.encryptStringWithDES(updatedUser.getPassword()));
+            addingUser.put("Password", encryptedPassword);
             addingUser.put("Mailaddress" ,updatedUser.getEmail());
             addingUser.put("Firstname", updatedUser.getFirstname());
             addingUser.put("Lastname", updatedUser.getLastname());
@@ -185,8 +188,9 @@ public class UserDAO {
 
             boolean result = dbManager.addUser(addingUser.toString());
             if(result){
-                removeUserFromList(updatedUser.getUserID());
-                this.getAllUsersList().add(updatedUser);
+//                removeUserFromList(updatedUser.getUserID());
+//                this.getAllUsersList().add(updatedUser);
+                reloadDataFromDB();
             }
             return result;
         }
@@ -240,28 +244,28 @@ public class UserDAO {
     public boolean userExists(int userID) {
         throw new UnsupportedOperationException();
     }
-    public boolean userExists(String mailaddress) {
+    public boolean userExists(String mailaddressOrUsername) {
         ListIterator<UserPOJO> iter = this.getAllUsersList().listIterator();
         Boolean ret = false;
         UserPOJO user;
         while (iter.hasNext()){
             user = iter.next();
-            if(user.getEmail().equals(mailaddress)){
+            if(user.getEmail().equals(mailaddressOrUsername) || user.getUsername().equals(mailaddressOrUsername)){
                 ret = true;
                 break;
             }
         }
         return ret;
     }
-    public boolean userExists(String mailaddress,String password) {
-        if(!userExists(mailaddress)){return false;}
+    public boolean userExists(String mailaddressOrUsername,String password) {
+        if(!userExists(mailaddressOrUsername)){return false;}
         String encryptedPW = encryptionHelper.encryptStringWithDES(password);
         ListIterator<UserPOJO> iter = this.getAllUsersList().listIterator();
         Boolean ret = false;
         UserPOJO user;
         while (iter.hasNext()){
             user = iter.next();
-            if(user.getEmail().equals(mailaddress) && user.getPassword().equals(encryptedPW)){
+            if(user.getEmail().equals(mailaddressOrUsername) || user.getUsername().equals(mailaddressOrUsername) && user.getPassword().equals(encryptedPW)){
                 ret = true;
                 break;
             }
