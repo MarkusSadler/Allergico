@@ -18,4 +18,4 @@
          android:id="@+id/help_contents"
          android:layout_width="fill_parent"
          android:layout_height="fill_parent"
-         android:layout_weight="1"/><!-- From: file:/D:/_Projects/MobileProjects/_Project/Allergico/zxing/src/main/res/layout/help.xml -->
+         android:layout_weight="1"/><!-- From: file:/C:/Users/AGebhard/Documents/FH%20Technikum%20Wien/LVs/04Sem/MOCG%20-%20Mobile%20Computing%20Grundlagen/Allergico/zxing/src/main/res/layout/help.xml -->
