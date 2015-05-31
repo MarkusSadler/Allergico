@@ -197,7 +197,7 @@ public class AdministrateProductActivity extends Activity implements View.OnClic
         }else if(view.getId() == R.id.cancel){
             i = new Intent(this, MainActivity.class);
         }else if(view.getId() == R.id.addAllergen){
-            i = new Intent(this, ShowAllergenActivity.class);
+            i = new Intent(this, AdministrateAllergenActivity.class);
             i.putExtra("sourceActivity", "adminstrateActivity");
         }
 
