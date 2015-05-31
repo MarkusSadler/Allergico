@@ -1,50 +1,45 @@
 package at.allergico.allergico.activities;
 
 import android.app.Activity;
-import android.app.ListActivity;
-import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
-import android.widget.Spinner;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
 
 import at.allergico.allergico.R;
-import at.allergico.allergico.database.DAO.AllergenDAO;
-import at.allergico.allergico.database.POJO.AllergenPOJO;
+import at.allergico.allergico.database.DAO.UserDAO;
 import at.allergico.allergico.database.POJO.UserPOJO;
 import at.allergico.allergico.helper.CurrentUser;
 
-public class AdministrateProductActivity extends Activity {
+public class AdministrateProductActivity extends Activity implements View.OnClickListener{
     //region Variables
     /** Variables to working with the layout elements. */
     private EditText    firstname;          private EditText    lastname;
     private EditText    eMail;              private TextView    dateDisplay;
     private EditText    username;           private EditText    password;
-    private EditText    passwordRepeat;     private Button      addAllergen;
-    private Button      submit;             private Button      cancel;
+    private EditText    passwordRepeat;     private ImageButton addAllergenBtn;
+    private Button      submitBtn;          private Button      cancelBtn;
+    private UserPOJO    updatedUser;
 
     /** Help variable for input */
     private boolean[] checkInput = new boolean[4];
     /** For developing instead of helper.CurrentUser */
     private CurrentUser cU = CurrentUser.getInstance();
-    private UserPOJO currentUser;
+    private UserPOJO currentUser = cU.getLogedInUser();
+    private UserDAO ud = UserDAO.getInstance();
     //endregion
 
     @Override
@@ -53,27 +48,30 @@ public class AdministrateProductActivity extends Activity {
         setContentView(R.layout.activity_administrate_product);
         //region Variablebindings
         /** Bind the variables with the layout items on the view */
-        firstname       = (EditText) findViewById(R.id.firstname);
-        lastname        = (EditText) findViewById(R.id.lastname);
-        eMail           = (EditText) findViewById(R.id.mailAdress);
-        dateDisplay     = (TextView) findViewById(R.id.datDisplay);
-        username        = (EditText) findViewById(R.id.username);
-        password        = (EditText) findViewById(R.id.password);
-        passwordRepeat  = (EditText) findViewById(R.id.passwordRepeat);
-        submit          = (Button)   findViewById(R.id.submit);
-        cancel          = (Button)   findViewById(R.id.cancel);
-        addAllergen     = (Button)   findViewById(R.id.addAllergen);
+        firstname       = (EditText)    findViewById(R.id.firstname);
+        lastname        = (EditText)    findViewById(R.id.lastname);
+        eMail           = (EditText)    findViewById(R.id.mailAdress);
+        dateDisplay     = (TextView)    findViewById(R.id.datDisplay);
+        username        = (EditText)    findViewById(R.id.username);
+        password        = (EditText)    findViewById(R.id.password);
+        passwordRepeat  = (EditText)    findViewById(R.id.passwordRepeat);
+        submitBtn       = (Button)      findViewById(R.id.submit);
+        cancelBtn       = (Button)      findViewById(R.id.cancel);
+        addAllergenBtn  = (ImageButton) findViewById(R.id.addAllergen);
 
         //endregion
-        currentUser = cU.getLogedInUser();
+        System.out.println(currentUser.getFirstname());
+        DateFormat df = new SimpleDateFormat("dd.MM.yyyy-HH:mm:ss");
+        String[] reportDate = df.format(currentUser.getDob()).split("-");
+        for(int i=0; i<checkInput.length; i++) { checkInput[i] = true; }
         firstname.setText(currentUser.getFirstname());
         lastname.setText(currentUser.getLastname());
         eMail.setText(currentUser.getEmail());
-        dateDisplay.setText(currentUser.getDob().toString());
+        dateDisplay.setText(reportDate[0]);
         username.setText(currentUser.getUsername());
+        submitBtn.setEnabled(false);
+        checkAllInputs();
 
-
-        submit.setEnabled(false);
 
         firstname.addTextChangedListener(new TextWatcher() {
             @Override
@@ -112,34 +110,38 @@ public class AdministrateProductActivity extends Activity {
             @Override
             public void afterTextChanged(Editable editable)
             {
-                if(editable.length() < 1 || editable.length() > 6) { checkInput[2] = true; }
-                else { checkInput[2] = false;}
+                if(editable.length() == 0 || editable.length() > 6) { checkInput[2] = true; }
+                else {
+                    checkInput[2] = false;
+                }
                 checkAllInputs();
             }
         });
 
         passwordRepeat.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {}
+            public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+            }
+
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {}
+            public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+            }
+
             @Override
-            public void afterTextChanged(Editable editable)
-            {
-                if(editable.length() < 1 || editable.length() > 6) { checkInput[3] = true; }
-                else { checkInput[3] = false;}
+            public void afterTextChanged(Editable editable) {
+                if (editable.length() == 0 || editable.length() > 6) {
+                    checkInput[3] = true;
+                } else {
+                    checkInput[3] = false;
+                }
                 checkAllInputs();
             }
         });
 
-        addAllergen.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View view) {
-                    startActivity(new Intent(getApplicationContext(), AllergenListActivity.class));
-                }
-            }
-        );
+        addAllergenBtn.setOnClickListener(this);
+        submitBtn.setOnClickListener(this);
+        cancelBtn.setOnClickListener(this);
+
     }
 
 
@@ -167,12 +169,40 @@ public class AdministrateProductActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    /** If each input is valid, the submit button will be enabled, otherwise disabled. */
+    /** If each input is valid, the submitBtn button will be enabled, otherwise disabled. */
     private void checkAllInputs()
     {
         if(checkInput[0] && checkInput[1] && checkInput[2] && checkInput[3])
-        {   submit.setEnabled(true);    }
+        {   submitBtn.setEnabled(true);    }
         else
-        {   submit.setEnabled(false);   }
+        {   submitBtn.setEnabled(false);   }
+    }
+
+    @Override
+    public void onClick(View view) {
+        Intent i = null;
+        if(view.getId() == R.id.submit)
+        {
+            if(password.getText().length() == 0 && passwordRepeat.getText().length() == 0){
+                updatedUser = new UserPOJO(currentUser.getUserID(), currentUser.getUsername(), currentUser.getPassword(), currentUser.getEmail(), firstname.getText().toString(), lastname.getText().toString(), currentUser.getDob(), true);
+            }else if(password.getText().toString().equals(passwordRepeat.getText().toString()) == false){
+                Toast.makeText(this,"Passwörter stimmen nicht überein",Toast.LENGTH_LONG).show();
+            }else{
+                updatedUser = new UserPOJO(currentUser.getUserID(), currentUser.getUsername(), password.getText().toString(), currentUser.getEmail(), firstname.getText().toString(), lastname.getText().toString(), currentUser.getDob(), true);
+            }
+            System.out.println(updatedUser.toString());
+            ud.updateUser(updatedUser);
+            cU.setLogedInUser(ud.getUserByUsernameOrEmail(currentUser.getEmail()));
+            i = new Intent(this, MainActivity.class);
+        }else if(view.getId() == R.id.cancel){
+            i = new Intent(this, MainActivity.class);
+        }else if(view.getId() == R.id.addAllergen){
+            i = new Intent(this, ShowAllergenActivity.class);
+            i.putExtra("sourceActivity", "adminstrateActivity");
+        }
+
+        if(i != null) {
+            this.startActivity(i);
+        }
     }
 }

@@ -14,6 +14,7 @@ import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -80,7 +81,9 @@ public class UserDAO {
                 );
                 if(item.getString("[Active]").equals("0")){user.setActive(false);}
                 String[] dobStringArr = item.getString("DoB").split("-");
-                user.setDob(new Date(Integer.parseInt(dobStringArr[0]),Integer.parseInt(dobStringArr[1]),Integer.parseInt(dobStringArr[2])));
+                Calendar c = Calendar.getInstance();
+                c.set(Integer.parseInt(dobStringArr[0]),Integer.parseInt(dobStringArr[1])-1,Integer.parseInt(dobStringArr[2]));
+                user.setDob(c.getTime());
 
                 user.setAllergene(userHasAllergenDAO.getAllergeneOfUser(user.getUserID()));
 

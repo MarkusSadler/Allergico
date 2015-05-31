@@ -291,20 +291,6 @@ public class Registration extends ActionBarActivity
         }
     };
 
-    /** Return a int array with the actual [0] - year, [1] - month, [2] - day */
-    public int[] getCurrentDate()
-    {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd-HH:mm:ss");
-        Date date = new Date();
-        String dateString = dateFormat.format(date).split("-")[0];
-        int[] curDate = new int[3];
-        curDate[0] = Integer.parseInt(dateString.split("\\.")[0]);
-        curDate[1] = Integer.parseInt(dateString.split("\\.")[1]);
-        curDate[2] = Integer.parseInt(dateString.split("\\.")[2]);
-        System.out.println(dateFormat.format(date));
-        return curDate;
-    }
-
     /** Display the entered Message in a toast */
     public void DisplayToast(String tmp)
     {
