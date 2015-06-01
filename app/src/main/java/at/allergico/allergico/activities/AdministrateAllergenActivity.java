@@ -2,7 +2,6 @@ package at.allergico.allergico.activities;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,14 +32,6 @@ public class AdministrateAllergenActivity extends Activity {
         this._listener = new AdministrateAllergenActivityListener();
         this._listAdapter = new AdministrateAllergenListViewAdapter(getApplicationContext(), AllergenDAO.getInstance().getAllergeneList());
 
-        this._lv = (ListView) this.findViewById(R.id.allergenListView);
-        this._lv.setOnItemClickListener(this._listener);
-        this._lv.setOnItemLongClickListener(this._listener);
-        this._lv.setAdapter(this._listAdapter);
-
-
-        Toast.makeText(getApplicationContext(),this.getIntent().getExtras().getString("sourceActivity"), Toast.LENGTH_LONG).show();
-
         if(savedInstanceState == null) {
             Bundle extras = this.getIntent().getExtras();
             if(extras != null) {
@@ -54,15 +45,19 @@ public class AdministrateAllergenActivity extends Activity {
             }
         }
 
+        this._lv = (ListView) this.findViewById(R.id.allergenListView);
+        this._lv.setOnItemClickListener(this._listener);
+        this._lv.setOnItemLongClickListener(this._listener);
+        this._lv.setAdapter(this._listAdapter);
+
+        this._naviButton = (Button) this.findViewById(R.id.administrateAllergenNavigationButton);
+        this._naviButton.setOnClickListener(this._listener);
+
         switch(this._naviIntent) {
-            case "administrateActivity":
+            case "adminstrateActivity":
                 this._naviButton.setText("Back to profile");
                 break;
         }
-
-
-        this._naviButton = (Button) this.findViewById(R.id.navigationButton);
-        this._naviButton.setOnClickListener(this._listener);
     }
 
     @Override
@@ -92,16 +87,16 @@ public class AdministrateAllergenActivity extends Activity {
         @Override
         public void onClick(View v) {
 
-            if(v.getId() == R.id.navigationButton) {
-                //Intent i = new Intent(AdministrateAllergenActivity.this.getApplicationContext(),)
+            if(v.getId() == R.id.administrateAllergenNavigationButton) {
+                Intent i = null;
 
                 switch (AdministrateAllergenActivity.this._naviIntent) {
-                    case "administrateActivity":
-                        //AdministrateAllergenActivity.this._naviButton.setText("Back to profile");
+                    case "adminstrateActivity":
+                        i = new Intent(AdministrateAllergenActivity.this.getApplicationContext(), AdministrateProductActivity.class);
                         break;
                 }
 
-                //AdministrateAllergenActivity.this.startActivity(i);
+                AdministrateAllergenActivity.this.startActivity(i);
             }
         }
 

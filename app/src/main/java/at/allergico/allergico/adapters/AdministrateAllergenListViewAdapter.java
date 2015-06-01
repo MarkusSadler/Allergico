@@ -8,6 +8,7 @@ import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -42,48 +43,46 @@ public class AdministrateAllergenListViewAdapter extends ArrayAdapter<AllergenPO
 
         View rowView = inflater.inflate(R.layout.activity_administrate_allergen_listrow, parent, false);
 
-        /*TextView allergenName = (TextView) rowView.findViewById(R.id.listRowAllergenName);
         TextView allergenDescription = (TextView) rowView.findViewById(R.id.listRowAllergenDescription);
         ImageView allergenImage = (ImageView) rowView.findViewById(R.id.listRowAllergenImage);
 
-        /*char allergenAbbreviation = this._data.get(position).getAbbreviation();
+        char allergenAbbreviation = this._data.get(position).getAbbreviation();
         int iconID = -1;
-        allergenName.setText(this._data.get(position).getAbbreviation());
         allergenDescription.setText(this._data.get(position).getDescription());
 
         switch (allergenAbbreviation) {
-            case 'A':
+            case 'A': iconID = R.mipmap.allergen_a;
                 break;
-            case 'B':
+            case 'B': iconID = R.mipmap.allergen_b;
                 break;
-            case 'C':
+            case 'C': iconID = R.mipmap.allergen_c;
                 break;
-            case 'D':
+            case 'D': iconID = R.mipmap.allergen_d;
                 break;
-            case 'E':
+            case 'E': iconID = R.mipmap.allergen_e;
                 break;
-            case 'F':
+            case 'F': iconID = R.mipmap.allergen_f;
                 break;
-            case 'G':
+            case 'G': iconID = R.mipmap.allergen_g;
                 break;
-            case 'H':
+            case 'H': iconID = R.mipmap.allergen_h;
                 break;
-            case 'L':
+            case 'L': iconID = R.mipmap.allergen_l;
                 break;
-            case 'M':
+            case 'M': iconID = R.mipmap.allergen_m;
                 break;
-            case 'N':
+            case 'N': iconID = R.mipmap.allergen_n;
                 break;
-            case 'O':
+            case 'O': iconID = R.mipmap.allergen_o;
                 break;
-            case 'P':
+            case 'P': iconID = R.mipmap.allergen_p;
                 break;
-            case 'R':
+            case 'R': iconID = R.mipmap.allergen_r;
                 break;
-            default:
+            default: iconID = R.drawable.launcher_icon;
                 break;
         }
-        allergenImage.setImageResource(iconID);*/
+        allergenImage.setImageResource(iconID);
 
         return rowView;
     }
