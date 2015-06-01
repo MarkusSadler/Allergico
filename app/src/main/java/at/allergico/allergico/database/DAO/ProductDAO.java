@@ -198,9 +198,11 @@ public class ProductDAO {
             }
             for(JSONObject item : jsonObjects){
                 AllergenPOJO ap = new AllergenPOJO(item.getInt("AllergenID"), item.getString("Description"), item.getString("Abbreviation").charAt(0));
+                if(item.getInt("Product_ProductID") == productID){
+                    productsAllergenes.add(ap);
+                }
 
 
-                productsAllergenes.add(ap);
             }
         } catch (JSONException e) {
             e.printStackTrace();

@@ -64,13 +64,16 @@ public class MainActivity extends Activity implements View.OnClickListener{
         if(view.getId() == R.id.AdministrateUserButton){
             i = new Intent(this, AdministrateProductActivity.class);
         }else if(view.getId() == R.id.EANButton){
-           i = new Intent(this, EANReaderActivity.class);
+            i = new Intent("com.google.zxing.client.android.SCAN");
+            i.putExtra("SCAN_MODE", "PRODUCT_MODE");
+            startActivityForResult(i, 0);
         } else if(view.getId() == R.id.ProductOverviewButton) {
             i = new Intent(this, ProductOverviewActivity.class);
         } else if(view.getId() == R.id.AddProductButton) {
             i = new Intent(this, AddProductActivity.class);
         }else if(view.getId() == R.id.ShowAllergeneButton){
-            i = new Intent(this, ShowAllergenActivity.class);
+            i = new Intent(this, AdministrateAllergenActivity.class);
+            i.putExtra("sourceActivity", "mainActivity");
         }
 
         if(i != null) {
