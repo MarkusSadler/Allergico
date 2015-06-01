@@ -37,11 +37,15 @@ public class AdministrateAllergenActivity extends Activity {
             if(extras != null) {
                 if(extras.getString("sourceActivity") != null) {
                     this._naviIntent = extras.getString("sourceActivity");
+                } else if(extras.getString("mainActivity") != null) {
+                    this._naviIntent = extras.getString("mainActivity");
                 }
             }
         } else {
             if(savedInstanceState.getSerializable("sourceActivity") != null) {
                 this._naviIntent = (String) savedInstanceState.getSerializable("sourceActivity");
+            } else if(savedInstanceState.getSerializable("mainActivity") != null) {
+                this._naviIntent = (String) savedInstanceState.getSerializable("mainActivity");
             }
         }
 
@@ -55,7 +59,10 @@ public class AdministrateAllergenActivity extends Activity {
 
         switch(this._naviIntent) {
             case "adminstrateActivity":
-                this._naviButton.setText("Back to profile");
+                this._naviButton.setText("Zurück zur Profilverwaltung");
+                break;
+            case "mainActivity":
+                this._naviButton.setText("Zurück zum Hauptmenü");
                 break;
         }
     }
@@ -92,8 +99,11 @@ public class AdministrateAllergenActivity extends Activity {
 
                 switch (AdministrateAllergenActivity.this._naviIntent) {
                     case "adminstrateActivity":
+                        //TODO DB sochn
                         i = new Intent(AdministrateAllergenActivity.this.getApplicationContext(), AdministrateProductActivity.class);
                         break;
+                    case "mainActivity":
+                        i = new Intent(AdministrateAllergenActivity.this.getApplicationContext(), MainActivity.class);
                 }
 
                 AdministrateAllergenActivity.this.startActivity(i);

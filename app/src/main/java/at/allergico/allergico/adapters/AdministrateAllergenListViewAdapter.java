@@ -83,6 +83,7 @@ public class AdministrateAllergenListViewAdapter extends ArrayAdapter<AllergenPO
                 break;
         }
         allergenImage.setImageResource(iconID);
+        rowView.setSelected(true);
 
         return rowView;
     }
