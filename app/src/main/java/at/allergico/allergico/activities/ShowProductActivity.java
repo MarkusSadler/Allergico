@@ -44,7 +44,6 @@ public class ShowProductActivity extends Activity {
                 if(extras.getInt("productID") > 0) {
                     desiredProduct = pDAO.getProductByID(extras.getInt("productID"));
                 } else if(extras.getString("eanCode") != null) {
-                    System.out.println("ean code :)");
                     desiredProduct = pDAO.getProductByEANCode(extras.getString("eanCode"));
                 } else {
                     setDefaultViewValues();

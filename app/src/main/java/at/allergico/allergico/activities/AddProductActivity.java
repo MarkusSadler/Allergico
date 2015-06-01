@@ -98,8 +98,8 @@ public class AddProductActivity extends Activity {
                 String contents = intent.getStringExtra("SCAN_RESULT");
                 String format = intent.getStringExtra("SCAN_RESULT_FORMAT");
                 // Handle successful scan
-                Intent i = new Intent(getApplicationContext(), AllergenListActivity.class);
-                i.putExtra("addProduct", contents);
+                Intent i = new Intent(getApplicationContext(), AdministrateAllergenActivity.class);
+                i.putExtra("sourceActivity", "addProductActivity");
                 try {
                     Thread.sleep(5000);
                 } catch (InterruptedException e) {
