@@ -8,6 +8,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.GridLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,12 +20,14 @@ import at.allergico.allergico.database.DAO.AllergenDAO;
 import at.allergico.allergico.database.DAO.ProductDAO;
 import at.allergico.allergico.database.POJO.AllergenPOJO;
 import at.allergico.allergico.database.POJO.ProductPOJO;
+import at.allergico.allergico.helper.AllergenHelper;
 
 public class ShowProductActivity extends Activity {
 
     private TextView _productName;
     private TextView _productDescription;
-    private TextView _allergenesOfProduct;
+    //private TextView _allergenesOfProduct;
+    private AllergenHelper ah = new AllergenHelper();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +36,7 @@ public class ShowProductActivity extends Activity {
 
         this._productName = (TextView) this.findViewById(R.id.productName);
         this._productDescription = (TextView) this.findViewById(R.id.productDescription);
-        this._allergenesOfProduct = (TextView) this.findViewById(R.id.AllergenText);
+        //this._allergenesOfProduct = (TextView) this.findViewById(R.id.AllergenText);
         ProductDAO pDAO = ProductDAO.getInstance();
         ProductPOJO desiredProduct = null;
 
@@ -68,11 +72,17 @@ public class ShowProductActivity extends Activity {
 
             List<AllergenPOJO> productsAllergenes = pDAO.getProductsAllergenes(desiredProduct.getProductID());
             if(productsAllergenes.size() == 0) {
-                this._allergenesOfProduct.setText("Allergenes: None");
+                //this._allergenesOfProduct.setText("Allergenes: None");
             } else {
-                this._allergenesOfProduct.setText("Allergenes:");
+
+                //this._allergenesOfProduct.setText("Allergenes:");
+                LinearLayout linearLayout1 = (LinearLayout) findViewById(R.id.linearLayout1);
                 for(AllergenPOJO all : productsAllergenes) {
-                    this._allergenesOfProduct.setText(this._allergenesOfProduct.getText() + " " + all.getAbbreviation());
+                    //this._allergenesOfProduct.setText(this._allergenesOfProduct.getText() + " " + all.getAbbreviation());
+
+                    ImageView image = new ImageView(ShowProductActivity.this);
+                    image.setBackgroundResource(ah.getAllergenImage(all.getAbbreviation()));
+                    linearLayout1.addView(image);
                 }
             }
         } else {
@@ -84,7 +94,7 @@ public class ShowProductActivity extends Activity {
         String errorMessage = "Product load failed";
         this._productName.setText(errorMessage);
         this._productDescription.setText(errorMessage);
-        this._allergenesOfProduct.setText(errorMessage);
+        //this._allergenesOfProduct.setText(errorMessage);
     }
 
 
