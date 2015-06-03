@@ -78,9 +78,8 @@ public class AllergenDAO {
     }
 
     public AllergenPOJO getAllergenByID(int allergenID) {
-        Iterator<AllergenPOJO> iter = this.getAllergeneList().listIterator();
-        while (iter.hasNext()){
-            AllergenPOJO item = iter.next();
+
+        for(AllergenPOJO item : this.getAllergeneList()){
             if(item.getAllergenID() == allergenID){
                 return item;
             }

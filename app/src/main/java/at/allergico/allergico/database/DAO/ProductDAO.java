@@ -13,6 +13,7 @@ import java.util.List;
 
 import at.allergico.allergico.database.Manager.DBManager;
 import at.allergico.allergico.database.POJO.AllergenPOJO;
+import at.allergico.allergico.database.POJO.ProductHasAllergenPOJO;
 import at.allergico.allergico.database.POJO.ProductPOJO;
 import at.allergico.allergico.database.POJO.UserPOJO;
 
@@ -36,6 +37,7 @@ public class ProductDAO {
     }
     /******** SINGLETON END *********/
     private DBManager dbManager = DBManager.getInstance();
+    private AllergenDAO allergenDAO = AllergenDAO.getInstance();
 
     private List<ProductPOJO> _productList = new ArrayList<>();
     public List<ProductPOJO> getProductList() {
@@ -59,18 +61,51 @@ public class ProductDAO {
                         item.getString("Productname"),
                         item.getString("Description"),
                         null,
-                        item.getString("EANCode")
+                        item.getString("EANCode"),
+                        null
                 );
 //                byte[] imagebyteArray =  item.getString("Image").getBytes();
 //                product.setImage(BitmapFactory.decodeByteArray(imagebyteArray, 0, imagebyteArray.length));
 
+
                 this.getProductList().add(product);
             }
+           boolean res =  addAllergensToProductList();
+            if(res == false){return false;}
         } catch (JSONException e) {
             e.printStackTrace();
             return false;
         }
         return true;
+    }
+
+    private boolean addAllergensToProductList() {
+        String productHasAllergenJsonString = dbManager.getObject("ProductHasAllergen");
+        if(productHasAllergenJsonString == null) return false;
+        try{
+            JSONArray jsonArray = new JSONArray(productHasAllergenJsonString);
+            JSONObject[] jsonObjects = new JSONObject[jsonArray.length()];
+            for(int i = 0; i < jsonArray.length(); i++){
+                jsonObjects[i] = jsonArray.getJSONObject(i);
+            }
+            List<ProductHasAllergenPOJO> productHasAllergenList = new ArrayList<>();
+            for(JSONObject item : jsonObjects){
+                this.getProductByID(item.getInt("Product_ProductID")).getAllergene().add(allergenDAO.getAllergenByID(item.getInt("AllergenID")));
+            }
+
+//            for(ProductPOJO product : this.getProductList()){
+//                for(ProductHasAllergenPOJO pa : productHasAllergenList){
+//                    if(pa.getProductID() == product.getProductID()){
+//                        product.getAllergene().add(allergenDAO.getAllergenByID(pa.getAllergenID()));
+//                    }
+//
+//                }
+//            }
+        return true;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     public boolean reloadDataFromDB(){
@@ -99,6 +134,7 @@ public class ProductDAO {
     public boolean addProduct(ProductPOJO newProduct) {
         this.getProductList().add(newProduct);
         JSONObject addingProduct = new JSONObject();
+        JSONObject addingAllergene;
         try
         {
             addingProduct.put("ProductID", null);
@@ -107,6 +143,19 @@ public class ProductDAO {
             addingProduct.put("Image" ,null);
             addingProduct.put("EANCode", newProduct.getEanCode());
             boolean result = dbManager.addUser(addingProduct.toString());
+
+            boolean allergenRes;
+            for(AllergenPOJO item : newProduct.getAllergene()){
+                addingAllergene = new JSONObject();
+                addingAllergene.put("AllergenID", item.getAllergenID());
+                addingAllergene.put("ProductID", newProduct.getProductID());
+               allergenRes =  dbManager.addProductHasAllergen(addingAllergene.toString());
+                if(!allergenRes){
+                    result = false;
+                    break;
+                }
+            }
+
             if(result){
                 this.getProductList().add(newProduct);
             }
