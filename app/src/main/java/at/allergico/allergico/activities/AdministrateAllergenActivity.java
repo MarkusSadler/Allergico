@@ -26,6 +26,7 @@ import at.allergico.allergico.database.POJO.ProductPOJO;
 import at.allergico.allergico.helper.AllergenViewPOJO;
 import at.allergico.allergico.helper.ColourHelper;
 import at.allergico.allergico.helper.CurrentUser;
+import at.allergico.allergico.helper.ProductHelper;
 
 public class AdministrateAllergenActivity extends Activity {
 
@@ -37,9 +38,7 @@ public class AdministrateAllergenActivity extends Activity {
     private AdministrateAllergenActivityListener _listener;
     private AdministrateAllergenListViewAdapter _listAdapter;
 
-    private String _productName = null;
-    private String _productDescription = null;
-    private String _eanCode = null;
+
     private ProductPOJO _newProduct;
 
     @Override
@@ -56,22 +55,18 @@ public class AdministrateAllergenActivity extends Activity {
                     this._naviIntent = extras.getString("sourceActivity");
                 }
 
-                this._productName = extras.getString("productName");
-                this._productDescription = extras.getString("productDescription");
-                this._eanCode = extras.getString("eanCode");
+
             }
         } else {
             if(savedInstanceState.getSerializable("sourceActivity") != null) {
                 this._naviIntent = (String) savedInstanceState.getSerializable("sourceActivity");
 
-                this._productName = (String) savedInstanceState.getSerializable("productName");
-                this._productDescription = (String) savedInstanceState.getSerializable("productDescription");
-                this._eanCode = (String) savedInstanceState.getSerializable("eanCode");
+
             }
         }
 
-        this._newProduct = new ProductPOJO(-1, this._productName, this._productDescription, null, this._eanCode, null);
-
+        this._newProduct = new ProductPOJO(-1, ProductHelper.productname, ProductHelper.productdescription, null, ProductHelper.EANCode, null);
+        Toast.makeText(this.getApplicationContext(),this._newProduct.getProductName(),Toast.LENGTH_LONG).show();
         this._lv = (ListView) this.findViewById(R.id.allergenListView);
         this._lv.setAdapter(this._listAdapter);
         this._lv.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
@@ -133,11 +128,7 @@ public class AdministrateAllergenActivity extends Activity {
                     case "addProductActivity":
                         //TODO DB
                         AdministrateAllergenActivity.this._newProduct.setAllergene(AdministrateAllergenActivity.this._listAdapter.getAllSelectedAllergens());
-                        Toast.makeText(AdministrateAllergenActivity.this.getApplicationContext(), AdministrateAllergenActivity.this._newProduct.getProductName() + " " + AdministrateAllergenActivity.this._newProduct.getDescription(), Toast.LENGTH_LONG).show();
-                        String out = "";
-                        for(int j = 0; j < AdministrateAllergenActivity.this._newProduct.getAllergene().size(); j++) {
-                            out = out + AdministrateAllergenActivity.this._newProduct.getAllergene().get(j).getAbbreviation() + " ";
-                        }
+
 
                         ProductDAO.getInstance().addProduct(AdministrateAllergenActivity.this._newProduct);
                     case "mainActivity":
@@ -145,7 +136,7 @@ public class AdministrateAllergenActivity extends Activity {
                         break;
                 }
 
-                //AdministrateAllergenActivity.this.startActivity(i);
+                AdministrateAllergenActivity.this.startActivity(i);
             }
         }
     }

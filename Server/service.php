@@ -117,15 +117,16 @@ function UpdateUser($json,$conn){
 
 function InsertProduct($json,$conn){
     $product = json_decode($json);
-    $q = "INSERT INTO `Product`(`ProductID`, `Productname`, `Description`, `Image`, `EANCode`) VALUES (null,".
+    var_dump($product);
+
+    $q = "INSERT INTO `Product`(`ProductID`, `Productname`, `Description`, `Image`, `EANCode`) VALUES (null,'".
         $product -> {"Productname"}.
-        ",".
+        "','".
         $product -> {"Description"}.
-        ",".
-        $product -> {"Image"}.
-        ",".
+        "',null,'".
         $product -> {"EANCode"}.
-        ")";
+        "')";
+    echo $q;
     mysqli_query($conn,$q);
 }
 function InsertProductHasAllergen($json,$conn){

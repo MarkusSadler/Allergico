@@ -20,6 +20,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import at.allergico.allergico.R;
+import at.allergico.allergico.helper.ProductHelper;
 
 public class AddProductActivity extends Activity {
 
@@ -103,15 +104,10 @@ public class AddProductActivity extends Activity {
                 // Handle successful scan
                 Intent i = new Intent(getApplicationContext(), AdministrateAllergenActivity.class);
                 i.putExtra("sourceActivity", "addProductActivity");
-                i.putExtra("productName", "Cola"); //this._productName.getText());
-                i.putExtra("productDescription", "Flascherl"); //this._productDescription.getText());
-                i.putExtra("eanCode", contents);
 
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                ProductHelper.EANCode = contents;
+
+
                 startActivity(i);
             } else if (resultCode == RESULT_CANCELED) {
                 // Handle cancel
@@ -131,6 +127,7 @@ public class AddProductActivity extends Activity {
                     Intent intent = new Intent("com.google.zxing.client.android.SCAN");
                     intent.putExtra("SCAN_MODE", "PRODUCT_MODE");
                     startActivityForResult(intent, 0);
+
                     break;
                 case R.id.takePhotoRadio:
                         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -159,6 +156,8 @@ public class AddProductActivity extends Activity {
             if(AddProductActivity.this._productName.length() > 0 && AddProductActivity.this._productDescription.length() > 0) {
                 if(AddProductActivity.this._photoTakenRadioButton.isChecked() && AddProductActivity.this._madePhoto.getDrawable() != null || AddProductActivity.this._noPhotoCRadioButton.isChecked()) {
                     AddProductActivity.this._nextActivityButton.setEnabled(true);
+                    ProductHelper.productdescription = AddProductActivity.this._productDescription.getText().toString();
+                    ProductHelper.productname = AddProductActivity.this._productName.getText().toString();
                 } else {
                     AddProductActivity.this._nextActivityButton.setEnabled(false);
                 }

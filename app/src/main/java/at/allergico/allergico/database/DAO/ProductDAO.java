@@ -56,13 +56,13 @@ public class ProductDAO {
                 jsonObjects[i] = jsonArray.getJSONObject(i);
             }
             for(JSONObject item : jsonObjects){
-                ProductPOJO product = new ProductPOJO(
-                        item.getInt("ProductID"),
-                        item.getString("Productname"),
-                        item.getString("Description"),
-                        null,
-                        item.getString("EANCode"),
-                        null
+                    ProductPOJO product = new ProductPOJO(
+                            item.getInt("ProductID"),
+                            item.getString("Productname"),
+                            item.getString("Description"),
+                            null,
+                            item.getString("EANCode"),
+                            null
                 );
 //                byte[] imagebyteArray =  item.getString("Image").getBytes();
 //                product.setImage(BitmapFactory.decodeByteArray(imagebyteArray, 0, imagebyteArray.length));
@@ -93,20 +93,14 @@ public class ProductDAO {
                 this.getProductByID(item.getInt("Product_ProductID")).getAllergene().add(allergenDAO.getAllergenByID(item.getInt("AllergenID")));
             }
 
-//            for(ProductPOJO product : this.getProductList()){
-//                for(ProductHasAllergenPOJO pa : productHasAllergenList){
-//                    if(pa.getProductID() == product.getProductID()){
-//                        product.getAllergene().add(allergenDAO.getAllergenByID(pa.getAllergenID()));
-//                    }
-//
-//                }
-//            }
-        return true;
+            return true;
         } catch (JSONException e) {
             e.printStackTrace();
             return false;
         }
     }
+
+
 
     public boolean reloadDataFromDB(){
         return getAllProducts();
@@ -142,13 +136,14 @@ public class ProductDAO {
             addingProduct.put("Description", newProduct.getDescription());
             addingProduct.put("Image" ,null);
             addingProduct.put("EANCode", newProduct.getEanCode());
-            boolean result = dbManager.addUser(addingProduct.toString());
+            boolean result = dbManager.addProduct(addingProduct.toString());
+            reloadDataFromDB();
 
             boolean allergenRes;
             for(AllergenPOJO item : newProduct.getAllergene()){
                 addingAllergene = new JSONObject();
                 addingAllergene.put("AllergenID", item.getAllergenID());
-                addingAllergene.put("ProductID", newProduct.getProductID());
+                addingAllergene.put("ProductID", this.getProductByEANCode(newProduct.getEanCode()).getProductID());
                allergenRes =  dbManager.addProductHasAllergen(addingAllergene.toString());
                 if(!allergenRes){
                     result = false;
@@ -168,6 +163,8 @@ public class ProductDAO {
         }
 
     }
+
+
 
     public boolean updateProduct(ProductPOJO newProduct) {
         throw new UnsupportedOperationException();

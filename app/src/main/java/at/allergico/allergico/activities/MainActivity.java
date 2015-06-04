@@ -2,6 +2,7 @@ package at.allergico.allergico.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -12,6 +13,8 @@ import android.widget.ImageButton;
 
 import at.allergico.allergico.LoginActivity;
 import at.allergico.allergico.R;
+import at.allergico.allergico.helper.CurrentUser;
+import at.allergico.allergico.helper.ProductHelper;
 
 public class MainActivity extends Activity implements View.OnClickListener{
     private ImageButton _eanReader;
@@ -20,6 +23,8 @@ public class MainActivity extends Activity implements View.OnClickListener{
     private ImageButton _addProductButton;
     private ImageButton _showAllergenButton;
     private ImageButton _logoutButton;
+
+    private CurrentUser currentUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +42,8 @@ public class MainActivity extends Activity implements View.OnClickListener{
         this._addProductButton.setOnClickListener(this);
         this._showAllergenButton.setOnClickListener(this);
         this._logoutButton.setOnClickListener(this);
+
+        currentUser = CurrentUser.getInstance();
     }
 
 
@@ -79,6 +86,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
             i = new Intent(this, AdministrateAllergenActivity.class);
             i.putExtra("sourceActivity", "mainActivity");
         }else if(view.getId() == R.id.LogoutButton){
+            currentUser.setLogedInUser(null);
             i = new Intent(this, LoginActivity.class);
         }
 
@@ -86,5 +94,25 @@ public class MainActivity extends Activity implements View.OnClickListener{
             this.startActivity(i);
         }
 
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+         if (requestCode == 0) {
+            if (resultCode == RESULT_OK) {
+                String contents = intent.getStringExtra("SCAN_RESULT");
+                String format = intent.getStringExtra("SCAN_RESULT_FORMAT");
+                // Handle successful scan
+                Intent i = new Intent(getApplicationContext(), ShowProductActivity.class);
+                i.putExtra("eanCode", contents);
+
+
+
+
+
+                startActivity(i);
+            } else if (resultCode == RESULT_CANCELED) {
+                // Handle cancel
+            }
+        }
     }
 }
