@@ -38,6 +38,8 @@ public class LoadingScreenActivity extends Activity implements OnLoadingDAOsComp
         daoLoader.doInBackground(this);
 
 
+
+
     }
 
     @Override

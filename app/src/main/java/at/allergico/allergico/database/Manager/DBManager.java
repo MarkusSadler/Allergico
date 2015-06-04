@@ -151,15 +151,10 @@ public class DBManager {
     }
 
     public String getObject(String getParameter) {
-//        GetObjektTask getObjektTask = new GetObjektTask();
-//        String[] params = new String[1];
-//        params[0] = getParameter;
-//       return getObjektTask.doInBackground(params);
+
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         try {
-//          HttpParams httpParams = new BasicHttpParams();
-            // httpParams.setParameter("get",getParameter);
             HttpClient httpclient = new DefaultHttpClient(); // Create HTTP Client
             HttpGet httpget = new HttpGet("http://sadler.or.at/allergico/service.php?get=" + getParameter); // Set the action you want to do
             HttpResponse response = httpclient.execute(httpget); // Executeit

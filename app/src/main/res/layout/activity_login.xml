@@ -6,7 +6,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:background="@drawable/background"
-    tools:context="at.allergico.allergico.LoginActivity">
+    tools:context="at.allergico.allergico.LoginActivity"
+    android:weightSum="1">
 
     <!-- Login progress -->
     <TextView
@@ -22,7 +23,7 @@
         android:layout_marginBottom="8dp" android:visibility="gone" />
 
     <ScrollView android:id="@+id/login_form" android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <LinearLayout android:id="@+id/email_login_form" android:layout_width="match_parent"
             android:layout_height="wrap_content" android:orientation="vertical">
@@ -49,14 +50,14 @@
                 android:layout_marginTop="16dp" android:text="@string/action_registration"
                 android:background="@color/PaleGreen"
                 android:textStyle="bold" />
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/ic_launcher"
-                android:layout_marginLeft="100dp"
-                android:layout_marginTop="50dp"/>
         </LinearLayout>
     </ScrollView>
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:src="@drawable/allergico_logo"
+        android:layout_gravity="center_horizontal" />
 
 </LinearLayout>
 
