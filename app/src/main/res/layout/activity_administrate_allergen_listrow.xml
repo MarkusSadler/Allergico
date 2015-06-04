@@ -15,16 +15,27 @@
         android:layout_marginRight="10dp"
         android:layout_centerVertical="true"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Medium Text"
-        android:id="@+id/listRowAllergenDescription"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:textColor="@color/Black"
-        android:layout_alignParentEnd="true"
-        android:layout_toRightOf="@+id/listRowAllergenImage"
-        android:layout_toEndOf="@+id/listRowAllergenImage" />
+        <TextView
+            android:id="@+id/listRowAllergenDescription"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@+id/label"
+            android:textSize="16dp"
+            android:layout_toRightOf="@+id/listRowAllergenImage"
+            android:layout_toLeftOf="@+id/administrateAllergenCheckbox"
+            android:layout_toStartOf="@+id/administrateAllergenCheckbox">
+        </TextView>
+
+        <CheckBox
+            android:id="@+id/administrateAllergenCheckbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="4px"
+            android:layout_marginRight="10px"
+            android:background="@drawable/checkbox_styling"
+            android:gravity="center">
+
+        </CheckBox>
 </RelativeLayout>

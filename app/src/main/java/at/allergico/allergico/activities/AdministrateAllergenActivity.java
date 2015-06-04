@@ -20,6 +20,7 @@ import at.allergico.allergico.R;
 import at.allergico.allergico.adapters.AdministrateAllergenListViewAdapter;
 import at.allergico.allergico.database.DAO.AllergenDAO;
 import at.allergico.allergico.database.POJO.AllergenPOJO;
+import at.allergico.allergico.helper.AllergenViewPOJO;
 import at.allergico.allergico.helper.ColourHelper;
 import at.allergico.allergico.helper.CurrentUser;
 
@@ -38,7 +39,7 @@ public class AdministrateAllergenActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_administrate_allergen);
         this._listener = new AdministrateAllergenActivityListener(CurrentUser.getLogedInUser().getAllergene());
-        this._listAdapter = new AdministrateAllergenListViewAdapter(getApplicationContext(), AllergenDAO.getInstance().getAllergeneList());
+        this._listAdapter = new AdministrateAllergenListViewAdapter(this, AllergenDAO.getInstance().getAllergeneList());
 
         if(savedInstanceState == null) {
             Bundle extras = this.getIntent().getExtras();
@@ -55,9 +56,10 @@ public class AdministrateAllergenActivity extends Activity {
 
         this._lv = (ListView) this.findViewById(R.id.allergenListView);
         if(this._naviIntent.compareTo("addProductActivity") == 0 || this._naviIntent.compareTo("adminstrateActivity") == 0) {
-            this._lv.setOnItemLongClickListener(this._listener);
+            this._lv.setOnItemClickListener(this._listener);
         }
         this._lv.setAdapter(this._listAdapter);
+        this._lv.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
 
         this._naviButton = (Button) this.findViewById(R.id.administrateAllergenNavigationButton);
@@ -126,7 +128,8 @@ public class AdministrateAllergenActivity extends Activity {
                         i = new Intent(AdministrateAllergenActivity.this.getApplicationContext(), AdministrateProductActivity.class);
                         break;
                     case "addProductActivity":
-                        //TODO DB write product into db
+                        //TODO DB
+                        // write product into db
                     case "mainActivity":
                         i = new Intent(AdministrateAllergenActivity.this.getApplicationContext(), MainActivity.class);
                         break;
@@ -142,21 +145,19 @@ public class AdministrateAllergenActivity extends Activity {
 
         @Override
         public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-            boolean result = this._selectedAllergenes.add(position);
-
-            if(result == true) {
-                view.setBackgroundColor(ColourHelper.SELECTED_LIST_ELEMENT);
-            } else {
-                this._selectedAllergenes.remove(position);
-                view.setBackgroundColor(R.color.Transparent);
-            }
-
-            return result;
+            return false;
         }
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+            AllergenViewPOJO  currentAllergen = ((AdministrateAllergenListViewAdapter) parent.getAdapter()).getAllergenAtPosition(position);
+
+            boolean selectioNValue = false;
+
+            currentAllergen.set_selected(!currentAllergen.is_selected());
+
+            view.setSelected(currentAllergen.is_selected());
         }
     }
 }
