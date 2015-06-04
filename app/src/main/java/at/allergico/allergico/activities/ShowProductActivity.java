@@ -26,7 +26,7 @@ public class ShowProductActivity extends Activity {
 
     private TextView _productName;
     private TextView _productDescription;
-    //private TextView _allergenesOfProduct;
+    private ImageView _productImage;
     private AllergenHelper ah = new AllergenHelper();
 
     @Override
@@ -36,7 +36,7 @@ public class ShowProductActivity extends Activity {
 
         this._productName = (TextView) this.findViewById(R.id.productName);
         this._productDescription = (TextView) this.findViewById(R.id.productDescription);
-        //this._allergenesOfProduct = (TextView) this.findViewById(R.id.AllergenText);
+        this._productImage = (ImageView) this.findViewById(R.id.productimage);
         ProductDAO pDAO = ProductDAO.getInstance();
         ProductPOJO desiredProduct = null;
 
@@ -73,6 +73,7 @@ public class ShowProductActivity extends Activity {
             if(productsAllergenes.size() == 0) {
                 //this._allergenesOfProduct.setText("Allergenes: None");
             } else {
+                //this._productImage.setImageBitmap(desiredProduct.getImage());
 
                 //this._allergenesOfProduct.setText("Allergenes:");
                 LinearLayout linearLayout1 = (LinearLayout) findViewById(R.id.linearLayout1);
@@ -120,7 +121,7 @@ public class ShowProductActivity extends Activity {
     }
 
     public void onClickBackToProductOverviewButton(View view) {
-        Intent i = new Intent(getApplicationContext(), MainActivity.class);
+        Intent i = new Intent(getApplicationContext(), ProductOverviewActivity.class);
         this.startActivity(i);
     }
 }

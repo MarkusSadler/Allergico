@@ -35,8 +35,10 @@ if($_GET["get"]){
     DeleteUserHasAllergen($_GET["UserID"],$_GET["AllergenID"],$conn);
 }elseif($_GET["UpdateUser"]){
     UpdateUser($_GET["UpdateUser"],$conn);
+}elseif($_GET["ProductHasAllergen"]){
+    ProductHasAllergen($_GET["ProductHasAllergen"],$conn);
 }else{
-    print("Invalid Arguments!");
+     print("Invalid Arguments!");
 }
 
 
@@ -144,6 +146,12 @@ function InsertProductHasCategory($json,$conn){
 
 function DeleteUserHasAllergen($userID,$allergenID,$conn){
     $q = "DELETE FROM `UserHasAllergen` WHERE User_UserID = "+$userID+" && Allergen_AllergenID = " + $allergenID;
+    mysqli_query($conn,$q);
+}
+
+function ProductHasAllergen($json,$conn){
+    $jsonObj = json_decode($json);
+    $q = "INSERT INTO `ProductHasAllergen`(`Allergen_AllergenID`, `Product_ProductID`) VALUES (".$jsonObj->{"AllergenID"}.",".$jsonObj->{"ProductID"}.")";
     mysqli_query($conn,$q);
 }
 ?>

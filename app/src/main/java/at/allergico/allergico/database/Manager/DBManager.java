@@ -186,6 +186,24 @@ public class DBManager {
             return null;
         }
     }
+
+    public boolean addProductHasAllergen(String jsonString) {
+        try {
+            //String jsonString = params[0];
+            String link = "http://sadler.or.at/allergico/service.php?InsertProductHasAllergen=" + URLEncoder.encode(jsonString);
+            System.out.println(link);
+            DefaultHttpClient client = new DefaultHttpClient();
+            HttpGet request = new HttpGet(link);
+            HttpResponse response = client.execute(request);
+            return true;
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+            return false;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
 
 //    public class GetObjektTask extends AsyncTask<String, Void, String> {

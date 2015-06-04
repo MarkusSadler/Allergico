@@ -11,7 +11,8 @@
         <TextView
             android:id="@+id/header"
             android:layout_height="wrap_content"
-            android:layout_width="fill_parent"/>
+            android:layout_width="fill_parent"
+            android:layout_marginTop="50dp"/>
 
         <EditText
             android:id="@+id/firstname"
@@ -52,7 +53,7 @@
             android:singleLine="true"
             android:layout_below="@id/mailAdress"
             android:layout_marginTop="23dp"
-            android:layout_marginLeft="3dp"
+            android:layout_marginLeft="13dp"
             android:textAlignment="center"
             android:textColor="@color/background_material_dark" />
 
@@ -85,15 +86,6 @@
             android:layout_marginTop="10dp"
             android:inputType="textPassword"/>
 
-        <!--<Spinner
-            android:layout_width="225dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/allergenSpinner"
-            android:layout_below="@+id/passwordRepeat"
-            android:layout_alignLeft="@+id/datDisplay"
-            android:layout_alignStart="@+id/datDisplay"
-            android:layout_marginTop="10dp" /> -->
-
         <ImageButton
             android:id="@+id/addAllergen"
             android:layout_height="wrap_content"
@@ -115,14 +107,6 @@
             android:textSize="16dp"
             android:textColor="@color/black"
             />
-        <!--<ListView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@id/android:list"
-            android:layout_below="@+id/addallergen"
-            android:layout_alignRight="@+id/reset"
-            android:layout_alignEnd="@+id/reset"
-            android:layout_marginBottom="10dp"/> -->
 
         <Button
             android:id="@+id/submit"

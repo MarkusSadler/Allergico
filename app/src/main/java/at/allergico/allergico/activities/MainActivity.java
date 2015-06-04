@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 
+import at.allergico.allergico.LoginActivity;
 import at.allergico.allergico.R;
 
 public class MainActivity extends Activity implements View.OnClickListener{
@@ -18,6 +19,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
     private ImageButton _productOverview;
     private ImageButton _addProductButton;
     private ImageButton _showAllergenButton;
+    private ImageButton _logoutButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,12 +29,14 @@ public class MainActivity extends Activity implements View.OnClickListener{
         this._productOverview = (ImageButton) findViewById(R.id.ProductOverviewButton);
         this._addProductButton = (ImageButton) findViewById(R.id.AddProductButton);
         this._showAllergenButton = (ImageButton) findViewById(R.id.ShowAllergeneButton);
+        this._logoutButton = (ImageButton) findViewById(R.id.LogoutButton);
 
         this._eanReader.setOnClickListener(this);
         this._administrate.setOnClickListener(this);
         this._productOverview.setOnClickListener(this);
         this._addProductButton.setOnClickListener(this);
         this._showAllergenButton.setOnClickListener(this);
+        this._logoutButton.setOnClickListener(this);
     }
 
 
@@ -74,6 +78,8 @@ public class MainActivity extends Activity implements View.OnClickListener{
         }else if(view.getId() == R.id.ShowAllergeneButton){
             i = new Intent(this, AdministrateAllergenActivity.class);
             i.putExtra("sourceActivity", "mainActivity");
+        }else if(view.getId() == R.id.LogoutButton){
+            i = new Intent(this, LoginActivity.class);
         }
 
         if(i != null) {
