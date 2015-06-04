@@ -69,6 +69,9 @@ public class UserDAO {
                 jsonObjects[i] = jsonArray.getJSONObject(i);
             }
             for(JSONObject item : jsonObjects){
+                String[] dobStringArr = item.getString("DoB").split("-");
+                Calendar c = Calendar.getInstance();
+                c.set(Integer.parseInt(dobStringArr[0]),Integer.parseInt(dobStringArr[1])-1,Integer.parseInt(dobStringArr[2]));
                 UserPOJO user = new UserPOJO(
                         item.getInt("UserID"),
                         item.getString("Username"),
@@ -76,14 +79,11 @@ public class UserDAO {
                         item.getString("Mailaddress"),
                         item.getString("Firstname"),
                         item.getString("Lastname"),
-                        null,
+                        c.getTime(),
                         true
                 );
                 if(item.getString("[Active]").equals("0")){user.setActive(false);}
-                String[] dobStringArr = item.getString("DoB").split("-");
-                Calendar c = Calendar.getInstance();
-                c.set(Integer.parseInt(dobStringArr[0]),Integer.parseInt(dobStringArr[1])-1,Integer.parseInt(dobStringArr[2]));
-                user.setDob(c.getTime());
+
 
                 user.setAllergene(userHasAllergenDAO.getAllergeneOfUser(user.getUserID()));
 
