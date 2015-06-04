@@ -98,4 +98,16 @@ public class AdministrateAllergenListViewAdapter extends ArrayAdapter<AllergenPO
     public AllergenViewPOJO getAllergenAtPosition(int position) {
         return this._data.get(position);
     }
+
+    public List<AllergenPOJO> getAllSelectedAllergens() {
+        List<AllergenPOJO> result = new ArrayList<AllergenPOJO>();
+
+        for(AllergenViewPOJO item : this._data) {
+            if(item.is_selected()) {
+                result.add(new AllergenPOJO(item.get_allergen().getAllergenID(), item.get_allergen().getDescription(), item.get_allergen().getAbbreviation()));
+            }
+        }
+
+        return result;
+    }
 }

@@ -19,7 +19,10 @@ import java.util.Set;
 import at.allergico.allergico.R;
 import at.allergico.allergico.adapters.AdministrateAllergenListViewAdapter;
 import at.allergico.allergico.database.DAO.AllergenDAO;
+import at.allergico.allergico.database.DAO.ProductDAO;
+import at.allergico.allergico.database.Manager.DBManager;
 import at.allergico.allergico.database.POJO.AllergenPOJO;
+import at.allergico.allergico.database.POJO.ProductPOJO;
 import at.allergico.allergico.helper.AllergenViewPOJO;
 import at.allergico.allergico.helper.ColourHelper;
 import at.allergico.allergico.helper.CurrentUser;
@@ -34,11 +37,16 @@ public class AdministrateAllergenActivity extends Activity {
     private AdministrateAllergenActivityListener _listener;
     private AdministrateAllergenListViewAdapter _listAdapter;
 
+    private String _productName = null;
+    private String _productDescription = null;
+    private String _eanCode = null;
+    private ProductPOJO _newProduct;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_administrate_allergen);
-        this._listener = new AdministrateAllergenActivityListener(CurrentUser.getLogedInUser().getAllergene());
+        this._listener = new AdministrateAllergenActivityListener();
         this._listAdapter = new AdministrateAllergenListViewAdapter(this, AllergenDAO.getInstance().getAllergeneList());
 
         if(savedInstanceState == null) {
@@ -47,17 +55,24 @@ public class AdministrateAllergenActivity extends Activity {
                 if(extras.getString("sourceActivity") != null) {
                     this._naviIntent = extras.getString("sourceActivity");
                 }
+
+                this._productName = extras.getString("productName");
+                this._productDescription = extras.getString("productDescription");
+                this._eanCode = extras.getString("eanCode");
             }
         } else {
             if(savedInstanceState.getSerializable("sourceActivity") != null) {
                 this._naviIntent = (String) savedInstanceState.getSerializable("sourceActivity");
+
+                this._productName = (String) savedInstanceState.getSerializable("productName");
+                this._productDescription = (String) savedInstanceState.getSerializable("productDescription");
+                this._eanCode = (String) savedInstanceState.getSerializable("eanCode");
             }
         }
 
+        this._newProduct = new ProductPOJO(-1, this._productName, this._productDescription, null, this._eanCode, null);
+
         this._lv = (ListView) this.findViewById(R.id.allergenListView);
-        if(this._naviIntent.compareTo("addProductActivity") == 0 || this._naviIntent.compareTo("adminstrateActivity") == 0) {
-            this._lv.setOnItemClickListener(this._listener);
-        }
         this._lv.setAdapter(this._listAdapter);
         this._lv.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
@@ -99,27 +114,15 @@ public class AdministrateAllergenActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    private class AdministrateAllergenActivityListener implements View.OnClickListener, AdapterView.OnItemLongClickListener, AdapterView.OnItemClickListener {
-
-        private Set<Integer> _selectedAllergenes;
-
-        public AdministrateAllergenActivityListener(List<AllergenPOJO> selectedAllergenes) {
-            this._selectedAllergenes = new HashSet<Integer>();
-
-            for(AllergenPOJO item : selectedAllergenes) {
-                this._selectedAllergenes.add(item.getAllergenID());
-            }
-        }
+    private class AdministrateAllergenActivityListener implements View.OnClickListener {
 
         @Override
         public void onClick(View v) {
 
-            Toast.makeText(AdministrateAllergenActivity.this.getApplicationContext(), "in onclick", Toast.LENGTH_LONG);
-            if(v.getId() == R.id.administrateAllergenNavigationButton) {
-                Intent i = null;
+            //Toast.makeText(AdministrateAllergenActivity.this.getApplicationContext(), "schubiduba" + AdministrateAllergenActivity.this._listAdapter.getAllSelectedAllergens().size(), Toast.LENGTH_LONG).show();
 
-                Set<Integer> newUserAllergenes = getSelectedItemsFromListView();
-                Toast.makeText(AdministrateAllergenActivity.this.getApplicationContext(), "Size: " + newUserAllergenes.size(), Toast.LENGTH_LONG);
+            if (v.getId() == R.id.administrateAllergenNavigationButton) {
+                Intent i = null;
 
                 switch (AdministrateAllergenActivity.this._naviIntent) {
                     case "adminstrateActivity":
@@ -129,35 +132,21 @@ public class AdministrateAllergenActivity extends Activity {
                         break;
                     case "addProductActivity":
                         //TODO DB
-                        // write product into db
+                        AdministrateAllergenActivity.this._newProduct.setAllergene(AdministrateAllergenActivity.this._listAdapter.getAllSelectedAllergens());
+                        Toast.makeText(AdministrateAllergenActivity.this.getApplicationContext(), AdministrateAllergenActivity.this._newProduct.getProductName() + " " + AdministrateAllergenActivity.this._newProduct.getDescription(), Toast.LENGTH_LONG).show();
+                        String out = "";
+                        for(int j = 0; j < AdministrateAllergenActivity.this._newProduct.getAllergene().size(); j++) {
+                            out = out + AdministrateAllergenActivity.this._newProduct.getAllergene().get(j).getAbbreviation() + " ";
+                        }
+
+                        ProductDAO.getInstance().addProduct(AdministrateAllergenActivity.this._newProduct);
                     case "mainActivity":
                         i = new Intent(AdministrateAllergenActivity.this.getApplicationContext(), MainActivity.class);
                         break;
                 }
 
-                AdministrateAllergenActivity.this.startActivity(i);
+                //AdministrateAllergenActivity.this.startActivity(i);
             }
-        }
-
-        private Set<Integer> getSelectedItemsFromListView() {
-            return this._selectedAllergenes;
-        }
-
-        @Override
-        public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-            return false;
-        }
-
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-            AllergenViewPOJO  currentAllergen = ((AdministrateAllergenListViewAdapter) parent.getAdapter()).getAllergenAtPosition(position);
-
-            boolean selectioNValue = false;
-
-            currentAllergen.set_selected(!currentAllergen.is_selected());
-
-            view.setSelected(currentAllergen.is_selected());
         }
     }
 }

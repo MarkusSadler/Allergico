@@ -33,6 +33,9 @@ public class AddProductActivity extends Activity {
     private RadioButton _noPhotoCRadioButton;
 
     private ImageView _madePhoto;
+    private String _productNameString;
+    private String _productDescriptionString;
+
 
     private AddProductActivityEventListener _listener;
 
@@ -100,6 +103,10 @@ public class AddProductActivity extends Activity {
                 // Handle successful scan
                 Intent i = new Intent(getApplicationContext(), AdministrateAllergenActivity.class);
                 i.putExtra("sourceActivity", "addProductActivity");
+                i.putExtra("productName", "Cola"); //this._productName.getText());
+                i.putExtra("productDescription", "Flascherl"); //this._productDescription.getText());
+                i.putExtra("eanCode", contents);
+
                 try {
                     Thread.sleep(5000);
                 } catch (InterruptedException e) {
@@ -118,6 +125,9 @@ public class AddProductActivity extends Activity {
         public void onClick(View v) {
             switch(v.getId()) {
                 case R.id.nextButton:
+                    AddProductActivity.this._productNameString = AddProductActivity.this._productName.getText().toString();
+                    AddProductActivity.this._productDescriptionString = AddProductActivity.this._productDescription.getText().toString();
+
                     Intent intent = new Intent("com.google.zxing.client.android.SCAN");
                     intent.putExtra("SCAN_MODE", "PRODUCT_MODE");
                     startActivityForResult(intent, 0);
