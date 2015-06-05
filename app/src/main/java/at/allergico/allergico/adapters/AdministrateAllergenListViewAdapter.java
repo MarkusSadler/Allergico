@@ -32,6 +32,8 @@ public class AdministrateAllergenListViewAdapter extends ArrayAdapter<AllergenPO
     private final Activity _parent;
     private final ArrayList<AllergenViewPOJO> _data;
 
+    private boolean _showCheckboxes = false;
+
     static class ViewHolder {
         protected ImageView _image;
         protected TextView _text;
@@ -71,17 +73,22 @@ public class AdministrateAllergenListViewAdapter extends ArrayAdapter<AllergenPO
 
             viewHolder._image = (ImageView) view.findViewById(R.id.listRowAllergenImage);
             viewHolder._text = (TextView) view.findViewById(R.id.listRowAllergenDescription);
+
             viewHolder._checkBox = (CheckBox) view.findViewById(R.id.administrateAllergenCheckbox);
             viewHolder._checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-
                 @Override
-                public void onCheckedChanged(CompoundButton buttonView,
-                                             boolean isChecked) {
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     AllergenViewPOJO element = (AllergenViewPOJO) viewHolder._checkBox.getTag();
                     element.set_selected(buttonView.isChecked());
-
                 }
             });
+
+            if(this._showCheckboxes == true) {
+                viewHolder._checkBox.setVisibility(View.VISIBLE);
+            } else {
+                viewHolder._checkBox.setVisibility(View.GONE);
+            }
+
             view.setTag(viewHolder);
             viewHolder._checkBox.setTag(this._data.get(position));
         } else {
@@ -109,5 +116,10 @@ public class AdministrateAllergenListViewAdapter extends ArrayAdapter<AllergenPO
         }
 
         return result;
+    }
+
+
+    public void setCheckboxView(boolean showCheckboxes) {
+        this._showCheckboxes = showCheckboxes;
     }
 }

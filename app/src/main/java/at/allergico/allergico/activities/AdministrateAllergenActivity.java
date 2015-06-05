@@ -34,6 +34,7 @@ public class AdministrateAllergenActivity extends Activity {
     private Button _naviButton;
 
     private String _naviIntent = null;
+    private boolean _showCheckboxes = false;
 
     private AdministrateAllergenActivityListener _listener;
     private AdministrateAllergenListViewAdapter _listAdapter;
@@ -54,37 +55,36 @@ public class AdministrateAllergenActivity extends Activity {
                 if(extras.getString("sourceActivity") != null) {
                     this._naviIntent = extras.getString("sourceActivity");
                 }
-
-
             }
         } else {
             if(savedInstanceState.getSerializable("sourceActivity") != null) {
                 this._naviIntent = (String) savedInstanceState.getSerializable("sourceActivity");
-
-
             }
         }
 
         this._newProduct = new ProductPOJO(-1, ProductHelper.productname, ProductHelper.productdescription, null, ProductHelper.EANCode, null);
-        Toast.makeText(this.getApplicationContext(),this._newProduct.getProductName(),Toast.LENGTH_LONG).show();
         this._lv = (ListView) this.findViewById(R.id.allergenListView);
         this._lv.setAdapter(this._listAdapter);
         this._lv.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-
 
         this._naviButton = (Button) this.findViewById(R.id.administrateAllergenNavigationButton);
         this._naviButton.setOnClickListener(this._listener);
         switch(this._naviIntent) {
             case "adminstrateActivity":
                 this._naviButton.setText("Zurueck zur Profilverwaltung");
+                this._showCheckboxes = true;
                 break;
             case "mainActivity":
-                this._naviButton.setText("Zurueck zum HauptmenueMike");
+                this._naviButton.setText("Zurueck zum Hauptmenue");
+                this._showCheckboxes = false;
                 break;
             case "addProductActivity":
                 this._naviButton.setText("Produkt hinzufuegen");
+                this._showCheckboxes = true;
                 break;
         }
+
+        this._listAdapter.setCheckboxView(this._showCheckboxes);
     }
 
     @Override
