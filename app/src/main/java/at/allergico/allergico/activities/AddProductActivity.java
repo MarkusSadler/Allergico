@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -61,9 +62,11 @@ public class AddProductActivity extends Activity {
 
         this._photoTakenRadioButton = (RadioButton) this.findViewById(R.id.takePhotoRadio);
         this._photoTakenRadioButton.setOnClickListener(this._listener);
+        this._photoTakenRadioButton.setOnCheckedChangeListener(this._listener);
 
         this._noPhotoCRadioButton = (RadioButton) this.findViewById(R.id.noTakePhotoRadio);;
         this._noPhotoCRadioButton.setOnClickListener(this._listener);
+        this._noPhotoCRadioButton.setOnCheckedChangeListener(this._listener);
 
         this._nextActivityButton = (Button) this.findViewById(R.id.nextButton);
         this._nextActivityButton.setOnClickListener(this._listener);
@@ -115,7 +118,7 @@ public class AddProductActivity extends Activity {
         }
     }
 
-    private class AddProductActivityEventListener implements View.OnClickListener, TextWatcher {
+    private class AddProductActivityEventListener implements View.OnClickListener, TextWatcher, CompoundButton.OnCheckedChangeListener {
 
         @Override
         public void onClick(View v) {
@@ -164,6 +167,11 @@ public class AddProductActivity extends Activity {
             } else {
                 AddProductActivity.this._nextActivityButton.setEnabled(false);
             }
+        }
+
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            checkAllInputs();
         }
     }
 }
