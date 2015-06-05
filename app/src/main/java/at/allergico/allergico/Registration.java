@@ -1,6 +1,7 @@
 package at.allergico.allergico;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -224,10 +225,16 @@ public class Registration extends ActionBarActivity
                                                             eMail.getText().toString(),     firstname.getText().toString(),
                                                             lastname.getText().toString(),  userDate.getTime(), true);
 
-                    if(userdao.addUser(insertUser)) { DisplayToast("Registrierung erfolgreich"); }
+                    if(userdao.addUser(insertUser)) {
+                        startActivity(new Intent(Registration.this,LoginActivity.class));
+
+                    }
                         else{ DisplayToast("Fehler beim Registrieren"); }
                 }
-                else {DisplayToast("Passwörter stimmen nicht überein"); }
+                else {
+                        password.setError("Passwörter stimmen nicht überein!");
+                        passwordRepeat.setError("Passwörter stimmen nicht überein!");
+                     }
             }
         });
         //endregion
@@ -286,7 +293,7 @@ public class Registration extends ActionBarActivity
             }
             else
             {
-                DisplayToast("Fehler - Datum liegt in der Zukunft");
+                dateDisplay.setError("Datum liegt in der Zukunft!");
             }
         }
     };

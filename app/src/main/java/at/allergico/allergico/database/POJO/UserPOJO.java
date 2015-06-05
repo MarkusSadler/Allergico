@@ -36,6 +36,19 @@ public class UserPOJO {
 
     }
 
+    public UserPOJO(UserPOJO user){
+        this.userID = user.getUserID();
+        this.username = user.getUsername();
+        this.password = user.getPassword();
+        this.email = user.getEmail();
+        this.firstname = user.getFirstname();
+        this.lastname = user.getLastname();
+        this.dob = user.getDob();
+        this.active = user.isActive();
+        this.allergene = user.getAllergene();
+
+    }
+
     /**
      * Creates a new object and assigns given values
      * @param userID
