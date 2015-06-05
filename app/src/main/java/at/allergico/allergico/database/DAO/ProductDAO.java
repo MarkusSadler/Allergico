@@ -151,9 +151,7 @@ public class ProductDAO {
                 }
             }
 
-            if(result){
-                this.getProductList().add(newProduct);
-            }
+
             return result;
         }
         catch (JSONException e)
