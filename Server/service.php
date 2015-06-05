@@ -146,7 +146,8 @@ function InsertProductHasCategory($json,$conn){
 }
 
 function DeleteUserHasAllergen($userID,$allergenID,$conn){
-    $q = "DELETE FROM `UserHasAllergen` WHERE User_UserID = "+$userID+" && Allergen_AllergenID = " + $allergenID;
+    $q = "DELETE FROM `UserHasAllergen` WHERE User_UserID = ".$userID." && Allergen_AllergenID = ".$allergenID;
+    echo $q;
     mysqli_query($conn,$q);
 }
 

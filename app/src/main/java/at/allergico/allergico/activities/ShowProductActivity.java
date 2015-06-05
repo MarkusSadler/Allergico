@@ -121,7 +121,7 @@ public class ShowProductActivity extends Activity {
     }
 
     public void onClickBackToProductOverviewButton(View view) {
-        Intent i = new Intent(getApplicationContext(), ProductOverviewActivity.class);
+        Intent i = new Intent(getApplicationContext(), MainActivity.class);
         this.startActivity(i);
     }
 }

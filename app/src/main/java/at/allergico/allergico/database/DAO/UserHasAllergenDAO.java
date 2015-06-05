@@ -110,7 +110,7 @@ public class UserHasAllergenDAO {
             addingUserHasAllergen.put("UserID", pojo.getUserID());
             addingUserHasAllergen.put("AllergenID", pojo.getAllergenID());
 
-            boolean result = dbManager.addUser(addingUserHasAllergen.toString());
+            boolean result = dbManager.addUserHasAllergen(addingUserHasAllergen.toString());
             if(result){
                 this.getUserHasAllergenList().add(pojo);
             }
