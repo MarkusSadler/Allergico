@@ -186,11 +186,13 @@ public class AdministrateProductActivity extends Activity implements View.OnClic
             if(password.getText().length() == 0 && passwordRepeat.getText().length() == 0){
                 updatedUser = new UserPOJO(currentUser.getUserID(), currentUser.getUsername(), currentUser.getPassword(), currentUser.getEmail(), firstname.getText().toString(), lastname.getText().toString(), currentUser.getDob(), true);
             }else if(password.getText().toString().equals(passwordRepeat.getText().toString()) == false){
-                Toast.makeText(this,"Passwörter stimmen nicht überein",Toast.LENGTH_LONG).show();
+                password.setError("Passwörter stimmen nicht überein!");
+                passwordRepeat.setError("Passwörter stimmen nicht überein!");
             }else{
                 updatedUser = new UserPOJO(currentUser.getUserID(), currentUser.getUsername(), password.getText().toString(), currentUser.getEmail(), firstname.getText().toString(), lastname.getText().toString(), currentUser.getDob(), true);
             }
             System.out.println(updatedUser.toString());
+            
             ud.updateUser(updatedUser);
             cU.setLogedInUser(ud.getUserByUsernameOrEmail(currentUser.getEmail()));
             i = new Intent(this, MainActivity.class);

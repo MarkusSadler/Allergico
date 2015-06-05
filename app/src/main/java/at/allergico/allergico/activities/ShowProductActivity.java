@@ -36,7 +36,7 @@ public class ShowProductActivity extends Activity {
 
         this._productName = (TextView) this.findViewById(R.id.productName);
         this._productDescription = (TextView) this.findViewById(R.id.productDescription);
-        this._productImage = (ImageView) this.findViewById(R.id.productimage);
+        //this._productImage = (ImageView) this.findViewById(R.id.productimage);
         ProductDAO pDAO = ProductDAO.getInstance();
         ProductPOJO desiredProduct = null;
 
@@ -70,21 +70,14 @@ public class ShowProductActivity extends Activity {
             this._productDescription.setText(desiredProduct.getDescription());
 
             List<AllergenPOJO> productsAllergenes = pDAO.getProductsAllergenes(desiredProduct.getProductID());
-            if(productsAllergenes.size() == 0) {
-                //this._allergenesOfProduct.setText("Allergenes: None");
-            } else {
-                //this._productImage.setImageBitmap(desiredProduct.getImage());
 
-                //this._allergenesOfProduct.setText("Allergenes:");
                 LinearLayout linearLayout1 = (LinearLayout) findViewById(R.id.linearLayout1);
                 for(AllergenPOJO all : productsAllergenes) {
-                    //this._allergenesOfProduct.setText(this._allergenesOfProduct.getText() + " " + all.getAbbreviation());
 
                     ImageView image = new ImageView(ShowProductActivity.this);
                     image.setBackgroundResource(ah.getAllergenImage(all.getAbbreviation()));
                     linearLayout1.addView(image);
                 }
-            }
         } else {
             setDefaultViewValues();
         }
@@ -94,7 +87,6 @@ public class ShowProductActivity extends Activity {
         String errorMessage = "Product load failed";
         this._productName.setText(errorMessage);
         this._productDescription.setText(errorMessage);
-        //this._allergenesOfProduct.setText(errorMessage);
     }
 
 

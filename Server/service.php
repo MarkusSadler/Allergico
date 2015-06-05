@@ -108,7 +108,7 @@ function InsertUser($json,$conn){
 function UpdateUser($json,$conn){
     $user = json_decode($json);
 
-    $q ="Update `User` SET  `Username` = [".$user ->{"Username"}."], `Password` = [".$user ->{"Password"}."], `Mailaddress` = [".$user ->{"Mailaddress"}."], `Firstname` = [".$user ->{"Firstname"}."], `Lastname` = [".$user ->{"Lastname"}."], `DoB` = STR_TO_DATE('".$user ->{"DoB"}."','%Y-%m-%d'), `[Active]` = ".$user->{"Active"}."
+    $q ="Update `User` SET  `Username` = '".$user ->{"Username"}."', `Password` = '".$user ->{"Password"}."', `Mailaddress` = '".$user ->{"Mailaddress"}."', `Firstname` = '".$user ->{"Firstname"}."', `Lastname` = '".$user ->{"Lastname"}."', `DoB` = STR_TO_DATE('".$user ->{"DoB"}."','%Y-%m-%d'), `[Active]` = ".$user->{"Active"}."
      WHERE UserID = ".$user ->{"UserID"} ;
 
     mysqli_query($conn,$q);
