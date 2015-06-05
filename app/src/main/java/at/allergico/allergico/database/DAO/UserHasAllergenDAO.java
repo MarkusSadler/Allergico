@@ -114,6 +114,7 @@ public class UserHasAllergenDAO {
             if(result){
                 this.getUserHasAllergenList().add(pojo);
             }
+            reloadDataFromDB();
             return result;
         }
         catch (JSONException e)
@@ -128,6 +129,7 @@ public class UserHasAllergenDAO {
     public boolean removeUserHasAllergen(UserHasAllergenPOJO pojo){
         this.getUserHasAllergenList().remove(pojo);
         dbManager.removeUserHasAllergen(pojo.getUserID(),pojo.getAllergenID());
+        reloadDataFromDB();
         return true;
     }
 }

@@ -20,9 +20,12 @@ import at.allergico.allergico.R;
 import at.allergico.allergico.adapters.AdministrateAllergenListViewAdapter;
 import at.allergico.allergico.database.DAO.AllergenDAO;
 import at.allergico.allergico.database.DAO.ProductDAO;
+import at.allergico.allergico.database.DAO.UserHasAllergenDAO;
 import at.allergico.allergico.database.Manager.DBManager;
 import at.allergico.allergico.database.POJO.AllergenPOJO;
 import at.allergico.allergico.database.POJO.ProductPOJO;
+import at.allergico.allergico.database.POJO.UserHasAllergenPOJO;
+import at.allergico.allergico.database.POJO.UserPOJO;
 import at.allergico.allergico.helper.AllergenViewPOJO;
 import at.allergico.allergico.helper.ColourHelper;
 import at.allergico.allergico.helper.CurrentUser;
@@ -35,6 +38,7 @@ public class AdministrateAllergenActivity extends Activity {
 
     private String _naviIntent = null;
     private boolean _showCheckboxes = false;
+    private boolean _showUserAllergenes = false;
 
     private AdministrateAllergenActivityListener _listener;
     private AdministrateAllergenListViewAdapter _listAdapter;
@@ -46,8 +50,6 @@ public class AdministrateAllergenActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_administrate_allergen);
-        this._listener = new AdministrateAllergenActivityListener();
-        this._listAdapter = new AdministrateAllergenListViewAdapter(this, AllergenDAO.getInstance().getAllergeneList());
 
         if(savedInstanceState == null) {
             Bundle extras = this.getIntent().getExtras();
@@ -57,22 +59,21 @@ public class AdministrateAllergenActivity extends Activity {
                 }
             }
         } else {
-            if(savedInstanceState.getSerializable("sourceActivity") != null) {
+            if (savedInstanceState.getSerializable("sourceActivity") != null) {
                 this._naviIntent = (String) savedInstanceState.getSerializable("sourceActivity");
             }
         }
 
-        this._newProduct = new ProductPOJO(-1, ProductHelper.productname, ProductHelper.productdescription, null, ProductHelper.EANCode, null);
-        this._lv = (ListView) this.findViewById(R.id.allergenListView);
-        this._lv.setAdapter(this._listAdapter);
-        this._lv.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        this._listener = new AdministrateAllergenActivityListener();
 
         this._naviButton = (Button) this.findViewById(R.id.administrateAllergenNavigationButton);
         this._naviButton.setOnClickListener(this._listener);
+
         switch(this._naviIntent) {
             case "adminstrateActivity":
                 this._naviButton.setText("Zurueck zur Profilverwaltung");
                 this._showCheckboxes = true;
+                this._showUserAllergenes = true;
                 break;
             case "mainActivity":
                 this._naviButton.setText("Zurueck zum Hauptmenue");
@@ -81,9 +82,17 @@ public class AdministrateAllergenActivity extends Activity {
             case "addProductActivity":
                 this._naviButton.setText("Produkt hinzufuegen");
                 this._showCheckboxes = true;
+                this._showUserAllergenes = false;
                 break;
         }
 
+
+        this._listAdapter = new AdministrateAllergenListViewAdapter(this, AllergenDAO.getInstance().getAllergeneList(), this._showUserAllergenes);
+
+        this._newProduct = new ProductPOJO(-1, ProductHelper.productname, ProductHelper.productdescription, null, ProductHelper.EANCode, null);
+        this._lv = (ListView) this.findViewById(R.id.allergenListView);
+        this._lv.setAdapter(this._listAdapter);
+        this._lv.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         this._listAdapter.setCheckboxView(this._showCheckboxes);
     }
 
@@ -114,14 +123,28 @@ public class AdministrateAllergenActivity extends Activity {
         @Override
         public void onClick(View v) {
 
-            //Toast.makeText(AdministrateAllergenActivity.this.getApplicationContext(), "schubiduba" + AdministrateAllergenActivity.this._listAdapter.getAllSelectedAllergens().size(), Toast.LENGTH_LONG).show();
-
             if (v.getId() == R.id.administrateAllergenNavigationButton) {
                 Intent i = null;
 
                 switch (AdministrateAllergenActivity.this._naviIntent) {
                     case "adminstrateActivity":
                         //TODO update user allergenes
+                        List<AllergenPOJO> selectedAllergenes = AdministrateAllergenActivity.this._listAdapter.getAllSelectedAllergens();
+                        List<AllergenPOJO> deleteUserAllergenes = CurrentUser.getLogedInUser().getAllergene();
+
+                        UserHasAllergenPOJO temp = null;
+                        for(AllergenPOJO item : deleteUserAllergenes) {
+                            temp = new UserHasAllergenPOJO(CurrentUser.getLogedInUser().getUserID(), item.getAllergenID());
+                            UserHasAllergenDAO.getInstance().removeUserHasAllergen(temp);
+                        }
+
+                        for(AllergenPOJO item : selectedAllergenes) {
+                            temp = new UserHasAllergenPOJO(CurrentUser.getLogedInUser().getUserID(), item.getAllergenID());
+                            UserHasAllergenDAO.getInstance().addUserHasAllergen(temp);
+                        }
+
+                        UserPOJO curUser = CurrentUser.getLogedInUser();
+                        curUser.setAllergene(UserHasAllergenDAO.getInstance().getAllergeneOfUser(curUser.getUserID()));
 
                         i = new Intent(AdministrateAllergenActivity.this.getApplicationContext(), AdministrateProductActivity.class);
                         break;

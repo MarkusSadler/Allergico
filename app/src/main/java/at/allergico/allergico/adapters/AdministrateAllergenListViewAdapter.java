@@ -41,7 +41,7 @@ public class AdministrateAllergenListViewAdapter extends ArrayAdapter<AllergenPO
     }
 
 
-    public AdministrateAllergenListViewAdapter(Activity context, List<AllergenPOJO> values) {
+    public AdministrateAllergenListViewAdapter(Activity context, List<AllergenPOJO> values, boolean showUserAllergen) {
         super(context, R.layout.activity_administrate_allergen_listrow, values);
         this._parent = context;
         this._data = new ArrayList<AllergenViewPOJO>();
@@ -56,7 +56,7 @@ public class AdministrateAllergenListViewAdapter extends ArrayAdapter<AllergenPO
 
         for(int i = 0; i < values.size(); i++) {
             userHasAllergen = false;
-            if(userAllergenIDs.contains(values.get(i).getAllergenID())) {
+            if(showUserAllergen && userAllergenIDs.contains(values.get(i).getAllergenID())) {
                 userHasAllergen = true;
             }
             this._data.add(new AllergenViewPOJO(values.get(i), userHasAllergen));
@@ -114,10 +114,8 @@ public class AdministrateAllergenListViewAdapter extends ArrayAdapter<AllergenPO
                 result.add(new AllergenPOJO(item.get_allergen().getAllergenID(), item.get_allergen().getDescription(), item.get_allergen().getAbbreviation()));
             }
         }
-
         return result;
     }
-
 
     public void setCheckboxView(boolean showCheckboxes) {
         this._showCheckboxes = showCheckboxes;
